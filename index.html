@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="ColorMaster Pro — учёт красок, остатков и истории клиентов с Bluetooth-весами.">
-  <meta name="theme-color" content="#0C0B14">
+  <meta name="theme-color" content="#17121e">
   <title>ColorMaster Pro — учёт красок для салонов</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1865,45 +1865,309 @@ h1, h2 {
 }
 </style>
 
+
+<style id="cm-visual-refresh-v4">
+/* ==========================================================
+   ColorMaster Pro — visual refresh v4
+   Direction: established B2B beauty-tech company.
+   Mixed light/dark surfaces, higher readability, stronger product focus.
+   ========================================================== */
+:root{
+  --v4-ink:#17131d;
+  --v4-text:#2a2530;
+  --v4-muted:#6f6875;
+  --v4-soft:#8f8796;
+  --v4-paper:#faf9fb;
+  --v4-paper-2:#f3f0f6;
+  --v4-paper-3:#ece8f0;
+  --v4-line:#e1dce5;
+  --v4-purple:#6c3bff;
+  --v4-purple-2:#7955ff;
+  --v4-dark:#17121e;
+  --v4-dark-2:#211a2b;
+  --v4-dark-line:rgba(255,255,255,.13);
+  --v4-white:#fff;
+}
+html,body{background:var(--v4-paper)!important;color:var(--v4-text)!important;}
+body{font-family:'Manrope','DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif!important;font-size:17px!important;line-height:1.62!important;font-weight:500!important;}
+.cm-section,.cm-demo-section,.cm-ps-section,.cm-testi-section{padding:88px 36px!important;}
+.cm-inner,.cm-demo-inner,.cm-ps-inner,.cm-testi-grid,.cm-testi-section>div{width:min(100%,1320px)!important;max-width:1320px!important;}
+.cm-h1,.cm-stitle,.cm-roi-h2,.cm-t-h2,.cm-footer-h2,h1,h2{font-family:'Manrope',sans-serif!important;font-weight:800!important;letter-spacing:-.048em!important;}
+.cm-stitle,.cm-roi-h2,.cm-t-h2,.cm-footer-h2{font-size:clamp(2.35rem,3.6vw,3.6rem)!important;line-height:1.02!important;color:var(--v4-ink)!important;}
+.cm-slabel{font-size:.78rem!important;font-weight:800!important;letter-spacing:.11em!important;color:var(--v4-purple)!important;margin-bottom:14px!important;}
+.cm-slabel::before{display:none!important;}
+.cm-ssub,.cm-roi-subtitle,.cm-t-sub{font-size:1.04rem!important;line-height:1.7!important;color:var(--v4-muted)!important;max-width:780px!important;}
+
+/* one coherent monoline icon language */
+.cm-line-icon{width:20px;height:20px;display:inline-block;flex:0 0 auto;position:relative;color:currentColor;}
+.cm-line-icon::before,.cm-line-icon::after{content:"";position:absolute;box-sizing:border-box;}
+.cm-icon-scale::before{left:2px;right:2px;bottom:2px;height:12px;border:1.7px solid currentColor;border-radius:5px;}
+.cm-icon-scale::after{width:6px;height:3px;border:1.7px solid currentColor;border-bottom:0;border-radius:6px 6px 0 0;left:7px;top:3px;}
+.cm-icon-box::before{inset:3px;border:1.7px solid currentColor;border-radius:3px;}
+.cm-icon-box::after{left:4px;right:4px;top:8px;border-top:1.7px solid currentColor;transform:skewY(-18deg);}
+.cm-icon-users::before{width:7px;height:7px;border:1.7px solid currentColor;border-radius:50%;left:2px;top:3px;box-shadow:9px 2px 0 -1.7px transparent,9px 2px 0 0 currentColor;}
+.cm-icon-users::after{left:1px;bottom:2px;width:18px;height:7px;border:1.7px solid currentColor;border-radius:9px 9px 3px 3px;}
+.cm-icon-chart::before{left:3px;bottom:3px;width:3px;height:7px;background:currentColor;border-radius:2px;box-shadow:6px -4px 0 currentColor,12px -9px 0 currentColor;}
+.cm-icon-chart::after{left:1px;bottom:1px;width:18px;border-top:1.7px solid currentColor;}
+.cm-icon-lock::before{left:4px;right:4px;bottom:2px;height:10px;border:1.7px solid currentColor;border-radius:3px;}
+.cm-icon-lock::after{width:8px;height:7px;border:1.7px solid currentColor;border-bottom:0;border-radius:7px 7px 0 0;left:6px;top:2px;}
+.cm-icon-check::before{width:16px;height:16px;border:1.7px solid currentColor;border-radius:50%;left:2px;top:2px;}
+.cm-icon-check::after{width:8px;height:4px;border-left:1.7px solid currentColor;border-bottom:1.7px solid currentColor;transform:rotate(-45deg);left:6px;top:7px;}
+.cm-icon-history::before{inset:3px;border:1.7px solid currentColor;border-radius:50%;}
+.cm-icon-history::after{width:6px;height:5px;border-left:1.7px solid currentColor;border-bottom:1.7px solid currentColor;left:9px;top:5px;}
+.cm-icon-settings::before{inset:4px;border:1.7px solid currentColor;border-radius:50%;box-shadow:0 -6px 0 -4px currentColor,0 6px 0 -4px currentColor,6px 0 0 -4px currentColor,-6px 0 0 -4px currentColor;}
+.cm-icon-clock::before{inset:2px;border:1.7px solid currentColor;border-radius:50%;}
+.cm-icon-clock::after{left:9px;top:5px;width:5px;height:6px;border-left:1.7px solid currentColor;border-bottom:1.7px solid currentColor;}
+.cm-icon-doc::before{left:4px;right:4px;top:2px;bottom:2px;border:1.7px solid currentColor;border-radius:2px;}
+.cm-icon-doc::after{left:7px;right:7px;top:7px;border-top:1.7px solid currentColor;box-shadow:0 4px 0 currentColor;}
+.cm-icon-wallet::before{left:2px;right:2px;top:5px;bottom:3px;border:1.7px solid currentColor;border-radius:4px;}
+.cm-icon-wallet::after{right:2px;top:9px;width:6px;height:5px;border:1.7px solid currentColor;border-radius:2px;background:inherit;}
+.cm-icon-export::before{left:3px;right:3px;bottom:2px;height:9px;border:1.7px solid currentColor;border-radius:3px;}
+.cm-icon-export::after{left:9px;top:2px;width:7px;height:7px;border-top:1.7px solid currentColor;border-right:1.7px solid currentColor;transform:rotate(-45deg);}
+.cm-icon-bolt::before{width:9px;height:15px;left:6px;top:2px;border:1.7px solid currentColor;clip-path:polygon(48% 0,100% 0,64% 43%,100% 43%,28% 100%,43% 57%,0 57%);background:currentColor;}
+
+/* HERO — compact copy + strong product canvas */
+.cm-hero{min-height:auto!important;padding:54px 36px 40px!important;background:var(--v4-dark)!important;border-bottom:0!important;text-align:left!important;color:#fff!important;}
+.cm-hero::before{opacity:.16!important;background-size:96px 100%!important;}
+.cm-hero::after{background:radial-gradient(circle at 72% 24%,rgba(108,59,255,.20),transparent 28%)!important;}
+.cm-hero-shell{position:relative;z-index:2;width:min(100%,1320px);margin:0 auto;display:grid;grid-template-columns:minmax(0,.9fr) minmax(460px,1.1fr);gap:68px;align-items:center;}
+.cm-hero-copy{padding:28px 0 14px;}
+.cm-badge{display:inline-flex!important;width:max-content!important;max-width:max-content!important;margin:0 0 20px!important;padding:7px 11px!important;border-radius:999px!important;background:rgba(255,255,255,.06)!important;border:1px solid rgba(255,255,255,.14)!important;color:rgba(255,255,255,.78)!important;font-size:.75rem!important;font-weight:700!important;box-shadow:none!important;}
+.cm-badge-dot{width:7px!important;height:7px!important;background:#52d68c!important;box-shadow:none!important;}
+.cm-h1{max-width:720px!important;margin:0 0 22px!important;font-size:clamp(3.25rem,5.3vw,5.35rem)!important;line-height:.97!important;color:#fff!important;letter-spacing:-.064em!important;}
+.cm-h1 em{color:#a894ff!important;background:none!important;-webkit-text-fill-color:currentColor!important;}
+.cm-hero-sub{max-width:660px!important;margin:0 0 30px!important;font-size:1.08rem!important;line-height:1.68!important;color:rgba(255,255,255,.72)!important;font-weight:500!important;}
+.cm-cta-row{justify-content:flex-start!important;gap:10px!important;}
+.cm-btn-main,.cm-roi-submit-btn,.cm-t-submit-btn,.cm-form-btn{min-height:52px!important;padding:0 24px!important;border-radius:9px!important;background:var(--v4-purple)!important;border:1px solid transparent!important;box-shadow:none!important;font-family:'Manrope',sans-serif!important;font-size:.93rem!important;font-weight:800!important;}
+.cm-btn-main:hover,.cm-roi-submit-btn:hover,.cm-t-submit-btn:hover,.cm-form-btn:hover{background:var(--v4-purple-2)!important;box-shadow:0 8px 24px rgba(108,59,255,.20)!important;}
+.cm-btn-ghost{min-height:52px!important;padding:0 22px!important;border-radius:9px!important;background:transparent!important;border:1px solid rgba(255,255,255,.22)!important;color:#fff!important;font-size:.93rem!important;font-weight:700!important;}
+.cm-btn-ghost:hover{background:rgba(255,255,255,.06)!important;border-color:rgba(255,255,255,.34)!important;}
+.cm-product-visual{min-height:430px;border:1px solid rgba(255,255,255,.15);border-radius:18px;background:linear-gradient(145deg,#251f2f,#17121e 62%);padding:16px;display:grid;grid-template-rows:auto 1fr auto;box-shadow:0 28px 70px rgba(0,0,0,.26);overflow:hidden;position:relative;}
+.cm-product-visual::after{content:"";position:absolute;width:260px;height:260px;right:-90px;top:-90px;border-radius:50%;background:rgba(108,59,255,.19);filter:blur(10px);pointer-events:none;}
+.cm-product-visual-head,.cm-product-visual-foot{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:12px;color:rgba(255,255,255,.58);font-size:.69rem;font-weight:700;letter-spacing:.035em;}
+.cm-product-status{display:flex;align-items:center;gap:7px;color:rgba(255,255,255,.74);}
+.cm-product-status span{width:7px;height:7px;border-radius:50%;background:#4dd586;}
+.cm-product-photo-placeholder{position:relative;z-index:2;margin:16px 0;border:1px dashed rgba(255,255,255,.24);border-radius:14px;background:linear-gradient(150deg,rgba(255,255,255,.07),rgba(255,255,255,.025));min-height:330px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px;color:#fff;}
+.cm-placeholder-icon{width:34px;height:34px;margin-bottom:14px;fill:none;stroke:#a894ff;stroke-width:1.5;}
+.cm-product-photo-placeholder strong{font-size:1rem;font-weight:800;margin-bottom:6px;}
+.cm-product-photo-placeholder span{max-width:290px;color:rgba(255,255,255,.50);font-size:.76rem;line-height:1.55;}
+.cm-product-visual-foot{justify-content:flex-start;gap:18px;flex-wrap:wrap;}
+.cm-product-visual-foot span{display:inline-flex;align-items:center;gap:6px;}
+.cm-product-visual-foot span::before{content:"";width:5px;height:5px;border-radius:50%;background:#8f75ff;}
+.cm-stats{grid-column:1/-1;width:100%!important;max-width:none!important;margin:8px 0 0!important;display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:0!important;border-radius:14px!important;border:1px solid rgba(255,255,255,.13)!important;background:rgba(255,255,255,.045)!important;overflow:hidden!important;}
+.cm-stat{min-height:92px!important;padding:20px 24px!important;text-align:left!important;background:transparent!important;display:flex!important;align-items:baseline!important;gap:12px!important;border:0!important;}
+.cm-stat+.cm-stat{border-left:1px solid rgba(255,255,255,.11)!important;}
+.cm-stat+.cm-stat::before{display:none!important;}
+.cm-stat-n{font-size:1.75rem!important;line-height:1!important;color:#fff!important;-webkit-text-fill-color:currentColor!important;background:none!important;white-space:nowrap;}
+.cm-stat-l{font-size:.76rem!important;color:rgba(255,255,255,.48)!important;line-height:1.25!important;}
+
+/* capability rail — no emoji collage */
+.cm-ticker-wrap{background:#fff!important;border-top:0!important;border-bottom:1px solid var(--v4-line)!important;padding:0!important;}
+.cm-ticker{animation:cm-ticker 32s linear infinite!important;gap:0!important;}
+.cm-tick{height:58px;display:flex!important;align-items:center!important;gap:10px!important;padding:0 28px!important;color:#4e4755!important;font-size:.82rem!important;font-weight:700!important;border-right:1px solid var(--v4-line);}
+.cm-tick .cm-line-icon{width:17px;height:17px;color:var(--v4-purple);}
+.cm-tick b{color:var(--v4-purple)!important;}
+
+/* Light product demo */
+.cm-demo-section{background:var(--v4-paper)!important;border-bottom:1px solid var(--v4-line)!important;padding-top:96px!important;padding-bottom:96px!important;}
+.cm-demo-section .cm-stitle,.cm-demo-section .cm-ssub{color:var(--v4-ink)!important;}
+.cm-demo-section .cm-ssub{color:var(--v4-muted)!important;margin-bottom:32px!important;}
+.cm-demo-grid{grid-template-columns:minmax(500px,1.05fr) minmax(390px,.75fr)!important;gap:68px!important;margin-top:34px!important;align-items:center!important;}
+.cm-demo-grid>div:first-child{background:#fff!important;border:1px solid var(--v4-line)!important;border-radius:18px!important;padding:20px 24px 28px!important;box-shadow:0 18px 55px rgba(41,25,54,.08)!important;}
+.cm-screen-tabs{display:flex!important;grid-template-columns:none!important;gap:5px!important;padding:5px!important;margin-bottom:26px!important;background:var(--v4-paper-2)!important;border:1px solid var(--v4-line)!important;border-radius:10px!important;overflow:visible!important;}
+.cm-stab{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;flex:1 1 0!important;min-height:40px!important;padding:0 10px!important;border:0!important;border-radius:7px!important;background:transparent!important;color:#726a79!important;font-size:.75rem!important;font-weight:700!important;}
+.cm-stab .cm-line-icon{width:16px;height:16px;}
+.cm-stab.cm-on{background:#fff!important;color:var(--v4-ink)!important;border:1px solid var(--v4-line)!important;box-shadow:0 3px 12px rgba(38,26,46,.06)!important;}
+.cm-phone{width:290px!important;height:574px!important;border:1px solid #39323f!important;background:#17131d!important;box-shadow:0 24px 52px rgba(25,15,33,.22)!important;}
+.cm-demo-grid>div:last-child{padding:20px 0!important;}
+.cm-demo-grid>div:last-child h3{font-family:'Manrope',sans-serif!important;font-size:2rem!important;line-height:1.08!important;color:var(--v4-ink)!important;font-weight:800!important;}
+.cm-demo-grid>div:last-child p{font-size:1.01rem!important;color:var(--v4-muted)!important;line-height:1.72!important;}
+.cm-feat-list{border-top:1px solid var(--v4-line)!important;margin-top:28px!important;}
+.cm-feat-list li{padding:15px 0!important;border-bottom:1px solid var(--v4-line)!important;color:#4e4755!important;font-size:.94rem!important;font-weight:600!important;}
+.cm-feat-list li::before{color:var(--v4-purple)!important;}
+.cm-demo-grid>div:last-child .cm-btn-main{color:#fff!important;}
+
+/* Problems + solution: warm pale band */
+.cm-ps-section{background:var(--v4-paper-2)!important;border-bottom:1px solid var(--v4-line)!important;padding-top:94px!important;padding-bottom:100px!important;}
+.cm-ps-section .cm-stitle{color:var(--v4-ink)!important;}
+.cm-ps-section .cm-ssub{color:var(--v4-muted)!important;font-size:1.03rem!important;}
+.cm-grid2{gap:14px!important;margin-bottom:70px!important;}
+.cm-grid3{gap:14px!important;}
+.cm-prob,.cm-sol{background:#fff!important;border:1px solid var(--v4-line)!important;border-radius:14px!important;box-shadow:none!important;}
+.cm-prob{padding:26px!important;min-height:242px!important;}
+.cm-prob::before{height:3px!important;opacity:1!important;}
+.cm-prob-ico,.cm-sol-ico{display:flex!important;align-items:center!important;justify-content:center!important;width:42px!important;height:42px!important;border-radius:10px!important;background:#f4f0ff!important;border:1px solid #e3dafe!important;color:var(--v4-purple)!important;filter:none!important;}
+.cm-prob-ico .cm-line-icon,.cm-sol-ico .cm-line-icon{width:20px;height:20px;}
+.cm-prob-t,.cm-sol-t{font-family:'Manrope',sans-serif!important;color:var(--v4-ink)!important;font-weight:800!important;line-height:1.26!important;}
+.cm-prob-t{font-size:1.06rem!important;}
+.cm-prob-d,.cm-sol-d{color:var(--v4-muted)!important;font-size:.91rem!important;line-height:1.68!important;font-weight:500!important;}
+.cm-sol{padding:24px!important;gap:16px!important;}
+.cm-sol:hover{border-color:#cfc5da!important;transform:translateY(-2px)!important;box-shadow:0 10px 26px rgba(44,27,55,.06)!important;}
+
+/* ROI: light shell + dark result, stronger readability */
+#cm-roi{background:#fff!important;border-bottom:1px solid var(--v4-line)!important;padding-top:96px!important;padding-bottom:100px!important;color:var(--v4-text)!important;}
+.cm-roi-h2{color:var(--v4-ink)!important;}
+.cm-roi-subtitle{color:var(--v4-muted)!important;margin-bottom:34px!important;}
+.cm-calc-container{grid-template-columns:1.08fr .92fr!important;border:1px solid var(--v4-line)!important;border-radius:18px!important;background:var(--v4-paper)!important;box-shadow:0 18px 55px rgba(39,22,51,.07)!important;overflow:hidden!important;}
+.cm-calc-inputs{background:var(--v4-paper)!important;color:var(--v4-text)!important;padding:42px 44px!important;}
+.cm-calc-result{background:var(--v4-dark)!important;color:#fff!important;padding:42px 44px!important;border-left:0!important;}
+.cm-calc-label{color:#504956!important;font-size:.98rem!important;font-weight:700!important;}
+.cm-calc-val{color:var(--v4-purple)!important;font-size:1.16rem!important;font-weight:800!important;}
+.cm-range-slider{background:#ddd6e5!important;}
+.cm-range-limits{color:#8b8490!important;}
+.cm-hardware-badge{background:#fff!important;border:1px solid var(--v4-line)!important;border-radius:11px!important;}
+.cm-badge-text{color:var(--v4-muted)!important;font-size:.88rem!important;}
+.cm-badge-text strong{color:var(--v4-ink)!important;}
+.cm-badge-icon{color:var(--v4-purple)!important;display:flex!important;}
+.cm-calc-result .cm-result-label{color:rgba(255,255,255,.58)!important;}
+.cm-calc-result .cm-result-num,.cm-calc-result .cm-sub-price{color:#fff!important;}
+.cm-calc-result .cm-saved-color{color:#d4b067!important;}
+.cm-result-label-highlight{color:#7be0a7!important;}
+.cm-result-num-big{color:#74dfa1!important;}
+.cm-payback-text{color:rgba(255,255,255,.62)!important;}
+.cm-payback-text strong{color:#fff!important;}
+.cm-divider-calc{background:rgba(255,255,255,.13)!important;}
+
+/* Testimonials: readable light editorial layout */
+.cm-testi-section{background:var(--v4-paper)!important;border-bottom:1px solid var(--v4-line)!important;padding-top:94px!important;padding-bottom:100px!important;}
+.cm-testi-section .cm-stitle{color:var(--v4-ink)!important;}
+.cm-testi-section .cm-ssub{color:var(--v4-muted)!important;}
+.cm-testi-grid{gap:16px!important;}
+.cm-tc{min-height:280px!important;padding:28px!important;background:#fff!important;border:1px solid var(--v4-line)!important;border-radius:14px!important;}
+.cm-tc-stars{color:#a67b25!important;letter-spacing:.08em!important;}
+.cm-tc-text{color:#4f4855!important;font-size:.98rem!important;line-height:1.72!important;font-weight:600!important;}
+.cm-tc-author{border-top:1px solid var(--v4-line)!important;}
+.cm-tc-av{background:#f1edff!important;border:1px solid #ddd4ff!important;color:var(--v4-purple)!important;border-radius:9px!important;}
+.cm-tc-name{color:var(--v4-ink)!important;}
+.cm-tc-role{color:var(--v4-soft)!important;}
+
+/* Tariff: clean commercial section */
+#cm-tariffs{background:#fff!important;border-bottom:1px solid var(--v4-line)!important;padding-top:96px!important;padding-bottom:100px!important;color:var(--v4-text)!important;}
+.cm-t-h2{color:var(--v4-ink)!important;}
+.cm-t-sub{color:var(--v4-muted)!important;margin-bottom:34px!important;}
+.cm-t-main-box{max-width:1320px!important;background:var(--v4-paper)!important;border:1px solid var(--v4-line)!important;border-radius:18px!important;box-shadow:none!important;overflow:hidden!important;}
+.cm-t-badge{background:#eee8ff!important;border:1px solid #ddd4ff!important;color:var(--v4-purple)!important;border-radius:999px!important;font-size:.74rem!important;font-weight:800!important;}
+.cm-t-left-side{background:var(--v4-paper)!important;color:var(--v4-text)!important;padding:36px 44px 44px!important;}
+.cm-t-right-side{background:var(--v4-dark)!important;color:#fff!important;padding:44px!important;border-left:0!important;}
+.cm-t-label,.cm-total-title,.cm-t-period{color:var(--v4-muted)!important;}
+.cm-t-right-side .cm-total-title,.cm-t-right-side .cm-t-period{color:rgba(255,255,255,.58)!important;}
+.cm-t-final-price{color:#fff!important;}
+.cm-t-hardware-alert{background:#fff!important;border:1px solid var(--v4-line)!important;border-radius:11px!important;color:var(--v4-muted)!important;}
+.cm-t-hardware-alert strong{color:var(--v4-ink)!important;}
+.cm-hw-icon{display:flex!important;color:var(--v4-purple)!important;}
+.cm-t-benefits-list li{color:rgba(255,255,255,.78)!important;border-bottom-color:rgba(255,255,255,.11)!important;}
+.cm-t-benefits-list li::before{color:#8e76ff!important;}
+
+/* Footer / lead: dark trust anchor */
+#cm-footer{background:var(--v4-dark)!important;color:#fff!important;border:0!important;padding-top:96px!important;padding-bottom:100px!important;}
+.cm-footer-container{grid-template-columns:.92fr 1.08fr!important;gap:76px!important;}
+.cm-footer-h2{color:#fff!important;}
+.cm-footer-p{font-size:1.05rem!important;color:rgba(255,255,255,.66)!important;line-height:1.72!important;}
+.cm-footer-p strong{color:#fff!important;}
+.cm-footer-meta{display:grid!important;gap:10px!important;}
+.cm-meta-item{display:flex!important;align-items:center!important;gap:10px!important;color:rgba(255,255,255,.70)!important;font-size:.92rem!important;}
+.cm-meta-item .cm-line-icon{width:18px;height:18px;color:#a894ff;}
+.cm-footer-form-box{padding:34px 36px!important;background:#fff!important;border:0!important;border-radius:16px!important;box-shadow:0 24px 70px rgba(0,0,0,.24)!important;}
+.cm-form-label{color:#49424f!important;font-size:.82rem!important;font-weight:800!important;}
+.cm-form-input,.cm-form-select{min-height:52px!important;background:#f8f7fa!important;border:1px solid var(--v4-line)!important;border-radius:9px!important;color:var(--v4-ink)!important;font-size:.95rem!important;}
+.cm-form-input::placeholder{color:#a09aa4!important;}
+.cm-form-input:focus,.cm-form-select:focus{border-color:#9a83ff!important;box-shadow:0 0 0 3px rgba(108,59,255,.10)!important;}
+.cm-privacy-text{color:#77707c!important;}
+.cm-privacy-text a{color:var(--v4-purple)!important;}
+.cm-form-status{color:#77707c!important;}
+
+@media (min-width:1180px){
+  .cm-grid2{grid-template-columns:repeat(4,1fr)!important;}
+  .cm-grid3{grid-template-columns:repeat(3,1fr)!important;}
+}
+@media (max-width:1000px){
+  .cm-hero-shell{grid-template-columns:1fr!important;gap:36px!important;}
+  .cm-product-visual{min-height:390px;}
+  .cm-stats{grid-template-columns:repeat(2,1fr)!important;}
+  .cm-stat:nth-child(3){border-left:0!important;border-top:1px solid rgba(255,255,255,.11)!important;}
+  .cm-stat:nth-child(4){border-top:1px solid rgba(255,255,255,.11)!important;}
+  .cm-demo-grid{grid-template-columns:1fr!important;gap:36px!important;}
+  .cm-calc-container{grid-template-columns:1fr!important;}
+  .cm-calc-result{border-top:0!important;}
+  .cm-footer-container{grid-template-columns:1fr!important;gap:44px!important;}
+}
+@media (max-width:700px){
+  body{font-size:16px!important;}
+  .cm-section,.cm-demo-section,.cm-ps-section,.cm-testi-section{padding:72px 20px!important;}
+  .cm-hero{padding:38px 20px 28px!important;}
+  .cm-hero-copy{padding-top:12px;}
+  .cm-h1{font-size:clamp(2.65rem,12vw,4rem)!important;}
+  .cm-product-visual{min-height:330px;border-radius:14px;}
+  .cm-product-photo-placeholder{min-height:250px;}
+  .cm-stats{grid-template-columns:1fr 1fr!important;}
+  .cm-stat{min-height:88px!important;padding:18px!important;display:block!important;}
+  .cm-stat-n{margin-bottom:5px;}
+  .cm-stat:nth-child(odd){border-right:0!important;}
+  .cm-screen-tabs{overflow-x:auto!important;}
+  .cm-stab{flex:0 0 auto!important;padding:0 12px!important;}
+  .cm-calc-inputs,.cm-calc-result,.cm-t-left-side,.cm-t-right-side{padding:30px 22px!important;}
+  .cm-footer-form-box{padding:26px 22px!important;}
+}
+</style>
+
 </head>
 <body>
 <div class="cm-hero">
 <div class="cm-hero-glow"></div>
-<div class="cm-badge">
-<div class="cm-badge-dot"></div>
-Ранний доступ — первые 50 мест
-</div>
-<h1 class="cm-h1">Учёт красок<br>без тетрадок <em>и Excel</em></h1>
-<p class="cm-hero-sub">
-Bluetooth-весы списывают граммы автоматически. Остатки, история клиентов,
-аналитика — всё в одном приложении. Работает без интернета.
-</p>
-<div class="cm-cta-row">
-<a href="#cm-footer" class="cm-btn-main">Получить ранний доступ →</a>
-<a href="#demo" class="cm-btn-ghost">Смотреть как работает</a>
-</div>
-<div class="cm-stats">
-<div class="cm-stat"><div class="cm-stat-n">−15%</div><div class="cm-stat-l">потерь краски</div></div>
-<div class="cm-stat"><div class="cm-stat-n">3 сек</div><div class="cm-stat-l">на списание</div></div>
-<div class="cm-stat"><div class="cm-stat-n">0 мин</div><div class="cm-stat-l">на инвентаризацию</div></div>
-<div class="cm-stat"><div class="cm-stat-n">От 5т₽</div><div class="cm-stat-l">экономия/мес</div></div>
-</div>
-</div>
+<div class="cm-hero-shell">
+  <div class="cm-hero-copy">
+    <div class="cm-badge">
+      <div class="cm-badge-dot"></div>
+      Ранний доступ — первые 50 мест
+    </div>
+    <h1 class="cm-h1">Учёт красок<br>без тетрадок <em>и Excel</em></h1>
+    <p class="cm-hero-sub">
+      Bluetooth-весы списывают граммы автоматически. Остатки, история клиентов,
+      аналитика — всё в одном приложении. Работает без интернета.
+    </p>
+    <div class="cm-cta-row">
+      <a href="#cm-footer" class="cm-btn-main">Получить ранний доступ <span aria-hidden="true">→</span></a>
+      <a href="#demo" class="cm-btn-ghost">Смотреть как работает</a>
+    </div>
+  </div>
 
+  <div class="cm-product-visual" aria-label="Место для будущей фотографии продукта">
+    <div class="cm-product-visual-head">
+      <span class="cm-product-kicker">ColorMaster Pro / hardware + software</span>
+      <span class="cm-product-status"><span></span> продукт</span>
+    </div>
+    <div class="cm-product-photo-placeholder">
+      <svg class="cm-placeholder-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5h3l1.5-2h7L17 7.5h3a2 2 0 0 1 2 2v8.5a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9.5a2 2 0 0 1 2-2Z"/><circle cx="12" cy="13" r="3.5"/></svg>
+      <strong>Фото продукта</strong>
+      <span>Сюда добавим исходник весов / планшета без изменения верстки</span>
+    </div>
+    <div class="cm-product-visual-foot">
+      <span>Bluetooth-весы</span><span>Локальная база</span><span>Контроль остатков</span>
+    </div>
+  </div>
+
+  <div class="cm-stats">
+    <div class="cm-stat"><div class="cm-stat-n">−15%</div><div class="cm-stat-l">потерь краски</div></div>
+    <div class="cm-stat"><div class="cm-stat-n">3 сек</div><div class="cm-stat-l">на списание</div></div>
+    <div class="cm-stat"><div class="cm-stat-n">0 мин</div><div class="cm-stat-l">на инвентаризацию</div></div>
+    <div class="cm-stat"><div class="cm-stat-n">От 5т₽</div><div class="cm-stat-l">экономия/мес</div></div>
+  </div>
+</div>
+</div>
 <div class="cm-ticker-wrap">
 <div class="cm-ticker">
-<div class="cm-tick">⚖️ Bluetooth-весы <b>→</b> авто-списание</div>
-<div class="cm-tick">📦 Остатки в реальном времени</div>
-<div class="cm-tick">👤 История клиентов и мастеров</div>
-<div class="cm-tick">📊 Аналитика расходов</div>
-<div class="cm-tick">🔒 Работает без интернета</div>
-<div class="cm-tick">✅ Автоинвентаризация без пересчёта</div>
-<div class="cm-tick">⚖️ Bluetooth-весы <b>→</b> авто-списание</div>
-<div class="cm-tick">📦 Остатки в реальном времени</div>
-<div class="cm-tick">👤 История клиентов и мастеров</div>
-<div class="cm-tick">📊 Аналитика расходов</div>
-<div class="cm-tick">🔒 Работает без интернета</div>
-<div class="cm-tick">✅ Автоинвентаризация без пересчёта</div>
+<div class="cm-tick"><span class="cm-line-icon cm-icon-scale" aria-hidden="true"></span>Bluetooth-весы <b>→</b> авто-списание</div>
+<div class="cm-tick"><span class="cm-line-icon cm-icon-box" aria-hidden="true"></span>Остатки в реальном времени</div>
+<div class="cm-tick"><span class="cm-line-icon cm-icon-users" aria-hidden="true"></span>История клиентов и мастеров</div>
+<div class="cm-tick"><span class="cm-line-icon cm-icon-chart" aria-hidden="true"></span>Аналитика расходов</div>
+<div class="cm-tick"><span class="cm-line-icon cm-icon-lock" aria-hidden="true"></span>Работает без интернета</div>
+<div class="cm-tick"><span class="cm-line-icon cm-icon-check" aria-hidden="true"></span>Автоинвентаризация без пересчёта</div>
+<div class="cm-tick"><span class="cm-line-icon cm-icon-scale" aria-hidden="true"></span>Bluetooth-весы <b>→</b> авто-списание</div>
+<div class="cm-tick"><span class="cm-line-icon cm-icon-box" aria-hidden="true"></span>Остатки в реальном времени</div>
+<div class="cm-tick"><span class="cm-line-icon cm-icon-users" aria-hidden="true"></span>История клиентов и мастеров</div>
+<div class="cm-tick"><span class="cm-line-icon cm-icon-chart" aria-hidden="true"></span>Аналитика расходов</div>
+<div class="cm-tick"><span class="cm-line-icon cm-icon-lock" aria-hidden="true"></span>Работает без интернета</div>
+<div class="cm-tick"><span class="cm-line-icon cm-icon-check" aria-hidden="true"></span>Автоинвентаризация без пересчёта</div>
 </div>
 </div>
 
@@ -1915,11 +2179,11 @@ Bluetooth-весы списывают граммы автоматически. �
 <div class="cm-demo-grid">
 <div>
 <div class="cm-screen-tabs">
-<button class="cm-stab cm-on" onclick="cmShowScreen('weigh',this)">⚖️ Весы</button>
-<button class="cm-stab" onclick="cmShowScreen('catalog',this)">🎨 Каталог</button>
-<button class="cm-stab" onclick="cmShowScreen('clients',this)">👥 Клиенты</button>
-<button class="cm-stab" onclick="cmShowScreen('history',this)">📋 История</button>
-<button class="cm-stab" onclick="cmShowScreen('settings',this)">⚙️ Настройки</button>
+<button class="cm-stab cm-on" onclick="cmShowScreen('weigh',this)"> <span class="cm-line-icon cm-icon-scale" aria-hidden="true"></span>Весы</button>
+<button class="cm-stab" onclick="cmShowScreen('catalog',this)"> <span class="cm-line-icon cm-icon-box" aria-hidden="true"></span>Каталог</button>
+<button class="cm-stab" onclick="cmShowScreen('clients',this)"> <span class="cm-line-icon cm-icon-users" aria-hidden="true"></span>Клиенты</button>
+<button class="cm-stab" onclick="cmShowScreen('history',this)"> <span class="cm-line-icon cm-icon-history" aria-hidden="true"></span>История</button>
+<button class="cm-stab" onclick="cmShowScreen('settings',this)"> <span class="cm-line-icon cm-icon-settings" aria-hidden="true"></span>Настройки</button>
 </div>
 <div class="cm-phone">
 <div class="cm-pscreen cm-on" id="cm-sc-weigh">
@@ -1950,7 +2214,7 @@ Bluetooth-весы списывают граммы автоматически. �
 <div class="cm-psbar"><span>9:41</span><span>●●●</span></div>
 <div class="cm-pbody">
 <div style="font-family:Syne,sans-serif;font-size:.85rem;font-weight:800;margin-bottom:8px;color:var(--cm-text)">Каталог</div>
-<div style="background:rgba(255,255,255,0.04);border:1px solid var(--cm-border);border-radius:6px;padding:5px 9px;font-size:8px;color:var(--cm-muted);margin-bottom:8px">🔍 Поиск компонента</div>
+<div style="background:rgba(255,255,255,0.04);border:1px solid var(--cm-border);border-radius:6px;padding:5px 9px;font-size:8px;color:var(--cm-muted);margin-bottom:8px">Поиск компонента</div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px">
 <div class="cm-pc" style="border-left:2px solid var(--cm-green)"><div class="cm-pc-t" style="font-size:10px">Красный 0.5 ✓</div><div class="cm-pc-s">110 г</div><div style="height:2px;background:rgba(255,255,255,0.06);border-radius:1px;margin-top:4px;overflow:hidden"><div style="width:70%;height:100%;background:var(--cm-green)"></div></div></div>
 <div class="cm-pc" style="border-left:2px solid var(--cm-gold)"><div class="cm-pc-t" style="font-size:10px">Синий 50 ⚠</div><div class="cm-pc-s">40 г</div><div style="height:2px;background:rgba(255,255,255,0.06);border-radius:1px;margin-top:4px;overflow:hidden"><div style="width:25%;height:100%;background:var(--cm-gold)"></div></div></div>
@@ -2049,21 +2313,21 @@ Bluetooth-весы списывают граммы автоматически. �
 <h2 class="cm-stitle">Звучит знакомо?</h2>
 <p class="cm-ssub">Опросили более 100 владельцев салонов — и вот, что мешает работать </p>
 <div class="cm-grid2">
-<div class="cm-prob pr"><div class="cm-prob-ico">📉</div><div class="cm-prob-t">Краска уходит в никуда</div><div class="cm-prob-d">Мастера отмеряют "на глаз". За месяц теряется 12–18% запасов — и никто не знает куда.</div></div>
-<div class="cm-prob pg"><div class="cm-prob-ico">⏰</div><div class="cm-prob-t">Нехватка в разгар работы</div><div class="cm-prob-d">Краска заканчивается, когда клиент уже в кресле. Срыв записи, потеря репутации.</div></div>
-<div class="cm-prob pv"><div class="cm-prob-ico">📝</div><div class="cm-prob-t">30 минут учёта каждый день</div><div class="cm-prob-d">Тетрадки, Excel, мессенджеры – данные неточные, а время персонала тратится впустую.</div></div>
-<div class="cm-prob pm"><div class="cm-prob-ico">💸</div><div class="cm-prob-t">Нет контроля над расходами</div><div class="cm-prob-d">Невозможно посчитать точную себестоимость окрашивания. Часть услуг работает в минус.</div></div>
+<div class="cm-prob pr"><div class="cm-prob-ico"><span class="cm-line-icon cm-icon-chart" aria-hidden="true"></span></div><div class="cm-prob-t">Краска уходит в никуда</div><div class="cm-prob-d">Мастера отмеряют "на глаз". За месяц теряется 12–18% запасов — и никто не знает куда.</div></div>
+<div class="cm-prob pg"><div class="cm-prob-ico"><span class="cm-line-icon cm-icon-clock" aria-hidden="true"></span></div><div class="cm-prob-t">Нехватка в разгар работы</div><div class="cm-prob-d">Краска заканчивается, когда клиент уже в кресле. Срыв записи, потеря репутации.</div></div>
+<div class="cm-prob pv"><div class="cm-prob-ico"><span class="cm-line-icon cm-icon-doc" aria-hidden="true"></span></div><div class="cm-prob-t">30 минут учёта каждый день</div><div class="cm-prob-d">Тетрадки, Excel, мессенджеры – данные неточные, а время персонала тратится впустую.</div></div>
+<div class="cm-prob pm"><div class="cm-prob-ico"><span class="cm-line-icon cm-icon-wallet" aria-hidden="true"></span></div><div class="cm-prob-t">Нет контроля над расходами</div><div class="cm-prob-d">Невозможно посчитать точную себестоимость окрашивания. Часть услуг работает в минус.</div></div>
 </div>
 <p class="cm-slabel">Решение</p>
 <h2 class="cm-stitle">ColorMaster Pro закрывает всё</h2>
 <p class="cm-ssub" style="margin-bottom:28px"></p>
 <div class="cm-grid3">
-<div class="cm-sol"><div class="cm-sol-ico cm-si-p">⚖️</div><div><div class="cm-sol-t">Bluetooth-весы → авто-списание</div><div class="cm-sol-d">Ставите тару, ждёте стабилизации, нажимаете кнопку. Граммы в базе.</div></div></div>
-<div class="cm-sol"><div class="cm-sol-ico cm-si-g">📦</div><div><div class="cm-sol-t">Остатки в реальном времени</div><div class="cm-sol-d">Зелёный — ок, жёлтый — мало, красный — упс... Видите всё без пересчёта.</div></div></div>
-<div class="cm-sol"><div class="cm-sol-ico cm-si-p">👥</div><div><div class="cm-sol-t">База клиентов и мастеров</div><div class="cm-sol-d">История каждого клиента, расход по мастерам, фильтры по датам.</div></div></div>
-<div class="cm-sol"><div class="cm-sol-ico cm-si-y">📊</div><div><div class="cm-sol-t">Автоинвентаризация</div><div class="cm-sol-d">Вместо сомнительного ручного пересчёта → Данные актуальны всегда!</div></div></div>
-<div class="cm-sol"><div class="cm-sol-ico cm-si-g">🔒</div><div><div class="cm-sol-t">Без интернета</div><div class="cm-sol-d">Данные на планшете. Работает без Wi-Fi. Никаких сбоев.</div></div></div>
-<div class="cm-sol"><div class="cm-sol-ico cm-si-p">📤</div><div><div class="cm-sol-t">Экспорт истории</div><div class="cm-sol-d">Выгрузка по мастеру, клиенту, периоду или компоненту.</div></div></div>
+<div class="cm-sol"><div class="cm-sol-ico cm-si-p"><span class="cm-line-icon cm-icon-scale" aria-hidden="true"></span></div><div><div class="cm-sol-t">Bluetooth-весы → авто-списание</div><div class="cm-sol-d">Ставите тару, ждёте стабилизации, нажимаете кнопку. Граммы в базе.</div></div></div>
+<div class="cm-sol"><div class="cm-sol-ico cm-si-g"><span class="cm-line-icon cm-icon-box" aria-hidden="true"></span></div><div><div class="cm-sol-t">Остатки в реальном времени</div><div class="cm-sol-d">Зелёный — ок, жёлтый — мало, красный — упс... Видите всё без пересчёта.</div></div></div>
+<div class="cm-sol"><div class="cm-sol-ico cm-si-p"><span class="cm-line-icon cm-icon-users" aria-hidden="true"></span></div><div><div class="cm-sol-t">База клиентов и мастеров</div><div class="cm-sol-d">История каждого клиента, расход по мастерам, фильтры по датам.</div></div></div>
+<div class="cm-sol"><div class="cm-sol-ico cm-si-y"><span class="cm-line-icon cm-icon-chart" aria-hidden="true"></span></div><div><div class="cm-sol-t">Автоинвентаризация</div><div class="cm-sol-d">Вместо сомнительного ручного пересчёта → Данные актуальны всегда!</div></div></div>
+<div class="cm-sol"><div class="cm-sol-ico cm-si-g"><span class="cm-line-icon cm-icon-lock" aria-hidden="true"></span></div><div><div class="cm-sol-t">Без интернета</div><div class="cm-sol-d">Данные на планшете. Работает без Wi-Fi. Никаких сбоев.</div></div></div>
+<div class="cm-sol"><div class="cm-sol-ico cm-si-p"><span class="cm-line-icon cm-icon-export" aria-hidden="true"></span></div><div><div class="cm-sol-t">Экспорт истории</div><div class="cm-sol-d">Выгрузка по мастеру, клиенту, периоду или компоненту.</div></div></div>
 </div>
 </div>
 </div>
@@ -2097,7 +2361,7 @@ Bluetooth-весы списывают граммы автоматически. �
 </div>
 </div>
 <div class="cm-hardware-badge cm-badge-desktop">
-<div class="cm-badge-icon">🔒</div>
+<div class="cm-badge-icon"><span class="cm-line-icon cm-icon-lock" aria-hidden="true"></span></div>
 <div class="cm-badge-text">
 <strong>Честная подписка и безопасный старт</strong><br>
 Цена меняется прозрачно в зависимости от размера вашей команды. Вашему салону необходимо: <span class="badge-hardware-qty">1 комплект</span> весов. Оборудование доставим и установим бесплатно!
@@ -2124,7 +2388,7 @@ Bluetooth-весы списывают граммы автоматически. �
 </div>
 <a href="#cm-footer" onclick="cmSendRoiToForm(event)" class="cm-roi-submit-btn">Оформить доступ</a>
 <div class="cm-hardware-badge cm-badge-mobile">
-<div class="cm-badge-icon">🔒</div>
+<div class="cm-badge-icon"><span class="cm-line-icon cm-icon-lock" aria-hidden="true"></span></div>
 <div class="cm-badge-text">
 <strong>Честная подписка и безопасный старт</strong><br>
 Цена меняется прозрачно в зависимости от размера вашей команды. Вашему салону необходимо: <span class="badge-hardware-qty">1 комплект</span> весов. Оборудование доставим и установим бесплатно!
@@ -2178,7 +2442,7 @@ Bluetooth-весы списывают граммы автоматически. �
 </div>
 </div>
 <div class="cm-t-hardware-alert" id="cm-hardware-status">
-<span class="cm-hw-icon">⚖️</span>
+<span class="cm-hw-icon"><span class="cm-line-icon cm-icon-scale" aria-hidden="true"></span></span>
 <span id="cm-hw-desc"><strong>Тест-драйв 14 дней:</strong> начните без риска. Если софт не окупится в первые две недели, мы вернем деньги за подписку!</span>
 </div>
 </div>
@@ -2210,8 +2474,8 @@ Bluetooth-весы списывают граммы автоматически. �
 Вы получите оборудование одними из первых и сможете напрямую влиять на развитие приложения во время бета-тестов.
 </p>
 <div class="cm-footer-meta">
-<div class="cm-meta-item">⚡️ Осталось мест: <strong><span id="cm-places-counter">14</span> из 50</strong></div>
-<div class="cm-meta-item">📦 Доставка весов за наш счет</div>
+<div class="cm-meta-item"><span class="cm-line-icon cm-icon-bolt" aria-hidden="true"></span>Осталось мест: <strong><span id="cm-places-counter">14</span> из 50</strong></div>
+<div class="cm-meta-item"><span class="cm-line-icon cm-icon-box" aria-hidden="true"></span>Доставка весов за наш счет</div>
 </div>
 </div>
 <div class="cm-footer-form-box">
