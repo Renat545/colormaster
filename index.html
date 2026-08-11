@@ -46,37 +46,7 @@ width: 100%;
 max-width: 900px;
 margin: 0 auto;
 }
-/* 🚨 ИСПРАВЛЕНИЕ ДЛЯ КАЛЬКУЛЯТОРА ROI 🚨
-Принудительно перекрашиваем фон калькулятора в фирменный темный цвет,
-чтобы устранить проблему "светлый текст на светлом фоне" */
-.cm-roi-section,
-.cm-calculator,
-#roi-block,
-#calculator-block,
-[id*="roi"],
-[class*="roi"],
-[class*="calc"] {
-background: var(--cm-bg) !important;
-background-color: var(--cm-bg) !important;
-color: var(--cm-text) !important;
-}
-/* Форсируем дерзкий шрифт для всех заголовков и цифр */
-.cm-h1, .cm-pain-h2, .cm-stat-n, .cm-btn-main, .cm-stitle, h1, h2 {
-font-family: 'Unbounded', 'Syne', -apple-system, BlinkMacSystemFont, sans-serif !important;
-font-weight: 800 !important;
-letter-spacing: -0.02em !important;
-}
-@keyframes cm-pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
-@keyframes cm-fadeUp {
-from { opacity:0; transform:translateY(20px); }
-to { opacity:1; transform:translateY(0); }
-}
-/* Анимация бегущей строки */
-@keyframes cm-ticker {
-from { transform:translateX(0); }
-to { transform:translateX(-50%); }
-}
-
+/* Standalone version: legacy Tilda calculator background override removed. */
 .cm-hero {
 background: var(--cm-bg);
 padding: 72px 24px 64px;
@@ -1873,18 +1843,18 @@ h1, h2 {
    Mixed light/dark surfaces, higher readability, stronger product focus.
    ========================================================== */
 :root{
-  --v4-ink:#17131d;
-  --v4-text:#2a2530;
-  --v4-muted:#6f6875;
-  --v4-soft:#8f8796;
-  --v4-paper:#faf9fb;
-  --v4-paper-2:#f3f0f6;
-  --v4-paper-3:#ece8f0;
-  --v4-line:#e1dce5;
-  --v4-purple:#6c3bff;
-  --v4-purple-2:#7955ff;
-  --v4-dark:#17121e;
-  --v4-dark-2:#211a2b;
+  --v4-ink:#18161D;
+  --v4-text:#302C34;
+  --v4-muted:#68636F;
+  --v4-soft:#8A848F;
+  --v4-paper:#F5F4F1;
+  --v4-paper-2:#EEECEF;
+  --v4-paper-3:#E7E4E9;
+  --v4-line:#D9D5DC;
+  --v4-purple:#6846F5;
+  --v4-purple-2:#5736E6;
+  --v4-dark:#17151C;
+  --v4-dark-2:#211E27;
   --v4-dark-line:rgba(255,255,255,.13);
   --v4-white:#fff;
 }
@@ -2108,6 +2078,86 @@ body{font-family:'Manrope','DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI'
   .cm-calc-inputs,.cm-calc-result,.cm-t-left-side,.cm-t-right-side{padding:30px 22px!important;}
   .cm-footer-form-box{padding:26px 22px!important;}
 }
+</style>
+
+
+<style id="cm-color-system-v5">
+/* v5 — unified commercial palette + contrast fixes */
+:root{
+  --cm-v5-bg:#F5F4F1;
+  --cm-v5-surface:#FFFFFF;
+  --cm-v5-soft:#EEECEF;
+  --cm-v5-line:#D9D5DC;
+  --cm-v5-ink:#18161D;
+  --cm-v5-text:#302C34;
+  --cm-v5-muted:#68636F;
+  --cm-v5-purple:#6846F5;
+  --cm-v5-purple-hover:#5736E6;
+  --cm-v5-purple-soft:#EEE9FF;
+  --cm-v5-dark:#17151C;
+  --cm-v5-dark-2:#211E27;
+  --cm-v5-success:#27A66B;
+  --cm-v5-warning:#B9852C;
+}
+
+/* Light sections should feel warm, not clinical white. */
+html,body{background:var(--cm-v5-bg)!important;color:var(--cm-v5-text)!important;}
+.cm-demo-section{background:var(--cm-v5-bg)!important;}
+.cm-ps-section{background:var(--cm-v5-soft)!important;}
+#cm-roi{background:var(--cm-v5-bg)!important;}
+.cm-testi-section{background:var(--cm-v5-surface)!important;}
+#cm-tariffs{background:var(--cm-v5-bg)!important;}
+
+/* Prevent the old Tilda dark-background fix from leaking into headings/labels. */
+#cm-roi .cm-roi-h2,#cm-roi .cm-roi-subtitle,#cm-roi .cm-calc-inputs,#cm-roi .cm-calc-group,#cm-roi .cm-calc-label-row,#cm-roi .cm-calc-label,#cm-roi .cm-calc-val,#cm-roi .cm-range-limits{background:transparent!important;background-color:transparent!important;}
+#cm-tariffs .cm-t-h2,#cm-tariffs .cm-t-sub,#cm-tariffs .cm-t-left-side,#cm-tariffs .cm-control-row,#cm-tariffs .cm-range-wrapper,#cm-tariffs .cm-t-label,#cm-tariffs .cm-t-value-display{background-color:transparent!important;}
+
+/* Typography contrast. */
+.cm-stitle,.cm-roi-h2,.cm-t-h2{color:var(--cm-v5-ink)!important;}
+.cm-ssub,.cm-roi-subtitle,.cm-t-sub{color:var(--cm-v5-muted)!important;}
+
+/* ROI — calm light workspace + graphite result panel. */
+.cm-calc-container{background:var(--cm-v5-surface)!important;border-color:var(--cm-v5-line)!important;box-shadow:0 16px 44px rgba(30,24,36,.055)!important;}
+.cm-calc-inputs{background:var(--cm-v5-surface)!important;color:var(--cm-v5-text)!important;}
+.cm-calc-label{color:#3C3740!important;font-weight:750!important;}
+.cm-calc-val{color:var(--cm-v5-purple)!important;}
+.cm-range-slider{background:#CCC7D0!important;}
+.cm-range-slider::-webkit-slider-thumb{background:var(--cm-v5-purple)!important;box-shadow:0 0 0 4px rgba(104,70,245,.10)!important;}
+.cm-range-slider::-moz-range-thumb{background:var(--cm-v5-purple)!important;border:0!important;box-shadow:0 0 0 4px rgba(104,70,245,.10)!important;}
+.cm-range-limits{color:#7B7580!important;font-weight:600!important;}
+.cm-hardware-badge{background:#FAF9F8!important;border-color:var(--cm-v5-line)!important;}
+.cm-badge-text{color:#625D67!important;}
+.cm-calc-result{background:var(--cm-v5-dark)!important;}
+.cm-calc-result .cm-saved-color{color:#D1A64C!important;}
+.cm-result-label-highlight,.cm-result-num-big{color:#65D69A!important;}
+.cm-roi-inline-badge{background:rgba(39,166,107,.11)!important;border-color:rgba(39,166,107,.30)!important;color:#72D9A3!important;}
+.cm-roi-inline-badge strong{color:#72D9A3!important;}
+
+/* Pricing — same palette as ROI, less black/white collision. */
+.cm-t-main-box{background:var(--cm-v5-surface)!important;border-color:var(--cm-v5-line)!important;}
+.cm-t-left-side{background:var(--cm-v5-surface)!important;color:var(--cm-v5-text)!important;}
+.cm-t-right-side{background:var(--cm-v5-dark)!important;}
+.cm-t-badge{background:var(--cm-v5-purple-soft)!important;border-color:#D9D0FF!important;color:var(--cm-v5-purple)!important;}
+.cm-t-label{color:#5E5863!important;}
+.cm-t-hardware-alert{background:#FAF9F8!important;border-color:var(--cm-v5-line)!important;color:#625D67!important;}
+.cm-t-hardware-alert strong{color:var(--cm-v5-ink)!important;}
+.cm-t-benefits-list li{color:rgba(255,255,255,.82)!important;}
+.cm-t-benefits-list li::before{color:#9B86FF!important;}
+
+/* Buttons: one restrained brand purple everywhere. */
+.cm-btn-main,.cm-roi-submit-btn,.cm-t-submit-btn,.cm-form-btn{background:var(--cm-v5-purple)!important;}
+.cm-btn-main:hover,.cm-roi-submit-btn:hover,.cm-t-submit-btn:hover,.cm-form-btn:hover{background:var(--cm-v5-purple-hover)!important;}
+
+/* Footer — neutral graphite, form softened. */
+#cm-footer{background:var(--cm-v5-dark)!important;}
+.cm-footer-form-box{background:#FBFAF8!important;box-shadow:0 22px 60px rgba(0,0,0,.20)!important;}
+.cm-form-input,.cm-form-select{background:#F4F2F5!important;border-color:#D8D4DB!important;color:var(--cm-v5-ink)!important;}
+.cm-form-input:focus,.cm-form-select:focus{border-color:#8E79F7!important;box-shadow:0 0 0 3px rgba(104,70,245,.10)!important;}
+.cm-privacy-text a{color:var(--cm-v5-purple)!important;}
+
+/* Cards/icons share one quieter accent family. */
+.cm-prob-ico,.cm-sol-ico,.cm-tc-av{background:var(--cm-v5-purple-soft)!important;border-color:#DBD3FF!important;color:var(--cm-v5-purple)!important;}
+.cm-prob,.cm-sol,.cm-tc,.cm-demo-grid>div:first-child{border-color:var(--cm-v5-line)!important;}
 </style>
 
 </head>
