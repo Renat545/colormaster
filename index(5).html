@@ -1,0 +1,1230 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ColorMaster Pro — учёт красок, остатков и истории клиентов с Bluetooth-весами.">
+  <meta name="theme-color" content="#0C0B14">
+  <title>ColorMaster Pro — учёт красок для салонов</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&family=Unbounded:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
+html { scroll-behavior: smooth; background: #0C0B14; }
+body { margin: 0; min-width: 320px; background: #0C0B14; color: #F0EEF8; }
+*, *::before, *::after { box-sizing: border-box; }
+button, input, select { font: inherit; }
+.cm-hp { position: absolute !important; left: -9999px !important; width: 1px !important; height: 1px !important; overflow: hidden !important; }
+.cm-form-status { min-height: 20px; margin-top: 12px; font-size: 13px; line-height: 1.4; color: var(--cm-muted); }
+.cm-form-status.cm-ok { color: var(--cm-green); }
+.cm-form-status.cm-error { color: var(--cm-red); }
+
+:root {
+--cm-bg: #0C0B14;
+--cm-card: #19172A;
+--cm-border: rgba(108,59,255,0.18);
+--cm-purple: #6C3BFF;
+--cm-violet: #9D6FFF;
+--cm-magenta: #C44BFF;
+--cm-green: #22C55E;
+--cm-gold: #F5A623;
+--cm-red: #EF4444;
+--cm-text: #F0EEF8;
+--cm-muted: rgba(240,238,248,0.55);
+--cm-dim: rgba(240,238,248,0.28);
+}
+.cm-section {
+background: var(--cm-bg);
+font-family: 'DM Sans', sans-serif;
+color: var(--cm-text);
+padding: 64px 24px;
+box-sizing: border-box;
+width: 100%;
+}
+.cm-inner {
+max-width: 900px;
+margin: 0 auto;
+}
+/* 🚨 ИСПРАВЛЕНИЕ ДЛЯ КАЛЬКУЛЯТОРА ROI 🚨
+Принудительно перекрашиваем фон калькулятора в фирменный темный цвет,
+чтобы устранить проблему "светлый текст на светлом фоне" */
+.cm-roi-section,
+.cm-calculator,
+#roi-block,
+#calculator-block,
+[id*="roi"],
+[class*="roi"],
+[class*="calc"] {
+background: var(--cm-bg) !important;
+background-color: var(--cm-bg) !important;
+color: var(--cm-text) !important;
+}
+/* Форсируем дерзкий шрифт для всех заголовков и цифр */
+.cm-h1, .cm-pain-h2, .cm-stat-n, .cm-btn-main, .cm-stitle, h1, h2 {
+font-family: 'Unbounded', 'Syne', -apple-system, BlinkMacSystemFont, sans-serif !important;
+font-weight: 800 !important;
+letter-spacing: -0.02em !important;
+}
+@keyframes cm-pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+@keyframes cm-fadeUp {
+from { opacity:0; transform:translateY(20px); }
+to { opacity:1; transform:translateY(0); }
+}
+/* Анимация бегущей строки */
+@keyframes cm-ticker {
+from { transform:translateX(0); }
+to { transform:translateX(-50%); }
+}
+
+.cm-hero {
+background: var(--cm-bg);
+padding: 72px 24px 64px;
+text-align: center;
+position: relative;
+overflow: hidden;
+font-family: 'DM Sans', sans-serif;
+}
+.cm-hero-glow {
+position: absolute;
+width: 500px; height: 500px;
+background: radial-gradient(ellipse, rgba(108,59,255,0.32) 0%, transparent 70%);
+top: -100px; left: 50%; transform: translateX(-50%);
+pointer-events: none;
+}
+.cm-badge {
+display: inline-flex; align-items: center; gap: 8px;
+padding: 6px 16px; border-radius: 100px;
+background: rgba(108,59,255,0.12);
+border: 1px solid rgba(108,59,255,0.3);
+font-size: .82rem; color: var(--cm-violet);
+margin-bottom: 24px;
+animation: cm-fadeUp .5s ease both;
+}
+.cm-badge-dot {
+width: 6px; height: 6px; border-radius: 50%;
+background: var(--cm-green); box-shadow: 0 0 6px var(--cm-green);
+animation: cm-pulse 2s infinite;
+}
+.cm-h1 {
+font-family: 'Syne', sans-serif;
+font-size: clamp(2.4rem, 7vw, 4.8rem);
+font-weight: 800; line-height: 1.08;
+letter-spacing: -0.03em;
+color: var(--cm-text);
+max-width: 800px; margin: 0 auto 16px;
+animation: cm-fadeUp .5s .08s ease both;
+}
+.cm-h1 em {
+font-style: normal;
+background: linear-gradient(135deg, var(--cm-purple), var(--cm-magenta));
+-webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.cm-hero-sub {
+font-size: clamp(.95rem, 2vw, 1.15rem);
+color: var(--cm-muted); max-width: 540px;
+line-height: 1.65; margin: 0 auto 36px;
+animation: cm-fadeUp .5s .15s ease both;
+}
+.cm-cta-row {
+display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
+animation: cm-fadeUp .5s .22s ease both;
+}
+.cm-btn-main {
+display: inline-flex; align-items: center;
+background: linear-gradient(135deg, var(--cm-purple), var(--cm-magenta));
+color: #fff; text-decoration: none; border: none; border-radius: 100px;
+padding: 16px 32px; font-size: 1rem; font-weight: 700; cursor: pointer;
+font-family: 'Syne', sans-serif;
+box-shadow: 0 8px 28px rgba(108,59,255,0.45);
+transition: all .2s;
+}
+.cm-btn-main:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(108,59,255,0.6); }
+.cm-btn-ghost {
+display: inline-flex; align-items: center;
+background: transparent; color: var(--cm-muted); text-decoration: none;
+border: 1px solid var(--cm-border); border-radius: 100px;
+padding: 15px 28px; font-size: .95rem; font-weight: 500; cursor: pointer;
+transition: all .2s;
+}
+.cm-btn-ghost:hover { border-color: var(--cm-purple); color: var(--cm-violet); }
+.cm-stats {
+display: grid; grid-template-columns: repeat(4,1fr); gap: 12px;
+max-width: 720px; margin: 48px auto 0;
+animation: cm-fadeUp .5s .3s ease both;
+}
+@media(max-width:600px){ .cm-stats { grid-template-columns: 1fr 1fr; } }
+.cm-stat {
+background: var(--cm-card); border: 1px solid var(--cm-border);
+border-radius: 16px; padding: 18px 12px; text-align: center;
+}
+.cm-stat-n {
+font-family: 'Syne', sans-serif; font-size: 1.9rem; font-weight: 800;
+background: linear-gradient(135deg, #fff, var(--cm-violet));
+-webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.cm-stat-l { font-size: .8rem; color: var(--cm-muted); margin-top: 4px; }
+
+.cm-ticker-wrap {
+background: var(--cm-bg);
+border-top: 1px solid var(--cm-border);
+border-bottom: 1px solid var(--cm-border);
+padding: 14px 0; overflow: hidden;
+font-family: 'DM Sans', sans-serif;
+}
+.cm-ticker {
+display: flex; gap: 56px; width: max-content;
+animation: cm-ticker 20s linear infinite;
+}
+.cm-tick { font-size: .85rem; color: var(--cm-muted); white-space: nowrap; }
+.cm-tick b { color: var(--cm-violet); font-weight: 500; }
+
+.cm-demo-section {
+background: var(--cm-bg);
+padding: 72px 24px;
+font-family: 'DM Sans', sans-serif;
+}
+.cm-demo-inner { max-width: 960px; margin: 0 auto; }
+.cm-slabel {
+font-size: .75rem; font-weight: 600; letter-spacing: .12em;
+text-transform: uppercase; color: var(--cm-violet); margin-bottom: 8px;
+}
+.cm-stitle {
+font-family: 'Syne', sans-serif; font-size: clamp(1.8rem,4vw,2.8rem);
+font-weight: 800; letter-spacing: -0.02em; margin-bottom: 10px;
+color: var(--cm-text);
+}
+.cm-ssub { font-size: .95rem; color: var(--cm-muted); margin-bottom: 36px; }
+.cm-demo-grid {
+display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;
+}
+@media(max-width:700px){ .cm-demo-grid { grid-template-columns: 1fr; } }
+.cm-screen-tabs {
+display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;
+}
+.cm-stab {
+padding: 8px 16px; border-radius: 100px; border: 1px solid var(--cm-border);
+background: transparent; color: var(--cm-muted); font-size: .82rem;
+cursor: pointer; transition: all .2s; font-family: 'DM Sans', sans-serif;
+}
+.cm-stab.cm-on {
+background: var(--cm-purple); color: #fff; border-color: var(--cm-purple);
+box-shadow: 0 0 16px rgba(108,59,255,0.35);
+}
+.cm-phone {
+width: 240px; height: 476px;
+background: #19172A; border-radius: 40px;
+border: 2px solid rgba(108,59,255,0.45);
+box-shadow: 0 24px 64px rgba(0,0,0,0.5), 0 0 48px rgba(108,59,255,0.2);
+overflow: hidden; position: relative; margin: 0 auto;
+}
+.cm-phone::before {
+content:''; position:absolute; top:0; left:50%; transform:translateX(-50%);
+width:88px; height:24px; background:#0C0B14;
+border-radius:0 0 16px 16px; z-index:5;
+}
+.cm-pscreen { display:none; width:100%; height:100%; flex-direction:column; }
+.cm-pscreen.cm-on { display:flex; }
+.cm-psbar { padding:30px 14px 6px; display:flex; justify-content:space-between; font-size:9px; color:var(--cm-muted); }
+.cm-pbody { flex:1; padding:6px 12px; overflow:hidden; font-size:11px; }
+.cm-pfoot { display:flex; justify-content:space-around; padding:8px 0 6px; border-top:1px solid rgba(255,255,255,0.06); }
+.cm-pfi { display:flex; flex-direction:column; align-items:center; gap:3px; font-size:7.5px; color:var(--cm-dim); }
+.cm-pfi.cm-a { color:var(--cm-violet); }
+.cm-pfd { width:5px; height:5px; border-radius:50%; background:currentColor; }
+.cm-pc { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:9px 11px; margin-bottom:6px; }
+.cm-pc-t { font-size:11px; font-weight:600; color:var(--cm-text); }
+.cm-pc-s { font-size:8.5px; color:var(--cm-muted); margin-top:2px; }
+.cm-pw { border:1.5px solid rgba(108,59,255,0.25); border-radius:14px; padding:16px; text-align:center; background:rgba(108,59,255,0.06); margin-bottom:8px; }
+.cm-pw-n { font-family:'Syne',sans-serif; font-size:3rem; font-weight:800; line-height:1; color:var(--cm-text); }
+.cm-pw-u { font-size:9px; color:var(--cm-muted); margin-top:3px; }
+.cm-pw-ok { background:rgba(34,197,94,0.12); color:var(--cm-green); border-radius:100px; padding:3px 10px; font-size:8px; display:inline-block; margin-top:6px; border:1px solid rgba(34,197,94,0.2); }
+.cm-pbtn { background:var(--cm-purple); color:#fff; border-radius:8px; padding:7px; text-align:center; font-size:9px; font-weight:700; margin-top:6px; cursor:pointer; border:none; width:100%; }
+.cm-ptag { display:inline-block; border-radius:100px; padding:2px 7px; font-size:7.5px; font-weight:600; margin:2px 2px 0 0; }
+.cm-tg { background:rgba(34,197,94,0.18); color:var(--cm-green); }
+.cm-ty { background:rgba(245,166,35,0.18); color:var(--cm-gold); }
+.cm-tr { background:rgba(239,68,68,0.18); color:var(--cm-red); }
+.cm-tp { background:rgba(108,59,255,0.2); color:var(--cm-violet); }
+.cm-feat-list { list-style:none; display:flex; flex-direction:column; gap:10px; margin:20px 0; }
+.cm-feat-list li { font-size:.9rem; color:var(--cm-muted); display:flex; gap:10px; }
+.cm-feat-list li::before { content:'✓'; color:var(--cm-green); font-weight:700; flex-shrink:0; }
+
+.cm-ps-section { background:var(--cm-bg); padding:72px 24px; font-family:'DM Sans',sans-serif; }
+.cm-ps-inner { max-width:960px; margin:0 auto; }
+.cm-grid2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:56px; }
+.cm-grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+@media(max-width:700px){
+.cm-grid2 { grid-template-columns:1fr; }
+.cm-grid3 { grid-template-columns:1fr; }
+}
+.cm-prob { background:var(--cm-card); border:1px solid var(--cm-border); border-radius:20px; padding:26px; position:relative; overflow:hidden; }
+.cm-prob::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
+.pr::before { background:var(--cm-red); }
+.pg::before { background:var(--cm-gold); }
+.pv::before { background:var(--cm-violet); }
+.pm::before { background:var(--cm-magenta); }
+.cm-prob-ico { font-size:1.7rem; margin-bottom:12px; }
+.cm-prob-t { font-family:'Syne',sans-serif; font-size:1rem; font-weight:700; margin-bottom:8px; color:var(--cm-text); }
+.cm-prob-d { font-size:.87rem; color:var(--cm-muted); line-height:1.65; }
+.cm-sol { background:var(--cm-card); border:1px solid var(--cm-border); border-radius:20px; padding:26px; display:flex; gap:16px; align-items:flex-start; transition:border-color .2s; }
+.cm-sol:hover { border-color:rgba(108,59,255,0.4); }
+.cm-sol-ico { width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0; }
+.cm-si-p { background:rgba(108,59,255,0.15); }
+.cm-si-g { background:rgba(34,197,94,0.12); }
+.cm-si-y { background:rgba(245,166,35,0.12); }
+.cm-sol-t { font-family:'Syne',sans-serif; font-size:.95rem; font-weight:700; margin-bottom:6px; color:var(--cm-text); }
+.cm-sol-d { font-size:.84rem; color:var(--cm-muted); line-height:1.6; }
+
+.cm-roi-h2 { text-align: center; font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 12px; }
+.cm-roi-subtitle { text-align: center; color: var(--cm-muted); margin-bottom: 40px; font-size: 1.1rem; }
+.cm-calc-container { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; background: var(--cm-card); border: 1px solid var(--cm-border); border-radius: 24px; padding: 40px; }
+.cm-calc-group { margin-bottom: 32px; }
+.cm-calc-label-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.cm-calc-label { font-size: 1.05rem; color: var(--cm-text); font-weight: 500; }
+.cm-calc-val { font-family: 'Unbounded', sans-serif; font-size: 1.25rem; color: var(--cm-violet); font-weight: 700; }
+.cm-range-slider { -webkit-appearance: none; width: 100%; height: 6px; border-radius: 3px; background: rgba(255, 255, 255, 0.1); outline: none; }
+.cm-range-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: var(--cm-purple); cursor: pointer; transition: transform 0.1s, background 0.1s; box-shadow: 0 0 10px rgba(108, 59, 255, 0.5); }
+.cm-range-slider::-webkit-slider-thumb:hover { transform: scale(1.15); background: var(--cm-magenta); }
+.cm-range-limits { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--cm-dim); margin-top: 8px; }
+.cm-hardware-badge { display: flex; gap: 16px; background: rgba(157, 111, 255, 0.06); border: 1px solid rgba(157, 111, 255, 0.15); border-radius: 16px; padding: 18px; align-items: center; }
+.cm-badge-mobile { display: none; }
+.cm-badge-icon { font-size: 1.8rem; }
+.cm-badge-text { font-size: 0.9rem; line-height: 1.5; color: var(--cm-muted); }
+.cm-badge-text strong { color: var(--cm-text); }
+#badge-tariff-name { color: var(--cm-magenta); }
+.cm-calc-result { background: rgba(255, 255, 255, 0.02); border-left: 1px solid var(--cm-border); padding-left: 40px; display: flex; flex-direction: column; justify-content: center; }
+.cm-result-block { margin-bottom: 20px; }
+.cm-result-label { font-size: 0.9rem; color: var(--cm-muted); display: block; margin-bottom: 4px; }
+.cm-result-num { font-family: 'Unbounded', sans-serif; font-size: 1.6rem; font-weight: 700; }
+.cm-result-num small { font-size: 0.9rem; color: var(--cm-dim); margin-left: 6px; font-family: 'DM Sans', sans-serif; font-weight: 400; }
+.cm-sub-price { color: var(--cm-text); }
+.cm-saved-color { color: var(--cm-gold); }
+.cm-divider-calc { height: 1px; background: var(--cm-border); margin: 16px 0 24px 0; }
+.cm-final-profit-block { margin-bottom: 0; }
+.cm-result-label-highlight { font-family: 'Unbounded', sans-serif; font-size: 0.9rem; color: var(--cm-green); letter-spacing: 0.05em; display: block; margin-bottom: 8px; }
+.cm-t-final-price { font-family: 'Unbounded', sans-serif; font-size: 2.3rem; font-weight: 900; color: var(--cm-violet) !important; line-height: 1; }
+.cm-result-num-big { font-family: 'Unbounded', sans-serif; font-size: 2.3rem; font-weight: 900; color: var(--cm-green); line-height: 1; }
+.cm-result-num-big small { font-size: 1.1rem; color: var(--cm-green); opacity: 0.7; margin-left: 6px; font-family: 'DM Sans', sans-serif; font-weight: 400; }
+.cm-payback-text { margin-top: 14px; font-size: 0.95rem; color: var(--cm-muted); display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+.cm-payback-text strong { color: var(--cm-text); }
+.cm-roi-inline-badge { background: rgba(34, 197, 94, 0.12); border: 1px solid rgba(34, 197, 94, 0.25); color: var(--cm-green); padding: 2px 8px; border-radius: 6px; font-size: 0.85rem; font-weight: 500; display: inline-flex; align-items: center; }
+.cm-roi-inline-badge strong { color: var(--cm-green) !important; font-family: 'Unbounded', sans-serif; margin-left: 4px; }
+/* ИСПРАВЛЕННЫЕ СТИЛИ КНОПКИ ДЛЯ ДЕСКТОПА */
+.cm-roi-submit-btn {
+display: block;
+width: 100%;
+max-width: 280px; /* Собрали кнопку в компактный размер */
+align-self: center; /* Отцентрировали внутри правой колонки */
+padding: 16px;
+border-radius: 12px;
+background: var(--cm-purple) !important;
+border: 1px solid var(--cm-purple) !important;
+color: #fff !important;
+text-decoration: none !important;
+text-align: center;
+font-family: 'Unbounded';
+font-size: 13px;
+font-weight: 700;
+transition: 0.2s;
+box-shadow: 0 4px 15px rgba(108, 59, 255, 0.3);
+margin-top: auto;
+margin-bottom: 8px;
+}
+.cm-roi-submit-btn:hover { background: var(--cm-magenta) !important; border-color: var(--cm-magenta) !important; transform: scale(1.02); }
+/* АДАПТИВНОСТЬ */
+@media (max-width: 840px) {
+.cm-calc-container { grid-template-columns: 1fr; padding: 24px; gap: 32px; }
+.cm-calc-result { border-left: none; border-top: 1px solid var(--cm-border); padding-left: 0; padding-top: 32px; }
+/* Возвращаем кнопку на всю ширину на мобилках */
+.cm-roi-submit-btn { max-width: 100%; margin-bottom: 0; }
+.cm-badge-desktop { display: none !important; }
+.cm-badge-mobile { display: flex !important; margin-top: 24px; }
+}
+
+.cm-testi-section { background:var(--cm-bg); padding:72px 24px; font-family:'DM Sans',sans-serif; }
+.cm-testi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; max-width:960px; margin:0 auto; }
+@media(max-width:700px){ .cm-testi-grid { grid-template-columns:1fr; } }
+.cm-tc { background:var(--cm-card); border:1px solid var(--cm-border); border-radius:20px; padding:26px; }
+.cm-tc-stars { color:var(--cm-gold); font-size:1rem; margin-bottom:12px; }
+.cm-tc-text { font-size:.88rem; color:var(--cm-muted); line-height:1.7; margin-bottom:16px; }
+.cm-tc-author { display:flex; align-items:center; gap:10px; }
+.cm-tc-av { width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,var(--cm-purple),var(--cm-magenta)); display:flex; align-items:center; justify-content:center; font-family:'Syne',sans-serif; font-size:.82rem; font-weight:700; color:#fff; flex-shrink:0; }
+.cm-tc-name { font-weight:600; font-size:.88rem; color:var(--cm-text); }
+.cm-tc-role { font-size:.76rem; color:var(--cm-dim); }
+
+#cm-tariffs * { box-sizing: border-box !important; }
+.cm-t-h2 { text-align: center; font-size: clamp(1.8rem, 4vw, 2.6rem); margin-bottom: 12px; font-family: 'Unbounded', sans-serif; }
+.cm-t-sub { text-align: center; color: var(--cm-muted) !important; margin: 0 auto 45px; font-size: 1.1rem; max-width: 650px; line-height: 1.4; }
+.cm-t-main-box { max-width: 950px; margin: 0 auto; background: var(--cm-card) !important; border: 1px solid var(--cm-border) !important; border-radius: 24px; padding: 40px; position: relative; }
+.cm-t-badge { position: absolute; top: -12px; left: 45px; background: var(--cm-magenta) !important; color: #fff !important; font-size: 10px; font-weight: 700; padding: 4px 14px; border-radius: 20px; font-family: 'Unbounded', sans-serif; letter-spacing: 0.05em; }
+.cm-t-split-wrap { display: flex; gap: 40px; align-items: stretch; }
+.cm-t-left-side { flex: 1.2; display: flex; flex-direction: column; justify-content: center; gap: 32px; }
+.cm-t-right-side { flex: 1; background: rgba(255, 255, 255, 0.02) !important; border-left: 1px solid var(--cm-border) !important; padding: 10px 0 10px 40px; display: flex; flex-direction: column; }
+.cm-slider-top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.cm-slider-lbl { font-size: 1.05rem; font-weight: 500; color: var(--cm-text) !important; }
+.cm-m-badge-num { font-family: 'Unbounded', sans-serif; font-size: 1.25rem; color: var(--cm-violet) !important; font-weight: 700; }
+.cm-control-row { display: flex; gap: 24px; align-items: flex-start; width: 100%; }
+.cm-range-wrapper { flex: 1; position: relative; }
+input[type=range].cm-range-slider-tariff {
+-webkit-appearance: none !important;
+appearance: none !important;
+width: 100% !important;
+height: 6px !important;
+border-radius: 3px !important;
+background: rgba(255, 255, 255, 0.1) !important;
+outline: none !important;
+margin: 10px 0 0 0 !important;
+}
+input[type=range].cm-range-slider-tariff::-webkit-slider-thumb {
+-webkit-appearance: none !important;
+appearance: none !important;
+width: 22px !important;
+height: 22px !important;
+border-radius: 50% !important;
+background: var(--cm-purple) !important;
+cursor: pointer;
+transition: transform 0.1s, background 0.1s;
+box-shadow: 0 0 10px rgba(108, 59, 255, 0.5) !important;
+border: none !important;
+margin-top: 0 !important;
+}
+input[type=range].cm-range-slider-tariff::-webkit-slider-thumb:hover {
+transform: scale(1.15);
+background: var(--cm-magenta) !important;
+}
+.cm-range-limits-tariff { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--cm-dim) !important; margin-top: 8px; }
+.cm-more-than-box { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 75px; text-align: center; }
+.cm-circle-more-btn {
+width: 22px;
+height: 22px;
+border-radius: 50%;
+border: 1px solid var(--cm-border) !important;
+background: transparent !important;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 0 !important;
+transition: 0.2s ease;
+margin-top: 2px;
+}
+.cm-circle-dot { width: 8px; height: 8px; border-radius: 50%; background: transparent; transition: 0.2s ease; }
+.cm-circle-more-btn:hover { border-color: var(--cm-purple) !important; }
+.cm-circle-active { border-color: var(--cm-magenta) !important; box-shadow: 0 0 10px rgba(108, 59, 255, 0.5); }
+.cm-circle-active .cm-circle-dot { background: var(--cm-magenta) !important; }
+.cm-more-lbl { font-size: 11px; font-weight: 600; color: var(--cm-dim) !important; text-transform: uppercase; white-space: nowrap; margin-top: 2px; }
+.cm-t-hardware-alert { display: flex; gap: 16px; background: rgba(157, 111, 255, 0.06) !important; border: 1px solid rgba(157, 111, 255, 0.15) !important; border-radius: 16px; padding: 18px; align-items: center; transition: all 0.3s ease; }
+.cm-hw-icon { font-size: 1.8rem; }
+.cm-hw-desc { font-size: 0.9rem; line-height: 1.5; color: var(--cm-muted) !important; }
+.cm-hw-desc strong { color: var(--cm-text) !important; }
+.cm-total-title { font-size: 0.9rem; color: var(--cm-muted) !important; display: block; margin-bottom: 4px; }
+/* ИЗМЕНЕНО: ЦВЕТ ЦЕНЫ ТЕПЕРЬ СТАЛ ЧИСТЫМ БЕЛЫМ ИЗ ROI-КАЛЬКУЛЯТОРА */
+.cm-t-final-price { font-family: 'Unbounded', sans-serif; font-size: 2.3rem; font-weight: 900; color: #ffffff !important; line-height: 1; }
+.cm-t-period { font-size: 0.9rem; color: var(--cm-dim) !important; margin-bottom: 24px; margin-top: 4px; }
+.cm-t-benefits-list { list-style: none !important; padding: 0 !important; margin: 0 0 24px !important; flex-grow: 1; border-top: 1px solid var(--cm-border); padding-top: 20px !important; }
+.cm-t-benefits-list li { font-size: 13.5px !important; margin-bottom: 12px !important; position: relative !important; padding-left: 22px !important; text-align: left !important; color: var(--cm-text) !important; line-height: 1.4 !important; transition: all 0.2s ease; }
+.cm-t-benefits-list li::before { content: "✓" !important; position: absolute !important; left: 0 !important; color: var(--cm-green) !important; font-weight: 700 !important; }
+.cm-t-benefits-list strong { color: #fff !important; }
+.cm-feat-disabled { opacity: 0.25; filter: grayscale(100%); }
+.cm-feat-disabled::before { color: var(--cm-dim) !important; }
+.cm-t-submit-btn { display: block; width: 100%; padding: 16px; border-radius: 12px; background: var(--cm-purple) !important; border: 1px solid var(--cm-purple) !important; color: #fff !important; text-decoration: none !important; text-align: center; font-family: 'Unbounded'; font-size: 13px; font-weight: 700; transition: 0.2s; box-shadow: 0 4px 15px rgba(108, 59, 255, 0.3); }
+.cm-t-submit-btn:hover { background: var(--cm-magenta) !important; border-color: var(--cm-magenta) !important; transform: scale(1.02); }
+@media (max-width: 840px) {
+.cm-t-main-box { padding: 24px; }
+.cm-t-split-wrap { flex-direction: column; gap: 32px; }
+.cm-t-right-side { border-left: none !important; border-top: 1px solid var(--cm-border) !important; padding-left: 0; padding-top: 32px; }
+}
+@media (max-width: 480px) {
+.cm-control-row { flex-direction: column; gap: 20px; align-items: center; }
+.cm-range-wrapper { width: 100%; }
+.cm-more-than-box { flex-direction: row; width: auto; gap: 12px; background: rgba(255,255,255,0.02); padding: 8px 16px; border-radius: 30px; border: 1px solid var(--cm-border); }
+}
+
+.cm-footer-container { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 50px; align-items: center; }
+.cm-footer-h2 { font-size: clamp(1.8rem, 3.5vw, 2.5rem); line-height: 1.2; margin-bottom: 20px; }
+.cm-footer-p { color: var(--cm-muted); font-size: 1.05rem; line-height: 1.6; margin-bottom: 32px; }
+.cm-footer-p strong { color: var(--cm-magenta); }
+.cm-footer-meta { display: flex; flex-direction: column; gap: 12px; }
+.cm-meta-item { font-size: 0.95rem; color: var(--cm-text); }
+.cm-meta-item strong { color: var(--cm-green); font-family: 'Unbounded', sans-serif; }
+.cm-footer-form-box { background: var(--cm-card); border: 1px solid var(--cm-border); padding: 40px; border-radius: 24px; box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
+.cm-form-group { margin-bottom: 20px; }
+.cm-form-label { display: block; font-size: 0.85rem; color: var(--cm-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+.cm-form-input, .cm-form-select { width: 100%; padding: 16px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--cm-border); border-radius: 12px; color: var(--cm-text); font-size: 1rem; box-sizing: border-box; outline: none; transition: border-color 0.2s; }
+.cm-form-input:focus, .cm-form-select:focus { border-color: var(--cm-violet); }
+.cm-form-input.cm-input-error { border-color: #FF453A !important; background: rgba(255, 69, 58, 0.05); }
+.cm-form-select option { background: #19172A; color: var(--cm-text); }
+/* ИСПРАВЛЕННЫЙ СТИЛЬ КНОПКИ */
+.cm-form-btn {
+width: 100%;
+padding: 18px;
+background: var(--cm-purple);
+border: none;
+border-radius: 12px;
+color: #fff;
+font-family: 'Unbounded', sans-serif;
+font-size: 0.95rem;
+font-weight: 700;
+cursor: pointer;
+transition: background 0.2s, transform 0.1s;
+box-shadow: 0 4px 15px rgba(108, 59, 255, 0.3);
+box-sizing: border-box; /* Теперь кнопка не будет вылезать вправо */
+display: block;
+}
+.cm-form-btn:hover { background: var(--cm-violet); }
+.cm-form-btn:active { transform: scale(0.98); }
+.cm-form-btn:disabled { background: #3A3654; color: #716E82; cursor: not-allowed; }
+/* КАСТОМНЫЙ СТИЛЬ ДЛЯ КНОПКИ-ГАЛОЧКИ И ПОЛИТИКИ */
+.cm-privacy-group { margin-top: 24px; margin-bottom: 24px; }
+.cm-privacy-label { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; user-select: none; }
+.cm-privacy-label input[type="checkbox"] { display: none; }
+.cm-privacy-custom-box {
+width: 18px;
+height: 18px;
+border: 1px solid var(--cm-border);
+border-radius: 5px;
+background: rgba(255, 255, 255, 0.02);
+flex-shrink: 0;
+margin-top: 2px;
+position: relative;
+transition: 0.2s;
+}
+.cm-privacy-label:hover .cm-privacy-custom-box { border-color: var(--cm-purple); }
+/* Когда галочка активна */
+.cm-privacy-label input[type="checkbox"]:checked + .cm-privacy-custom-box {
+background: var(--cm-purple);
+border-color: var(--cm-purple);
+}
+.cm-privacy-label input[type="checkbox"]:checked + .cm-privacy-custom-box::after {
+content: "✓";
+position: absolute;
+color: #fff;
+font-size: 11px;
+font-weight: bold;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+}
+.cm-privacy-text { font-size: 12px; line-height: 1.4; color: var(--cm-muted); }
+.cm-privacy-text a { color: var(--cm-purple); text-decoration: underline; transition: 0.2s; }
+.cm-privacy-text a:hover { color: var(--cm-magenta); }
+@media (max-width: 880px) {
+.cm-footer-container { grid-template-columns: 1fr; gap: 40px; }
+.cm-footer-form-box { padding: 28px; }
+}
+  </style>
+</head>
+<body>
+<div class="cm-hero">
+<div class="cm-hero-glow"></div>
+<div class="cm-badge">
+<div class="cm-badge-dot"></div>
+Ранний доступ — первые 50 мест
+</div>
+<h1 class="cm-h1">Учёт красок<br>без тетрадок <em>и Excel</em></h1>
+<p class="cm-hero-sub">
+Bluetooth-весы списывают граммы автоматически. Остатки, история клиентов,
+аналитика — всё в одном приложении. Работает без интернета.
+</p>
+<div class="cm-cta-row">
+<a href="#cm-footer" class="cm-btn-main">Получить ранний доступ →</a>
+<a href="#demo" class="cm-btn-ghost">Смотреть как работает</a>
+</div>
+<div class="cm-stats">
+<div class="cm-stat"><div class="cm-stat-n">−15%</div><div class="cm-stat-l">потерь краски</div></div>
+<div class="cm-stat"><div class="cm-stat-n">3 сек</div><div class="cm-stat-l">на списание</div></div>
+<div class="cm-stat"><div class="cm-stat-n">0 мин</div><div class="cm-stat-l">на инвентаризацию</div></div>
+<div class="cm-stat"><div class="cm-stat-n">От 5т₽</div><div class="cm-stat-l">экономия/мес</div></div>
+</div>
+</div>
+
+<div class="cm-ticker-wrap">
+<div class="cm-ticker">
+<div class="cm-tick">⚖️ Bluetooth-весы <b>→</b> авто-списание</div>
+<div class="cm-tick">📦 Остатки в реальном времени</div>
+<div class="cm-tick">👤 История клиентов и мастеров</div>
+<div class="cm-tick">📊 Аналитика расходов</div>
+<div class="cm-tick">🔒 Работает без интернета</div>
+<div class="cm-tick">✅ Автоинвентаризация без пересчёта</div>
+<div class="cm-tick">⚖️ Bluetooth-весы <b>→</b> авто-списание</div>
+<div class="cm-tick">📦 Остатки в реальном времени</div>
+<div class="cm-tick">👤 История клиентов и мастеров</div>
+<div class="cm-tick">📊 Аналитика расходов</div>
+<div class="cm-tick">🔒 Работает без интернета</div>
+<div class="cm-tick">✅ Автоинвентаризация без пересчёта</div>
+</div>
+</div>
+
+<div class="cm-demo-section" id="demo">
+<div class="cm-demo-inner">
+<p class="cm-slabel">Интерфейс приложения</p>
+<h2 class="cm-stitle">Как выглядит изнутри</h2>
+<p class="cm-ssub">Простой интерфейс понятен без обучения. Мастер разберётся за 5 минут.</p>
+<div class="cm-demo-grid">
+<div>
+<div class="cm-screen-tabs">
+<button class="cm-stab cm-on" onclick="cmShowScreen('weigh',this)">⚖️ Весы</button>
+<button class="cm-stab" onclick="cmShowScreen('catalog',this)">🎨 Каталог</button>
+<button class="cm-stab" onclick="cmShowScreen('clients',this)">👥 Клиенты</button>
+<button class="cm-stab" onclick="cmShowScreen('history',this)">📋 История</button>
+<button class="cm-stab" onclick="cmShowScreen('settings',this)">⚙️ Настройки</button>
+</div>
+<div class="cm-phone">
+<div class="cm-pscreen cm-on" id="cm-sc-weigh">
+<div class="cm-psbar"><span>9:41</span><span style="color:var(--cm-green);font-size:8px">BLE ●</span></div>
+<div class="cm-pbody">
+<div style="font-size:8px;color:var(--cm-muted);margin-bottom:5px">← Сессия</div>
+<div class="cm-pw">
+<div class="cm-pw-n" id="cm-sw">12.4</div>
+<div class="cm-pw-u">граммов</div>
+<div class="cm-pw-ok">✓ Стабильно</div>
+</div>
+<button class="cm-pbtn" onclick="cmAnimWeigh()">Взвесить 12.4 г</button>
+<div style="height:1px;background:var(--cm-border);margin:8px 0"></div>
+<div style="font-size:8px;color:var(--cm-muted);margin-bottom:4px">Краска:</div>
+<div class="cm-pc"><div class="cm-pc-t">Красный 0.5</div><div class="cm-pc-s">Остаток: 110 г</div></div>
+<div style="font-size:8px;color:var(--cm-muted);margin-bottom:4px">Клиент:</div>
+<div class="cm-pc"><div class="cm-pc-t">Мария Власова</div><div class="cm-pc-s">+7•••••7621</div></div>
+</div>
+<div class="cm-pfoot">
+<div class="cm-pfi"><div class="cm-pfd"></div>Каталог</div>
+<div class="cm-pfi"><div class="cm-pfd"></div>Люди</div>
+<div class="cm-pfi cm-a"><div class="cm-pfd"></div>Сессия</div>
+<div class="cm-pfi"><div class="cm-pfd"></div>Настр.</div>
+<div class="cm-pfi"><div class="cm-pfd"></div>История</div>
+</div>
+</div>
+<div class="cm-pscreen" id="cm-sc-catalog">
+<div class="cm-psbar"><span>9:41</span><span>●●●</span></div>
+<div class="cm-pbody">
+<div style="font-family:Syne,sans-serif;font-size:.85rem;font-weight:800;margin-bottom:8px;color:var(--cm-text)">Каталог</div>
+<div style="background:rgba(255,255,255,0.04);border:1px solid var(--cm-border);border-radius:6px;padding:5px 9px;font-size:8px;color:var(--cm-muted);margin-bottom:8px">🔍 Поиск компонента</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px">
+<div class="cm-pc" style="border-left:2px solid var(--cm-green)"><div class="cm-pc-t" style="font-size:10px">Красный 0.5 ✓</div><div class="cm-pc-s">110 г</div><div style="height:2px;background:rgba(255,255,255,0.06);border-radius:1px;margin-top:4px;overflow:hidden"><div style="width:70%;height:100%;background:var(--cm-green)"></div></div></div>
+<div class="cm-pc" style="border-left:2px solid var(--cm-gold)"><div class="cm-pc-t" style="font-size:10px">Синий 50 ⚠</div><div class="cm-pc-s">40 г</div><div style="height:2px;background:rgba(255,255,255,0.06);border-radius:1px;margin-top:4px;overflow:hidden"><div style="width:25%;height:100%;background:var(--cm-gold)"></div></div></div>
+<div class="cm-pc" style="border-left:2px solid var(--cm-red)"><div class="cm-pc-t" style="font-size:10px">Блонд !</div><div class="cm-pc-s">5 г</div><div style="height:2px;background:rgba(255,255,255,0.06);border-radius:1px;margin-top:4px;overflow:hidden"><div style="width:5%;height:100%;background:var(--cm-red)"></div></div></div>
+<div class="cm-pc" style="border-left:2px solid var(--cm-gold)"><div class="cm-pc-t" style="font-size:10px">База soft ⚠</div><div class="cm-pc-s">30 г</div><div style="height:2px;background:rgba(255,255,255,0.06);border-radius:1px;margin-top:4px;overflow:hidden"><div style="width:18%;height:100%;background:var(--cm-gold)"></div></div></div>
+</div>
+</div>
+<div class="cm-pfoot">
+<div class="cm-pfi cm-a"><div class="cm-pfd"></div>Каталог</div>
+<div class="cm-pfi"><div class="cm-pfd"></div>Люди</div>
+<div class="cm-pfi"><div class="cm-pfd"></div>Сессия</div>
+<div class="cm-pfi"><div class="cm-pfd"></div>Настр.</div>
+<div class="cm-pfi"><div class="cm-pfd"></div>История</div>
+</div>
+</div>
+<div class="cm-pscreen" id="cm-sc-clients">
+<div class="cm-psbar"><span>9:41</span><span>●●●</span></div>
+<div class="cm-pbody">
+<div style="font-family:Syne,sans-serif;font-size:.85rem;font-weight:800;margin-bottom:8px;color:var(--cm-text)">Люди</div>
+<div style="display:flex;gap:4px;margin-bottom:8px">
+<div style="background:var(--cm-purple);color:#fff;border-radius:100px;padding:3px 9px;font-size:8px">Мастера</div>
+<div style="background:rgba(255,255,255,0.06);border-radius:100px;padding:3px 9px;font-size:8px;color:var(--cm-muted)">Клиенты</div>
+</div>
+<div class="cm-pc"><div class="cm-pc-t">Анна Петрова</div></div>
+<div class="cm-pc"><div class="cm-pc-t">Иван Сидоров</div></div>
+<div class="cm-pc"><div class="cm-pc-t">Ольга Смирнова</div></div>
+<div style="height:1px;background:var(--cm-border);margin:8px 0"></div>
+<div style="font-size:7.5px;color:var(--cm-muted);margin-bottom:4px">12.04.2026 — Ольга Смирнова</div>
+<div style="display:flex;flex-wrap:wrap;gap:3px">
+<span class="cm-ptag cm-tp">Красный 0.5 — 12г</span>
+<span class="cm-ptag cm-tg">База soft — 8г</span>
+<span class="cm-ptag cm-ty">Top glossy — 6г</span>
+</div>
+</div>
+<div class="cm-pfoot">
+<div class="cm-pfi"><div class="cm-pfd"></div>Каталог</div>
+<div class="cm-pfi cm-a"><div class="cm-pfd"></div>Люди</div>
+<div class="cm-pfi"><div class="cm-pfd"></div>Сессия</div>
+<div class="cm-pfi"><div class="cm-pfd"></div>Настр.</div>
+<div class="cm-pfi"><div class="cm-pfd"></div>История</div>
+</div>
+</div>
+<div class="cm-pscreen" id="cm-sc-history">
+<div class="cm-psbar"><span>9:41</span><span>●●●</span></div>
+<div class="cm-pbody">
+<div style="font-family:Syne,sans-serif;font-size:.85rem;font-weight:800;margin-bottom:8px;color:var(--cm-text)">История</div>
+<div class="cm-pc"><div style="font-size:9px;font-weight:700;margin-bottom:2px">12.04.2026 14:30</div><div style="font-size:8px;color:var(--cm-muted)">Ольга С. → Мария В.</div><div style="display:flex;flex-wrap:wrap;gap:2px;margin-top:3px"><span class="cm-ptag cm-tp">Красный 7.0 — 7.45г</span><span class="cm-ptag cm-tg">Синий — 17.5г</span></div></div>
+<div class="cm-pc"><div style="font-size:9px;font-weight:700;margin-bottom:2px">05.04.2026 12:15</div><div style="font-size:8px;color:var(--cm-muted)">Анна П. → Дмитрий О.</div><div style="display:flex;flex-wrap:wrap;gap:2px;margin-top:3px"><span class="cm-ptag cm-tp">Лак nude — 10г</span><span class="cm-ptag cm-ty">Праймер — 2г</span></div></div>
+<div class="cm-pc"><div style="font-size:9px;font-weight:700;margin-bottom:2px">28.03.2026 10:00</div><div style="font-size:8px;color:var(--cm-muted)">Иван С. → Екатерина Б.</div><div style="display:flex;flex-wrap:wrap;gap:2px;margin-top:3px"><span class="cm-ptag cm-tg">Гель clear — 9г</span><span class="cm-ptag cm-tr">Финиш matte — 4г</span></div></div>
+</div>
+<div class="cm-pfoot">
+<div class="cm-pfi"><div class="cm-pfd"></div>Каталог</div>
+<div class="cm-pfi"><div class="cm-pfd"></div>Люди</div>
+<div class="cm-pfi"><div class="cm-pfd"></div>Сессия</div>
+<div class="cm-pfi"><div class="cm-pfd"></div>Настр.</div>
+<div class="cm-pfi cm-a"><div class="cm-pfd"></div>История</div>
+</div>
+</div>
+<div class="cm-pscreen" id="cm-sc-settings">
+<div class="cm-psbar"><span>9:41</span><span>●●●</span></div>
+<div class="cm-pbody">
+<div style="font-family:Syne,sans-serif;font-size:.85rem;font-weight:800;margin-bottom:12px;color:var(--cm-text)">Настройки</div>
+<div class="cm-pc" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><span class="cm-pc-t">экспорт логов</span><span style="font-size:10px;color:var(--cm-muted)">→</span></div>
+<div class="cm-pc" style="display:flex;justify-content:space-between;align-items:center"><span class="cm-pc-t">пароль админа</span><span style="font-size:10px;color:var(--cm-muted)">→</span></div>
+<div style="height:1px;background:var(--cm-border);margin:10px 0"></div>
+<div class="cm-pc" style="border-left:2px solid var(--cm-green)"><div class="cm-pc-t" style="color:var(--cm-green)">Acaia Lunar Pro ●</div><div class="cm-pc-s">MAC: D8:3A:DD:9F:02:7C</div></div>
+<div style="text-align:center;font-size:9px;color:var(--cm-dim);margin-top:16px">v1.0.0</div>
+</div>
+<div class="cm-pfoot">
+<div class="cm-pfi"><div class="cm-pfd"></div>Каталог</div>
+<div class="cm-pfi"><div class="cm-pfd"></div>Люди</div>
+<div class="cm-pfi"><div class="cm-pfd"></div>Сессия</div>
+<div class="cm-pfi cm-a"><div class="cm-pfd"></div>Настр.</div>
+<div class="cm-pfi"><div class="cm-pfd"></div>История</div>
+</div>
+</div>
+</div></div>
+<div>
+<h3 style="font-family:Syne,sans-serif;font-size:1.4rem;font-weight:800;margin-bottom:16px;color:var(--cm-text)">Попробуйте прямо сейчас</h3>
+<p style="color:var(--cm-muted);font-size:.9rem;margin-bottom:20px;line-height:1.7">Переключайтесь между экранами — это реальный интерфейс приложения. Нажмите «Взвесить» на экране весов.</p>
+<ul class="cm-feat-list" id="cm-feat-list">
+<li>Вес с весов → автоматически в поле</li>
+<li>Стабилизация определяется без нажатий</li>
+<li>Одна кнопка — граммы списаны в базу</li>
+<li>Остаток краски обновляется мгновенно</li>
+</ul>
+<a href="#cm-footer" onclick="event.preventDefault(); const target = document.getElementById('cm-footer'); if(target) { target.scrollIntoView({ behavior: 'smooth' }); }" class="cm-btn-main" style="margin-top:24px;display:inline-flex">Получить ранний доступ →</a>
+</div>
+</div>
+</div>
+</div>
+
+<div class="cm-ps-section">
+<div class="cm-ps-inner">
+<p class="cm-slabel">Боли бизнеса</p>
+<h2 class="cm-stitle">Звучит знакомо?</h2>
+<p class="cm-ssub">Опросили более 100 владельцев салонов — и вот, что мешает работать </p>
+<div class="cm-grid2">
+<div class="cm-prob pr"><div class="cm-prob-ico">📉</div><div class="cm-prob-t">Краска уходит в никуда</div><div class="cm-prob-d">Мастера отмеряют "на глаз". За месяц теряется 12–18% запасов — и никто не знает куда.</div></div>
+<div class="cm-prob pg"><div class="cm-prob-ico">⏰</div><div class="cm-prob-t">Нехватка в разгар работы</div><div class="cm-prob-d">Краска заканчивается, когда клиент уже в кресле. Срыв записи, потеря репутации.</div></div>
+<div class="cm-prob pv"><div class="cm-prob-ico">📝</div><div class="cm-prob-t">30 минут учёта каждый день</div><div class="cm-prob-d">Тетрадки, Excel, мессенджеры – данные неточные, а время персонала тратится впустую.</div></div>
+<div class="cm-prob pm"><div class="cm-prob-ico">💸</div><div class="cm-prob-t">Нет контроля над расходами</div><div class="cm-prob-d">Невозможно посчитать точную себестоимость окрашивания. Часть услуг работает в минус.</div></div>
+</div>
+<p class="cm-slabel">Решение</p>
+<h2 class="cm-stitle">ColorMaster Pro закрывает всё</h2>
+<p class="cm-ssub" style="margin-bottom:28px"></p>
+<div class="cm-grid3">
+<div class="cm-sol"><div class="cm-sol-ico cm-si-p">⚖️</div><div><div class="cm-sol-t">Bluetooth-весы → авто-списание</div><div class="cm-sol-d">Ставите тару, ждёте стабилизации, нажимаете кнопку. Граммы в базе.</div></div></div>
+<div class="cm-sol"><div class="cm-sol-ico cm-si-g">📦</div><div><div class="cm-sol-t">Остатки в реальном времени</div><div class="cm-sol-d">Зелёный — ок, жёлтый — мало, красный — упс... Видите всё без пересчёта.</div></div></div>
+<div class="cm-sol"><div class="cm-sol-ico cm-si-p">👥</div><div><div class="cm-sol-t">База клиентов и мастеров</div><div class="cm-sol-d">История каждого клиента, расход по мастерам, фильтры по датам.</div></div></div>
+<div class="cm-sol"><div class="cm-sol-ico cm-si-y">📊</div><div><div class="cm-sol-t">Автоинвентаризация</div><div class="cm-sol-d">Вместо сомнительного ручного пересчёта → Данные актуальны всегда!</div></div></div>
+<div class="cm-sol"><div class="cm-sol-ico cm-si-g">🔒</div><div><div class="cm-sol-t">Без интернета</div><div class="cm-sol-d">Данные на планшете. Работает без Wi-Fi. Никаких сбоев.</div></div></div>
+<div class="cm-sol"><div class="cm-sol-ico cm-si-p">📤</div><div><div class="cm-sol-t">Экспорт истории</div><div class="cm-sol-d">Выгрузка по мастеру, клиенту, периоду или компоненту.</div></div></div>
+</div>
+</div>
+</div>
+
+<div class="cm-section" id="cm-roi">
+<div class="cm-inner">
+<h2 class="cm-roi-h2">Посчитайте чистую прибыль салона</h2>
+<p class="cm-roi-subtitle">ColorMaster Pro окупается в первый же месяц использования. Убедитесь сами:</p>
+<div class="cm-calc-container">
+<div class="cm-calc-inputs">
+<div class="cm-calc-group">
+<div class="cm-calc-label-row">
+<span class="cm-calc-label">Количество мастеров:</span>
+<span class="cm-calc-val" id="val-masters">4</span>
+</div>
+<input type="range" id="input-masters" min="1" max="15" value="4" step="1" class="cm-range-slider">
+<div class="cm-range-limits">
+<span>1 мастер</span>
+<span>15 мастеров</span>
+</div>
+</div>
+<div class="cm-calc-group">
+<div class="cm-calc-label-row">
+<span class="cm-calc-label">Расход на закупку краски / мес:</span>
+<span class="cm-calc-val" id="val-expense">150 000 ₽</span>
+</div>
+<input type="range" id="input-expense" min="20000" max="500000" value="150000" step="5000" class="cm-range-slider">
+<div class="cm-range-limits">
+<span>20 000 ₽</span>
+<span>500 000 ₽</span>
+</div>
+</div>
+<div class="cm-hardware-badge cm-badge-desktop">
+<div class="cm-badge-icon">🔒</div>
+<div class="cm-badge-text">
+<strong>Честная подписка и безопасный старт</strong><br>
+Цена меняется прозрачно в зависимости от размера вашей команды. Вашему салону необходимо: <span class="badge-hardware-qty">1 комплект</span> весов. Оборудование доставим и установим бесплатно!
+</div>
+</div>
+</div>
+<div class="cm-calc-result">
+<div class="cm-result-block">
+<span class="cm-result-label">Стоимость подписки (+ весы):</span>
+<div class="cm-result-num cm-sub-price" id="res-sub-price">2 990 ₽<small>/мес</small></div>
+</div>
+<div class="cm-result-block">
+<span class="cm-result-label">Сбережем краски на:</span>
+<div class="cm-result-num cm-saved-color" id="res-saved-color">22 500 ₽<small>/мес</small></div>
+</div>
+<div class="cm-divider-calc"></div>
+<div class="cm-result-block cm-final-profit-block">
+<span class="cm-result-label-highlight">ВАША ЧИСТАЯ ПРИБЫЛЬ:</span>
+<div class="cm-result-num-big" id="res-net-profit">19 510 ₽<small>/мес</small></div>
+<p class="cm-payback-text" style="margin-bottom: 24px;">
+Инвестиции окупаются за <strong id="res-days">5 дней</strong>
+<span class="cm-roi-inline-badge">ROI: <strong id="res-roi">653%</strong></span>
+</p>
+</div>
+<a href="#cm-footer" onclick="cmSendRoiToForm(event)" class="cm-roi-submit-btn">Оформить доступ</a>
+<div class="cm-hardware-badge cm-badge-mobile">
+<div class="cm-badge-icon">🔒</div>
+<div class="cm-badge-text">
+<strong>Честная подписка и безопасный старт</strong><br>
+Цена меняется прозрачно в зависимости от размера вашей команды. Вашему салону необходимо: <span class="badge-hardware-qty">1 комплект</span> весов. Оборудование доставим и установим бесплатно!
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="cm-testi-section">
+<div style="max-width:960px;margin:0 auto">
+<p class="cm-slabel" style="text-align:center">Отзывы</p>
+<h2 class="cm-stitle" style="text-align:center">Говорят первые пользователи</h2>
+<p class="cm-ssub" style="text-align:center;max-width:520px;margin:0 auto 40px">Бета-тестеры, прошедшие путь от тетрадок до автоматики</p>
+<div class="cm-testi-grid">
+<div class="cm-tc"><div class="cm-tc-stars">★★★★★</div><p class="cm-tc-text">«За первый месяц сэкономила 9 000 ₽ на красках — просто потому что теперь вижу точный расход. Раньше списывала "на глаз" и не понимала куда уходит.»</p><div class="cm-tc-author"><div class="cm-tc-av">АС</div><div><div class="cm-tc-name">Анна С.</div><div class="cm-tc-role">Колор-мастер, Москва</div></div></div></div>
+<div class="cm-tc"><div class="cm-tc-stars">★★★★★</div><p class="cm-tc-text">«Наконец точно знаю что нужно докупить ДО того как краска закончилась. Это сильно упростило учет остатков для нашего салона.»</p><div class="cm-tc-author"><div class="cm-tc-av">МК</div><div><div class="cm-tc-name">Марина К.</div><div class="cm-tc-role">Владелец салона, Санкт-Петербург</div></div></div></div>
+<div class="cm-tc"><div class="cm-tc-stars">★★★★★</div><p class="cm-tc-text">«Весы + приложение — гениальная связка. Инвентаризация которая раньше занимала полдня — теперь секунды.»</p><div class="cm-tc-author"><div class="cm-tc-av">ОП</div><div><div class="cm-tc-name">Ольга П.</div><div class="cm-tc-role">Управляющая, Санкт-Петербург</div></div></div></div>
+</div>
+</div>
+</div>
+
+<div class="cm-section" id="cm-tariffs">
+<div class="cm-inner">
+<h2 class="cm-t-h2">Прозрачная цена</h2>
+<p class="cm-t-sub">Никаких скрытых платежей. Стоимость рассчитывается честно, исходя из масштаба вашей команды.</p>
+<div class="cm-t-main-box">
+<div class="cm-t-badge">КОНСТРУКТОР ПОДПИСКИ</div>
+<div class="cm-t-split-wrap">
+<div class="cm-t-left-side">
+<div class="cm-slider-container">
+<div class="cm-slider-top-row">
+<span class="cm-slider-lbl">Мастеров в салоне:</span>
+<span id="cm-m-display" class="cm-m-badge-num">1</span>
+</div>
+<div class="cm-control-row">
+<div class="cm-range-wrapper">
+<input type="range" id="cm-m-scale" min="1" max="15" value="1" step="1" class="cm-range-slider-tariff" oninput="cmCalculatePrice(this.value, false)">
+<div class="cm-range-limits-tariff">
+<span>1 мастер</span>
+<span>15 мастеров</span>
+</div>
+</div>
+<div class="cm-more-than-box">
+<button type="button" id="cm-btn-more" class="cm-circle-more-btn" onclick="cmToggleMoreThan15()">
+<span class="cm-circle-dot"></span>
+</button>
+<span class="cm-more-lbl">более 15</span>
+</div>
+</div>
+</div>
+<div class="cm-t-hardware-alert" id="cm-hardware-status">
+<span class="cm-hw-icon">⚖️</span>
+<span id="cm-hw-desc"><strong>Тест-драйв 14 дней:</strong> начните без риска. Если софт не окупится в первые две недели, мы вернем деньги за подписку!</span>
+</div>
+</div>
+<div class="cm-t-right-side">
+<div class="cm-total-title">Стоимость подписки:</div>
+<div class="cm-t-final-price" id="cm-display-price">1 490 ₽</div>
+<div class="cm-t-period">в месяц за весь салон</div>
+<ul class="cm-t-benefits-list">
+<li id="cm-li-scales"><strong>1 комплект:</strong> весы + софт</li>
+<li id="cm-li-limits">Лимит: до 50 формул колористики</li>
+<li>Авто-расчет пропорций и красок</li>
+<li>Персональный менеджер поддержки</li>
+<li id="cm-li-analytics">Аналитика расхода каждого мастера</li>
+</ul>
+<a href="#cm-footer" onclick="cmSendTariffToForm(event)" class="cm-t-submit-btn">Оформить доступ</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="cm-section" id="cm-footer">
+<div class="cm-inner">
+<div class="cm-footer-container">
+<div class="cm-footer-info">
+<h2 class="cm-footer-h2">Станьте первыми</h2>
+<p class="cm-footer-p">
+Мы набираем <strong>50 салонов</strong> в программу раннего доступа.
+Вы получите оборудование одними из первых и сможете напрямую влиять на развитие приложения во время бета-тестов.
+</p>
+<div class="cm-footer-meta">
+<div class="cm-meta-item">⚡️ Осталось мест: <strong><span id="cm-places-counter">14</span> из 50</strong></div>
+<div class="cm-meta-item">📦 Доставка весов за наш счет</div>
+</div>
+</div>
+<div class="cm-footer-form-box">
+<form id="cm-tg-form" class="cm-footer-form" novalidate>
+<div class="cm-hp" aria-hidden="true"><label>Ваш сайт<input type="text" id="form-website" name="website" tabindex="-1" autocomplete="off"></label></div>
+<div class="cm-form-group">
+<label class="cm-form-label">Ваше имя</label>
+<input type="text" id="form-name" name="name" placeholder="Введите имя" class="cm-form-input">
+</div>
+<div class="cm-form-group">
+<label class="cm-form-label">Телефон *</label>
+<div class="cm-error-message" id="cm-phone-error" style="font-size: 12px; color: #FF453A; margin-bottom: 6px; font-weight: 500; display: none;">Введите корректный номер телефона</div>
+<input type="tel" id="form-phone" name="phone" placeholder="+7 (___) ___-__-__" value="+7 " required class="cm-form-input">
+</div>
+<div class="cm-form-group">
+<label class="cm-form-label">Количество мастеров</label>
+<select id="form-tariff" name="tariff" class="cm-form-select">
+<option value="1 мастер" selected>1 мастер</option>
+<option value="2 мастера">2 мастера</option>
+<option value="3 мастера">3 мастера</option>
+<option value="4 мастера">4 мастера</option>
+<option value="5 мастеров">5 мастеров</option>
+<option value="6 мастеров">6 мастеров</option>
+<option value="7 мастеров">7 мастеров</option>
+<option value="8 мастеров">8 мастеров</option>
+<option value="9 мастеров">9 мастеров</option>
+<option value="10 мастеров">10 мастеров</option>
+<option value="11 мастеров">11 мастеров</option>
+<option value="12 мастеров">12 мастеров</option>
+<option value="13 мастеров">13 мастеров</option>
+<option value="14 мастеров">14 мастеров</option>
+<option value="15 мастеров">15 мастеров</option>
+<option value="Более 15 мастеров">Более 15 мастеров</option>
+</select>
+</div>
+<div class="cm-form-group cm-privacy-group">
+<div class="cm-error-message" id="cm-privacy-error" style="font-size: 12px; color: #FF453A; margin-bottom: 8px; font-weight: 500; display: none;">Необходимо подтвердить согласие</div>
+<label class="cm-privacy-label">
+<input type="checkbox" id="form-privacy" name="privacy" required>
+<span class="cm-privacy-custom-box"></span>
+<span class="cm-privacy-text">
+Я согласен на <a href="https://colormasterpro.ru/privacy" target="_blank">обработку персональных данных</a> и принимаю условия оферты
+</span>
+</label>
+</div>
+<button type="submit" id="form-submit-btn" class="cm-form-btn">Забронировать место</button>
+<div id="cm-form-status" class="cm-form-status" role="status" aria-live="polite"></div>
+</form>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+(function(){
+var feats = {
+weigh: ['Вес с весов → автоматически в поле','Стабилизация определяется без нажатий','Одна кнопка — граммы списаны в базу','Остаток краски обновляется мгновенно'],
+catalog: ['Все краски с остатками и цветными статусами','Индикатор: зелёный / жёлтый / красный','Поиск по названию или бренду','Добавление с защитой паролем'],
+clients: ['Списки мастеров и клиентов','История сессий по каждому клиенту','Просмотр расхода компонентов','Привязка клиента при взвешивании'],
+history: ['Полный лог: мастер, клиент, компоненты','Фильтры по мастеру, клиенту, периоду','Редактирование и удаление записей','Экспорт выбранного периода'],
+settings:['Экспорт логов в CSV','Смена пароля администратора','Управление BLE-устройствами','Информация о версии приложения'],
+};
+window.cmShowScreen = function(id, btn) {
+document.querySelectorAll('.cm-pscreen').forEach(function(s){ s.classList.remove('cm-on'); });
+document.querySelectorAll('.cm-stab').forEach(function(b){ b.classList.remove('cm-on'); });
+document.getElementById('cm-sc-'+id).classList.add('cm-on');
+btn.classList.add('cm-on');
+var list = document.getElementById('cm-feat-list');
+list.innerHTML = feats[id].map(function(f){ return '<li>'+f+'</li>'; }).join('');
+};
+window.cmAnimWeigh = function() {
+var w = document.getElementById('cm-sw');
+var v = 0; var t = 12.4;
+var iv = setInterval(function(){
+v = Math.min(v + 0.6, t);
+w.textContent = v.toFixed(1);
+if(v >= t){ clearInterval(iv); }
+}, 40);
+};
+})();
+</script>
+
+<script>
+let cmRoiState = {
+masters: 4,
+expense: 150000,
+subPrice: 2990
+};
+document.addEventListener("DOMContentLoaded", function() {
+const inputMasters = document.getElementById("input-masters");
+const inputExpense = document.getElementById("input-expense");
+const valMasters = document.getElementById("val-masters");
+const valExpense = document.getElementById("val-expense");
+const resSubPrice = document.getElementById("res-sub-price");
+const resSavedColor = document.getElementById("res-saved-color");
+const resNetProfit = document.getElementById("res-net-profit");
+const resDays = document.getElementById("res-days");
+const resRoi = document.getElementById("res-roi");
+const badgesHardware = document.querySelectorAll(".badge-hardware-qty");
+function calculateROI() {
+const masters = parseInt(inputMasters.value);
+const expense = parseInt(inputExpense.value);
+valMasters.innerText = masters;
+valExpense.innerText = expense.toLocaleString('ru-RU') + " ₽";
+let subPrice = 1490 + (masters - 1) * 500;
+let hardwareQty = "1 комплект";
+if (masters >= 7) {
+subPrice += 1000;
+hardwareQty = "2 комплекта";
+}
+cmRoiState.masters = masters;
+cmRoiState.expense = expense;
+cmRoiState.subPrice = subPrice;
+const savedColor = Math.round(expense * 0.15);
+const netProfit = savedColor - subPrice;
+let paybackDays = 0;
+if (savedColor > 0) {
+paybackDays = Math.ceil((subPrice / savedColor) * 30);
+}
+if (paybackDays < 1) paybackDays = 1;
+let roiPercent = 0;
+if (subPrice > 0 && netProfit > 0) {
+roiPercent = Math.round((netProfit / subPrice) * 100);
+}
+badgesHardware.forEach(function(badge) {
+badge.innerText = hardwareQty;
+});
+resSubPrice.innerHTML = subPrice.toLocaleString('ru-RU') + " ₽<small>/мес</small>";
+resSavedColor.innerHTML = savedColor.toLocaleString('ru-RU') + " ₽<small>/мес</small>";
+if (netProfit > 0) {
+resNetProfit.innerHTML = netProfit.toLocaleString('ru-RU') + " ₽<small>/мес</small>";
+resNetProfit.style.color = "var(--cm-green)";
+resDays.parentNode.style.display = "flex";
+resDays.innerText = paybackDays + " " + getNoun(paybackDays, 'день', 'дня', 'дней');
+resRoi.innerText = roiPercent + "%";
+} else {
+resNetProfit.innerHTML = netProfit.toLocaleString('ru-RU') + " ₽<small>/мес</small>";
+resNetProfit.style.color = "var(--cm-red)";
+resDays.parentNode.style.display = "none";
+}
+}
+function getNoun(number, one, two, five) {
+let n = Math.abs(number);
+n %= 100;
+if (n >= 5 && n <= 20) return five;
+n %= 10;
+if (n === 1) return one;
+if (n >= 2 && n <= 4) return two;
+return five;
+}
+inputMasters.addEventListener("input", calculateROI);
+inputExpense.addEventListener("input", calculateROI);
+calculateROI();
+});
+function cmSendRoiToForm(e) {
+if (e) e.preventDefault();
+const selectTariff = document.getElementById('form-tariff');
+const roiDataText = `Расчет ROI: Мастеров: ${cmRoiState.masters}, Расход краски: ${cmRoiState.expense.toLocaleString('ru-RU')}₽ (Подписка: ${cmRoiState.subPrice}₽)`;
+if (selectTariff) {
+let opt = selectTariff.querySelector('option[data-custom-roi="true"]');
+if (!opt) {
+opt = document.createElement('option');
+opt.setAttribute('data-custom-roi', 'true');
+selectTariff.appendChild(opt);
+}
+opt.value = roiDataText;
+opt.textContent = `Тариф из Калькулятора ROI (${cmRoiState.masters} маст.)`;
+selectTariff.value = roiDataText;
+}
+const hiddenMasters = document.getElementById('form-roi-masters');
+const hiddenExpense = document.getElementById('form-roi-expense');
+if (hiddenMasters) hiddenMasters.value = cmRoiState.masters;
+if (hiddenExpense) hiddenExpense.value = cmRoiState.expense;
+const footerBlock = document.getElementById('cm-footer');
+if (footerBlock) {
+footerBlock.scrollIntoView({ behavior: 'smooth' });
+}
+}
+</script>
+
+<script>
+let cmTariffState = {
+masters: 1,
+isMoreThan15: false,
+price: 1490,
+scales: 1
+};
+function cmCalculatePrice(val, isMorePressed) {
+const slider = document.getElementById('cm-m-scale');
+const moreBtn = document.getElementById('cm-btn-more');
+const mDisplay = document.getElementById('cm-m-display');
+const priceDisplay = document.getElementById('cm-display-price');
+const hwStatus = document.getElementById('cm-hardware-status');
+const liScales = document.getElementById('cm-li-scales');
+const liLimits = document.getElementById('cm-li-limits');
+const liAnalytics = document.getElementById('cm-li-analytics');
+if (isMorePressed) {
+cmTariffState.isMoreThan15 = true;
+cmTariffState.masters = "15+";
+cmTariffState.scales = 2;
+cmTariffState.price = 9490;
+moreBtn.classList.add('cm-circle-active');
+slider.disabled = true;
+slider.style.opacity = "0.3";
+mDisplay.innerText = "15+";
+} else {
+cmTariffState.isMoreThan15 = false;
+cmTariffState.masters = parseInt(val);
+slider.value = val;
+moreBtn.classList.remove('cm-circle-active');
+slider.disabled = false;
+slider.style.opacity = "1";
+mDisplay.innerText = val;
+let calculatedPrice = 1490 + (cmTariffState.masters - 1) * 500;
+if (cmTariffState.masters >= 7) {
+cmTariffState.scales = 2;
+calculatedPrice += 1000;
+} else {
+cmTariffState.scales = 1;
+}
+cmTariffState.price = calculatedPrice;
+}
+if (cmTariffState.isMoreThan15) {
+priceDisplay.innerText = "Индивидуально";
+priceDisplay.style.fontSize = "1.8rem";
+} else {
+priceDisplay.innerText = cmTariffState.price.toLocaleString('ru-RU') + ' ₽';
+priceDisplay.style.fontSize = "2.3rem";
+}
+// Сохраняем красивое переключение подсветки плашки для интерактива
+if (cmTariffState.scales === 2 || cmTariffState.isMoreThan15) {
+hwStatus.style.setProperty('border-color', 'var(--cm-purple)', 'important');
+hwStatus.style.setProperty('background', 'rgba(108, 59, 255, 0.08)', 'important');
+liScales.innerHTML = "<strong>2 комплекта:</strong> весы + софт";
+} else {
+hwStatus.style.setProperty('border-color', 'rgba(52, 211, 153, 0.25)', 'important');
+hwStatus.style.setProperty('background', 'rgba(52, 211, 153, 0.02)', 'important');
+liScales.innerHTML = "<strong>1 комплект:</strong> весы + софт";
+}
+if (cmTariffState.masters === 1 && !cmTariffState.isMoreThan15) {
+liLimits.innerHTML = "Лимит: до 50 формул колористики";
+liLimits.style.removeProperty('color');
+liAnalytics.classList.add('cm-feat-disabled');
+} else {
+liLimits.innerHTML = "<strong>Без лимитов:</strong> формулы колористики";
+liAnalytics.classList.remove('cm-feat-disabled');
+}
+}
+function cmToggleMoreThan15() {
+if (cmTariffState.isMoreThan15) {
+cmCalculatePrice(15, false);
+} else {
+cmCalculatePrice(15, true);
+}
+}
+function cmSendTariffToForm(e) {
+if (e) e.preventDefault();
+const select = document.getElementById('form-tariff');
+if (select) {
+let textValue = "";
+if (cmTariffState.isMoreThan15) {
+textValue = "Более 15 мастеров";
+} else {
+let num = cmTariffState.masters;
+let word = "мастеров";
+if (num % 10 === 1 && num % 100 !== 11) {
+word = "мастер";
+} else if ((num % 10 >= 2 && num % 10 <= 4) && (num % 100 < 10 || num % 100 >= 20)) {
+word = "мастера";
+}
+textValue = `${num} ${word}`;
+}
+select.value = textValue;
+}
+document.getElementById('cm-footer').scrollIntoView({ behavior: 'smooth' });
+}
+document.addEventListener("DOMContentLoaded", function() {
+cmCalculatePrice(1, false);
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("cm-tg-form");
+  const nameInput = document.getElementById("form-name");
+  const phoneInput = document.getElementById("form-phone");
+  const tariffInput = document.getElementById("form-tariff");
+  const privacyInput = document.getElementById("form-privacy");
+  const websiteInput = document.getElementById("form-website");
+  const phoneError = document.getElementById("cm-phone-error");
+  const privacyError = document.getElementById("cm-privacy-error");
+  const submitBtn = document.getElementById("form-submit-btn");
+  const status = document.getElementById("cm-form-status");
+
+  if (!form || !phoneInput || !privacyInput || !submitBtn) return;
+
+  phoneInput.addEventListener("focus", function () {
+    if (!phoneInput.value.trim()) phoneInput.value = "+7 ";
+  });
+
+  phoneInput.addEventListener("input", function () {
+    if (!phoneInput.value.startsWith("+7 ")) {
+      phoneInput.value = "+7 " + phoneInput.value.replace(/^\+?7?\s?/, "");
+    }
+    if (phoneInput.value.replace(/\D/g, "").length >= 11) {
+      phoneInput.classList.remove("cm-input-error");
+      if (phoneError) phoneError.style.display = "none";
+    }
+  });
+
+  privacyInput.addEventListener("change", function () {
+    if (privacyInput.checked && privacyError) privacyError.style.display = "none";
+  });
+
+  form.addEventListener("submit", async function (event) {
+    event.preventDefault();
+    status.className = "cm-form-status";
+    status.textContent = "";
+
+    const digits = phoneInput.value.replace(/\D/g, "");
+    let invalid = false;
+
+    if (digits.length < 11) {
+      phoneInput.classList.add("cm-input-error");
+      if (phoneError) phoneError.style.display = "block";
+      invalid = true;
+    }
+    if (!privacyInput.checked) {
+      if (privacyError) privacyError.style.display = "block";
+      invalid = true;
+    }
+    if (invalid) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Отправка...";
+
+    try {
+      const response = await fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: nameInput ? nameInput.value.trim() : "",
+          phone: phoneInput.value.trim(),
+          tariff: tariffInput ? tariffInput.value : "",
+          privacy: privacyInput.checked,
+          website: websiteInput ? websiteInput.value : ""
+        })
+      });
+
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(result.error || "Не удалось отправить заявку");
+
+      status.className = "cm-form-status cm-ok";
+      status.textContent = "Спасибо! Заявка отправлена. Мы свяжемся с вами.";
+      form.reset();
+      phoneInput.value = "+7 ";
+      if (tariffInput) tariffInput.value = "1 мастер";
+    } catch (error) {
+      console.error(error);
+      status.className = "cm-form-status cm-error";
+      status.textContent = "Заявка не отправлена. Попробуйте ещё раз или свяжитесь с нами другим способом.";
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Забронировать место";
+    }
+  });
+});
+</script>
+</body>
+</html>
