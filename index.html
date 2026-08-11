@@ -2160,10 +2160,85 @@ html,body{background:var(--cm-v5-bg)!important;color:var(--cm-v5-text)!important
 .cm-prob,.cm-sol,.cm-tc,.cm-demo-grid>div:first-child{border-color:var(--cm-v5-line)!important;}
 </style>
 
+
+<style id="cm-visual-fixes-v6">
+/* v6 — visibility fixes for pricing constructor + persistent brand header */
+.cm-sitebar{
+  position:relative;z-index:3;width:min(100%,1320px);margin:0 auto 6px;
+  display:flex;align-items:center;justify-content:flex-start;
+}
+.cm-sitebrand{
+  display:inline-flex;align-items:center;gap:10px;color:#fff!important;text-decoration:none!important;
+  font-family:'Manrope',sans-serif!important;font-size:1.02rem!important;font-weight:800!important;
+  letter-spacing:-.025em!important;line-height:1!important;
+}
+.cm-sitebrand-mark{
+  width:17px;height:17px;border-radius:5px;background:var(--cm-v5-purple);position:relative;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);
+}
+.cm-sitebrand-mark::after{
+  content:'';position:absolute;width:6px;height:6px;border-radius:2px;background:#fff;right:3px;top:3px;opacity:.88;
+}
+
+/* The left side of the pricing constructor sits on a light surface.
+   Force every control/label to use the light-theme palette rather than inherited dark-theme tokens. */
+#cm-tariffs .cm-slider-container,
+#cm-tariffs .cm-slider-top-row,
+#cm-tariffs .cm-control-row,
+#cm-tariffs .cm-range-wrapper,
+#cm-tariffs .cm-more-than-box{
+  background:transparent!important;color:var(--cm-v5-text)!important;
+}
+#cm-tariffs .cm-slider-lbl{
+  color:#3C3740!important;font-weight:750!important;font-size:.96rem!important;
+}
+#cm-tariffs .cm-m-badge-num{
+  color:var(--cm-v5-purple)!important;font-family:'Manrope',sans-serif!important;font-weight:800!important;
+}
+#cm-tariffs .cm-range-limits-tariff{
+  color:#77717C!important;font-size:.76rem!important;font-weight:650!important;
+}
+#cm-tariffs .cm-more-lbl{
+  color:#77717C!important;font-size:.68rem!important;font-weight:750!important;
+}
+#cm-tariffs input[type=range].cm-range-slider-tariff{
+  background:#CEC9D2!important;height:5px!important;
+}
+#cm-tariffs input[type=range].cm-range-slider-tariff::-webkit-slider-thumb{
+  background:var(--cm-v5-surface)!important;border:4px solid var(--cm-v5-purple)!important;
+  box-shadow:0 0 0 4px rgba(104,70,245,.10)!important;
+}
+#cm-tariffs input[type=range].cm-range-slider-tariff::-moz-range-thumb{
+  background:var(--cm-v5-surface)!important;border:4px solid var(--cm-v5-purple)!important;
+  box-shadow:0 0 0 4px rgba(104,70,245,.10)!important;
+}
+#cm-tariffs .cm-circle-more-btn{
+  background:#fff!important;border:1px solid #BDB7C4!important;box-shadow:none!important;
+}
+#cm-tariffs .cm-circle-dot{background:#8B8491!important;}
+#cm-tariffs .cm-circle-more-btn.cm-active,
+#cm-tariffs .cm-circle-more-btn:hover{border-color:var(--cm-v5-purple)!important;}
+#cm-tariffs .cm-circle-more-btn.cm-active .cm-circle-dot{background:var(--cm-v5-purple)!important;}
+#cm-tariffs .cm-t-hardware-alert{
+  color:#625D67!important;background:#FAF9F8!important;border-color:#D9D5DC!important;
+}
+#cm-tariffs .cm-t-hardware-alert strong{color:#18161D!important;}
+
+@media (max-width:700px){
+  .cm-sitebar{margin-bottom:18px;}
+  .cm-sitebrand{font-size:.96rem!important;}
+}
+</style>
 </head>
 <body>
 <div class="cm-hero">
 <div class="cm-hero-glow"></div>
+<div class="cm-sitebar" aria-label="ColorMaster Pro">
+  <a class="cm-sitebrand" href="#" aria-label="ColorMaster Pro — на главную">
+    <span class="cm-sitebrand-mark" aria-hidden="true"></span>
+    <span>ColorMaster Pro</span>
+  </a>
+</div>
 <div class="cm-hero-shell">
   <div class="cm-hero-copy">
     <div class="cm-badge">
