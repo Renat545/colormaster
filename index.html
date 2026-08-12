@@ -2448,6 +2448,63 @@ body {
 }
 </style>
 
+
+<style id="cm-problems-refresh-v10">
+/* v10 — problem block becomes a business argument, not a flat table */
+.cm-ps-section .cm-inner{max-width:1320px!important;}
+.cm-grid2{
+  display:grid!important;
+  grid-template-columns:1.12fr .88fr!important;
+  gap:14px!important;
+  border:0!important;
+  margin-top:38px!important;
+  margin-bottom:78px!important;
+}
+.cm-prob{
+  background:#fff!important;
+  border:1px solid #D9D4DC!important;
+  border-radius:16px!important;
+  padding:26px 28px 28px!important;
+  min-height:248px!important;
+  box-shadow:0 16px 42px rgba(34,26,40,.045)!important;
+}
+.cm-prob::before{display:none!important;content:none!important;}
+.cm-prob-featured{
+  background:linear-gradient(180deg,#fff 0%,#faf7ff 100%)!important;
+  border-color:#D9D0FF!important;
+  box-shadow:0 22px 56px rgba(104,70,245,.08)!important;
+}
+.cm-prob-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;}
+.cm-prob-num{font-size:.72rem;font-weight:800;letter-spacing:.14em;color:#A09AA4;}
+.cm-prob-ico{
+  position:static!important;
+  width:42px!important;height:42px!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  border-radius:11px!important;
+  background:#F3EEFF!important;
+  border:1px solid #DDD3FF!important;
+  color:var(--v8-purple)!important;
+}
+.cm-prob-ico .cm-line-icon{width:20px;height:20px;}
+.cm-prob-meta{font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#8F8995;margin-bottom:16px;}
+.cm-prob-metric{font-size:2rem;line-height:.95;font-weight:800;letter-spacing:-.05em;color:#17151C;margin-bottom:6px;}
+.cm-prob-featured .cm-prob-metric{font-size:3rem;margin-bottom:8px;}
+.cm-prob-metric-label{font-size:.84rem;line-height:1.45;color:#6B6670;margin-bottom:18px;max-width:28ch;}
+.cm-prob-t{font-size:1.12rem!important;line-height:1.24!important;margin-bottom:10px!important;color:#19171D!important;}
+.cm-prob-d{font-size:.92rem!important;line-height:1.62!important;color:#66616B!important;max-width:38ch;}
+.cm-prob-featured .cm-prob-d{max-width:45ch;}
+.cm-prob:hover{transform:translateY(-2px);border-color:#CFC7DA!important;box-shadow:0 20px 48px rgba(34,26,40,.065)!important;}
+@media(max-width:1100px){
+  .cm-grid2{grid-template-columns:1fr 1fr!important;}
+  .cm-prob-featured .cm-prob-metric{font-size:2.5rem;}
+}
+@media(max-width:760px){
+  .cm-grid2{grid-template-columns:1fr!important;gap:12px!important;}
+  .cm-prob{min-height:auto!important;padding:24px!important;}
+  .cm-prob-featured .cm-prob-metric,.cm-prob-metric{font-size:2rem!important;}
+}
+</style>
+
 </head>
 <body>
 <div class="cm-hero">
@@ -2677,10 +2734,38 @@ body {
 <h2 class="cm-stitle">Звучит знакомо?</h2>
 <p class="cm-ssub">Опросили более 100 владельцев салонов — и вот, что мешает работать </p>
 <div class="cm-grid2">
-<div class="cm-prob pr"><div class="cm-prob-ico"><span class="cm-line-icon cm-icon-chart" aria-hidden="true"></span></div><div class="cm-prob-t">Краска уходит в никуда</div><div class="cm-prob-d">Мастера отмеряют "на глаз". За месяц теряется 12–18% запасов — и никто не знает куда.</div></div>
-<div class="cm-prob pg"><div class="cm-prob-ico"><span class="cm-line-icon cm-icon-clock" aria-hidden="true"></span></div><div class="cm-prob-t">Нехватка в разгар работы</div><div class="cm-prob-d">Краска заканчивается, когда клиент уже в кресле. Срыв записи, потеря репутации.</div></div>
-<div class="cm-prob pv"><div class="cm-prob-ico"><span class="cm-line-icon cm-icon-doc" aria-hidden="true"></span></div><div class="cm-prob-t">30 минут учёта каждый день</div><div class="cm-prob-d">Тетрадки, Excel, мессенджеры – данные неточные, а время персонала тратится впустую.</div></div>
-<div class="cm-prob pm"><div class="cm-prob-ico"><span class="cm-line-icon cm-icon-wallet" aria-hidden="true"></span></div><div class="cm-prob-t">Нет контроля над расходами</div><div class="cm-prob-d">Невозможно посчитать точную себестоимость окрашивания. Часть услуг работает в минус.</div></div>
+<div class="cm-prob cm-prob-featured pr">
+  <div class="cm-prob-top"><span class="cm-prob-num">01</span><div class="cm-prob-ico"><span class="cm-line-icon cm-icon-chart" aria-hidden="true"></span></div></div>
+  <div class="cm-prob-meta">Потери материала</div>
+  <div class="cm-prob-metric">12–18%</div>
+  <div class="cm-prob-metric-label">запасов краски теряется ежемесячно без точного учёта</div>
+  <div class="cm-prob-t">Краска уходит в никуда</div>
+  <div class="cm-prob-d">Мастера отмеряют «на глаз», поэтому расход не фиксируется, а запасы тают незаметно и без ответов на вопрос, куда именно ушёл материал.</div>
+</div>
+<div class="cm-prob pg">
+  <div class="cm-prob-top"><span class="cm-prob-num">02</span><div class="cm-prob-ico"><span class="cm-line-icon cm-icon-clock" aria-hidden="true"></span></div></div>
+  <div class="cm-prob-meta">Срыв работы</div>
+  <div class="cm-prob-metric">в разгар</div>
+  <div class="cm-prob-metric-label">краска заканчивается в самый неудобный момент</div>
+  <div class="cm-prob-t">Нехватка в разгар работы</div>
+  <div class="cm-prob-d">Когда клиент уже в кресле, нехватка материала превращается в сорванную запись и потерю доверия.</div>
+</div>
+<div class="cm-prob pv">
+  <div class="cm-prob-top"><span class="cm-prob-num">03</span><div class="cm-prob-ico"><span class="cm-line-icon cm-icon-doc" aria-hidden="true"></span></div></div>
+  <div class="cm-prob-meta">Потеря времени</div>
+  <div class="cm-prob-metric">30 минут</div>
+  <div class="cm-prob-metric-label">ежедневно уходит на ручной учёт</div>
+  <div class="cm-prob-t">30 минут учёта каждый день</div>
+  <div class="cm-prob-d">Тетрадки, Excel и мессенджеры не дают точных данных, а время персонала тратится не на клиентов, а на рутину.</div>
+</div>
+<div class="cm-prob pm">
+  <div class="cm-prob-top"><span class="cm-prob-num">04</span><div class="cm-prob-ico"><span class="cm-line-icon cm-icon-wallet" aria-hidden="true"></span></div></div>
+  <div class="cm-prob-meta">Деньги под вопросом</div>
+  <div class="cm-prob-metric">в минус</div>
+  <div class="cm-prob-metric-label">часть услуг оказывается без видимой прибыли</div>
+  <div class="cm-prob-t">Нет контроля над расходами</div>
+  <div class="cm-prob-d">Без точной себестоимости невозможно понять, какие услуги действительно зарабатывают, а какие работают в минус.</div>
+</div>
 </div>
 <p class="cm-slabel">Решение</p>
 <h2 class="cm-stitle">ColorMaster Pro закрывает всё</h2>
