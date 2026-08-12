@@ -2229,6 +2229,72 @@ html,body{background:var(--cm-v5-bg)!important;color:var(--cm-v5-text)!important
   .cm-sitebrand{font-size:.96rem!important;}
 }
 </style>
+
+<style id="cm-layout-motion-fixes-v7">
+/* v7 — remove horizontal page overflow and restore the ticker motion */
+html,
+body {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  overflow-x: clip !important;
+}
+
+/* The decorative ROI glow used to sit 180px outside the viewport and created
+   a horizontal scroll area. Keep the effect, but clip it inside the section. */
+#cm-roi {
+  overflow: hidden !important;
+  contain: paint;
+}
+
+.cm-hero,
+.cm-ticker-wrap,
+.cm-demo-section,
+.cm-ps-section,
+#cm-roi,
+.cm-testi-section,
+#cm-tariffs,
+#cm-footer {
+  width: 100% !important;
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Continuous ticker: two identical content sets are already present in HTML. */
+@keyframes cm-ticker-v7 {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+.cm-ticker-wrap {
+  position: relative !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+}
+
+.cm-ticker {
+  display: flex !important;
+  width: max-content !important;
+  min-width: max-content !important;
+  flex-wrap: nowrap !important;
+  animation: cm-ticker-v7 30s linear infinite !important;
+  animation-play-state: running !important;
+  will-change: transform;
+}
+
+.cm-tick {
+  flex: 0 0 auto !important;
+}
+
+/* Keep motion accessible, but don't collapse the ticker into a static-looking row. */
+@media (prefers-reduced-motion: reduce) {
+  .cm-ticker {
+    animation: cm-ticker-v7 60s linear infinite !important;
+  }
+}
+</style>
+
 </head>
 <body>
 <div class="cm-hero">
