@@ -3,15 +3,176 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ColorMaster Pro — функциональный каркас</title>
+<title>ColorMaster Pro — функциональный каркас v2</title>
 <meta name="description" content="Функциональный каркас сайта ColorMaster Pro без финального визуального оформления.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  /* ВАЖНО: это не дизайн. Только минимальные стили для проверки структуры и функций. */
-  *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font:16px/1.55 system-ui,-apple-system,Segoe UI,sans-serif;color:#19171d;background:#fff}
-  a{color:inherit} button,input,select{font:inherit} button{cursor:pointer}
-  .wrap{width:min(1100px,calc(100% - 32px));margin:auto}.nav{position:sticky;top:0;background:#fff;border-bottom:1px solid #ddd;z-index:10}.nav .wrap{display:flex;align-items:center;gap:18px;min-height:62px;overflow:auto;white-space:nowrap}.brand{font-weight:800;margin-right:auto}.nav a{font-size:14px;text-decoration:none}
-  section{padding:64px 0;border-bottom:1px solid #e5e5e5}.hero{padding-top:78px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:28px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.box{border:1px solid #ccc;padding:20px;border-radius:8px}.placeholder{border:1px dashed #999;min-height:300px;padding:20px;display:flex;align-items:center;justify-content:center;text-align:center;color:#666}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border:1px solid #222;background:#222;color:#fff;text-decoration:none;border-radius:6px}.btn.alt{background:#fff;color:#222}.muted{color:#666}.metric{font-size:30px;font-weight:800}.field{display:grid;gap:6px;margin:18px 0}.field input,.field select{min-height:44px;padding:8px 10px;border:1px solid #aaa;border-radius:5px}.calc-result{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:20px}.calc-result .box{padding:14px}.result-big{font-size:24px;font-weight:800}.faq-item{border-top:1px solid #ddd}.faq-item:last-child{border-bottom:1px solid #ddd}.faq-q{width:100%;padding:18px 0;border:0;background:transparent;display:flex;justify-content:space-between;text-align:left;font-weight:700}.faq-a{display:none;padding:0 0 18px;color:#555}.faq-item.open .faq-a{display:block}.status{min-height:24px;margin-top:10px;font-weight:700}.status.ok{color:green}.status.err{color:#b00020}.inline{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.hidden{display:none!important}.small{font-size:13px;color:#666}.summary{background:#f7f7f7;padding:18px;border:1px solid #ddd;border-radius:6px}.section-index{font-size:13px;color:#777;margin-bottom:6px}.list{padding-left:20px}.wire-note{background:#fffbe6;border:1px solid #e8d878;padding:12px 16px;margin:20px 0;border-radius:6px}
-  @media(max-width:760px){.grid2,.grid3,.calc-result{grid-template-columns:1fr}.nav a:not(.brand){display:none}section{padding:48px 0}}
+  /* Глобальная дизайн-система v2. Модули пока намеренно не стилизуем отдельно. */
+  :root{
+    --cm-bg:#F4F0E9;
+    --cm-surface:#F8F5EF;
+    --cm-surface-strong:#FCFAF6;
+    --cm-text:#1C1A1F;
+    --cm-muted:#6F6972;
+    --cm-line:#D8D1C8;
+    --cm-line-strong:#C9C0B5;
+    --cm-accent:#6D4AFF;
+    --cm-accent-hover:#5C3BE8;
+    --cm-accent-soft:#EEE9FF;
+    --cm-success:#2E7D5B;
+    --cm-error:#A93C50;
+    --cm-radius:14px;
+    --cm-radius-lg:18px;
+    --cm-content:1180px;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:'Onest',ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:17px;
+    line-height:1.62;
+    color:var(--cm-text);
+    background:var(--cm-bg);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  a{color:inherit}
+  button,input,select{font:inherit}
+  button{cursor:pointer}
+  h1,h2,h3,p{margin-top:0}
+  h1{
+    font-size:clamp(3rem,6vw,5rem);
+    line-height:.98;
+    letter-spacing:-.055em;
+    font-weight:700;
+    max-width:850px;
+    margin-bottom:24px;
+  }
+  h2{
+    font-size:clamp(2rem,4vw,3.5rem);
+    line-height:1.04;
+    letter-spacing:-.045em;
+    font-weight:700;
+    margin-bottom:28px;
+  }
+  strong{font-weight:650}
+  p{color:var(--cm-muted)}
+
+  .wrap{width:min(var(--cm-content),calc(100% - 48px));margin:auto}
+  .nav{
+    position:sticky;top:0;z-index:10;
+    background:rgba(244,240,233,.92);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--cm-line);
+  }
+  .nav .wrap{display:flex;align-items:center;gap:24px;min-height:70px;overflow:auto;white-space:nowrap}
+  .brand{font-weight:750;margin-right:auto;font-size:1.12rem;letter-spacing:-.025em;text-decoration:none;color:var(--cm-text)}
+  .nav a{font-size:14px;text-decoration:none;color:var(--cm-muted);font-weight:550}
+  .nav a:hover{color:var(--cm-text)}
+  .nav a[href="#contact"]{color:var(--cm-accent);font-weight:650}
+
+  section{padding:82px 0;border-bottom:1px solid var(--cm-line);background:var(--cm-bg)}
+  .hero{padding-top:96px;padding-bottom:92px}
+  .hero p{font-size:1.12rem;max-width:720px}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+
+  /* Нейтральные поверхности. Не считаем это дизайном конкретного блока. */
+  .box,.summary,.placeholder{
+    border:1px solid var(--cm-line);
+    background:var(--cm-surface);
+    border-radius:var(--cm-radius-lg);
+  }
+  .box{padding:24px}
+  .placeholder{
+    min-height:300px;padding:28px;
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    color:var(--cm-muted);
+    border-style:dashed;
+  }
+  .summary{padding:24px}
+
+  .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    min-height:50px;padding:0 22px;
+    border:1px solid var(--cm-accent);
+    background:var(--cm-accent);
+    color:#fff;text-decoration:none;
+    border-radius:12px;
+    font-weight:650;
+    transition:background .16s ease,border-color .16s ease,transform .16s ease;
+  }
+  .btn:hover{background:var(--cm-accent-hover);border-color:var(--cm-accent-hover);transform:translateY(-1px)}
+  .btn.alt{background:transparent;color:var(--cm-text);border-color:var(--cm-line-strong)}
+  .btn.alt:hover{background:var(--cm-surface);border-color:var(--cm-text)}
+
+  .muted{color:var(--cm-muted)}
+  .metric{font-size:34px;line-height:1.1;font-weight:700;letter-spacing:-.04em}
+  .result-big{font-size:25px;line-height:1.15;font-weight:700;letter-spacing:-.035em;color:var(--cm-text)}
+
+  .field{display:grid;gap:8px;margin:20px 0}
+  .field label{font-size:.94rem;font-weight:550;color:var(--cm-text)}
+  .field input:not([type="range"]),.field select{
+    min-height:50px;padding:10px 13px;
+    border:1px solid var(--cm-line-strong);
+    border-radius:11px;
+    background:var(--cm-surface-strong);
+    color:var(--cm-text);
+    outline:none;
+  }
+  .field input:not([type="range"]):focus,.field select:focus{border-color:var(--cm-accent);box-shadow:0 0 0 3px rgba(109,74,255,.11)}
+  input[type="range"]{accent-color:var(--cm-accent);width:100%}
+  input[type="checkbox"]{accent-color:var(--cm-accent)}
+
+  .calc-result{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:20px}
+  .calc-result .box{padding:16px;background:var(--cm-surface-strong)}
+  .calc-result .box:nth-child(3),.calc-result .box:nth-child(5){border-color:#CFC4FF;background:var(--cm-accent-soft)}
+
+  .faq-item{border-top:1px solid var(--cm-line)}
+  .faq-item:last-child{border-bottom:1px solid var(--cm-line)}
+  .faq-q{
+    width:100%;padding:20px 0;border:0;background:transparent;
+    display:flex;justify-content:space-between;gap:24px;text-align:left;
+    color:var(--cm-text);font-weight:600;
+  }
+  .faq-q span{color:var(--cm-accent);font-size:1.2rem}
+  .faq-a{display:none;padding:0 0 20px;color:var(--cm-muted);max-width:840px}
+  .faq-item.open .faq-a{display:block}
+
+  .status{min-height:24px;margin-top:10px;font-weight:600}
+  .status.ok{color:var(--cm-success)}
+  .status.err{color:var(--cm-error)}
+  .inline{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .hidden{display:none!important}
+  .small{font-size:13px;color:var(--cm-muted)}
+  .section-index{display:none}
+  .list{padding-left:20px;color:var(--cm-muted)}
+  .list li{margin:7px 0}
+  .wire-note{
+    background:var(--cm-accent-soft);
+    border:1px solid #D7CCFF;
+    color:#554A79;
+    padding:14px 16px;margin:20px 0;border-radius:12px;
+  }
+  .dev-note{display:none}
+
+  @media(max-width:760px){
+    body{font-size:16px}
+    .wrap{width:min(var(--cm-content),calc(100% - 32px))}
+    .grid2,.grid3,.calc-result{grid-template-columns:1fr}
+    .nav a:not(.brand):not([href="#contact"]){display:none}
+    section{padding:62px 0}
+    .hero{padding-top:72px;padding-bottom:68px}
+    h1{font-size:clamp(2.7rem,13vw,4.3rem)}
+    h2{font-size:clamp(2rem,9vw,3rem)}
+    .btn{width:100%}
+  }
 </style>
 </head>
 <body>
@@ -79,7 +240,7 @@
       <div class="box"><strong>Каталог и остатки</strong><p>Компоненты, текущий остаток, предупреждения и поиск.</p></div>
       <div class="box"><strong>История клиента и формул</strong><p>Сессии, мастер, использованные компоненты и их фактический вес.</p></div>
     </div>
-    <div class="wire-note">Реальные скриншоты уже есть. Пока не определяем способ их визуальной подачи — только фиксируем, какие сценарии обязательно должны быть показаны.</div>
+    <div class="wire-note dev-note">Реальные скриншоты уже есть. Пока не определяем способ их визуальной подачи — только фиксируем, какие сценарии обязательно должны быть показаны.</div>
   </div>
 </section>
 
