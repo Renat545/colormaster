@@ -222,7 +222,7 @@
   }
 
 
-  /* HOW v2 — product-led scroll story */
+  /* HOW v3 — manual tabs only */
   .how-story{
     padding:116px 0 126px;
     border-bottom:1px solid var(--cm-line);
@@ -259,7 +259,21 @@
   }
   .how-story-steps{
     padding-top:36px;
+    position:relative;
   }
+  .how-click-hint{
+    position:absolute;
+    top:-2px;
+    right:4px;
+    width:28px;
+    height:28px;
+    color:#BBB2C3;
+    opacity:.42;
+    pointer-events:none;
+    transition:opacity .25s ease, transform .25s ease;
+  }
+  .how-click-hint svg{display:block;width:100%;height:100%}
+  .how-story-steps:hover .how-click-hint{opacity:.62;transform:translateY(-1px)}
   .how-story-step{
     appearance:none;
     width:100%;
@@ -279,6 +293,7 @@
   .how-story-step:last-child{border-bottom:1px solid var(--cm-line)}
   .how-story-step:hover{opacity:.72}
   .how-story-step.is-active{opacity:1;transform:translateX(8px)}
+  .how-story-step:focus-visible{outline:2px solid rgba(109,74,255,.35);outline-offset:6px;border-radius:10px}
   .how-story-num{
     font-size:1rem;
     line-height:1.1;
@@ -404,7 +419,8 @@
     .how-story-head{grid-template-columns:1fr;gap:22px;margin-bottom:46px}
     .how-story-head p{max-width:620px}
     .how-story-layout{grid-template-columns:1fr;gap:30px}
-    .how-story-steps{padding-top:0}
+    .how-story-steps{padding-top:8px}
+    .how-click-hint{top:-8px;right:0}
     .how-story-product{position:relative;top:auto;min-height:660px;padding-top:8px}
   }
   @media(max-width:760px){
@@ -412,6 +428,7 @@
     .how-story-head{margin-bottom:34px}
     .how-story-head h2{font-size:clamp(2.7rem,12vw,4rem)}
     .how-story-step{grid-template-columns:48px minmax(0,1fr);gap:12px;padding:24px 0 26px}
+    .how-click-hint{width:24px;height:24px;top:-10px;right:0;opacity:.36}
     .how-story-step.is-active{transform:none}
     .how-story-title{font-size:1.48rem}
     .how-story-copy{font-size:.96rem}
@@ -736,7 +753,7 @@ form.addEventListener('submit',async e=>{
 });
 
 
-// Product-led "How it works" module.
+// Product-led "How it works" module — manual switching only.
 (() => {
   const steps = [...document.querySelectorAll('[data-how-step]')];
   const screens = [...document.querySelectorAll('[data-how-screen]')];
@@ -757,16 +774,15 @@ form.addEventListener('submit',async e=>{
     dots.forEach((el,i)=>el.classList.toggle('is-active',i===index));
     if (caption) caption.textContent = captions[index];
   };
-  steps.forEach((step,i)=>step.addEventListener('click',()=>setActive(i)));
-  if ('IntersectionObserver' in window && window.innerWidth > 1040) {
-    const observer = new IntersectionObserver((entries)=>{
-      const visible = entries
-        .filter(e=>e.isIntersecting)
-        .sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
-      if (visible) setActive(Number(visible.target.dataset.howStep));
-    },{rootMargin:'-28% 0px -45% 0px',threshold:[0,.15,.3,.5,.7]});
-    steps.forEach(step=>observer.observe(step));
-  }
+  steps.forEach((step,i)=>{
+    step.addEventListener('click',()=>setActive(i));
+    step.addEventListener('keydown',(e)=>{
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        setActive(i);
+      }
+    });
+  });
 })();
 
 </script>
