@@ -1,699 +1,303 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ColorMaster Pro — контроль расхода красителей для салона</title>
-  <meta name="description" content="Bluetooth-весы автоматически передают данные в ColorMaster Pro. Остатки, формулы и себестоимость — без ручного учёта." />
-  <style>
-    :root{
-      --bg:#f5f3ef;
-      --paper:#fffdfa;
-      --ink:#17151c;
-      --muted:#6f6a74;
-      --line:#ddd7e1;
-      --soft:#ece6f2;
-      --accent:#6d4aff;
-      --accent-2:#8d73ff;
-      --accent-soft:#efebff;
-      --graphite:#16131c;
-      --graphite-2:#1c1923;
-      --graphite-3:#252130;
-      --success:#2fa673;
-      --warning:#d18a1d;
-      --danger:#c44f61;
-      --shadow:0 24px 70px rgba(27,24,35,.08);
-      --radius:28px;
-      --radius-sm:18px;
-      --container:1280px;
-    }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-    img{max-width:100%;display:block}
-    a{text-decoration:none;color:inherit}
-    button,input,select{font:inherit}
-    .container{width:min(calc(100% - 48px),var(--container));margin:0 auto}
-    .section{padding:110px 0}
-    .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
-    .eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent)}
-    h1,h2,h3,p{margin:0}
-    h1{font-size:clamp(3.35rem,7vw,5.8rem);line-height:.96;letter-spacing:-.055em;font-weight:780}
-    h2{font-size:clamp(2.1rem,4.5vw,4rem);line-height:1;letter-spacing:-.05em;font-weight:760}
-    h3{font-size:1.28rem;line-height:1.2;letter-spacing:-.03em;font-weight:720}
-    p.lead{font-size:1.18rem;line-height:1.65;color:rgba(255,255,255,.72);max-width:620px}
-    p.copy{font-size:1rem;line-height:1.7;color:var(--muted)}
-    .btn-row{display:flex;flex-wrap:wrap;gap:14px}
-    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:56px;padding:0 26px;border-radius:16px;font-weight:760;font-size:1rem;transition:.18s ease;border:1px solid transparent;cursor:pointer}
-    .btn-primary{background:linear-gradient(135deg,var(--accent),#7d6bff);color:#fff;box-shadow:0 20px 48px rgba(109,74,255,.25)}
-    .btn-primary:hover{transform:translateY(-1px);box-shadow:0 24px 56px rgba(109,74,255,.32)}
-    .btn-secondary{border-color:rgba(255,255,255,.18);color:#fff;background:rgba(255,255,255,.04)}
-    .btn-light{border-color:var(--line);background:#fff;color:var(--ink)}
-    .site-header{position:sticky;top:0;z-index:40;backdrop-filter:saturate(140%) blur(12px);background:rgba(245,243,239,.78);border-bottom:1px solid rgba(221,215,225,.7)}
-    .site-header .container{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:78px}
-    .brand{display:flex;align-items:center;gap:12px;font-weight:780;font-size:1.45rem;letter-spacing:-.03em}
-    .brand-mark{width:14px;height:14px;border-radius:4px;background:linear-gradient(135deg,var(--accent),#9e8dff);transform:rotate(45deg);box-shadow:0 0 0 6px rgba(109,74,255,.12)}
-    nav{display:flex;align-items:center;gap:30px}
-    nav a{font-size:.96rem;color:#635e68;font-weight:650}
-    .header-cta{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border-radius:13px;background:#fff;border:1px solid var(--line);font-size:.94rem;font-weight:760}
-
-    .hero{position:relative;overflow:hidden;background:radial-gradient(900px 520px at 70% 10%,rgba(109,74,255,.18),transparent 55%),linear-gradient(180deg,#18151e 0%,#110f16 100%);color:#fff;padding:54px 0 70px}
-    .hero::after{content:"";position:absolute;inset:auto -15% -36% auto;width:620px;height:620px;border-radius:50%;background:radial-gradient(circle,rgba(109,74,255,.08),transparent 65%);pointer-events:none}
-    .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(520px,610px);gap:54px;align-items:center;padding-top:36px}
-    .hero-copy{padding:26px 0 10px}
-    .hero-copy .eyebrow{margin-bottom:24px}
-    .hero-copy h1{max-width:680px;margin-bottom:24px}
-    .hero-copy h1 .accent{color:#b6a9ff}
-    .hero-copy .lead{margin-bottom:32px}
-    .hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:56px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);border-radius:24px;overflow:hidden}
-    .hero-stat{padding:26px 26px 24px;border-right:1px solid rgba(255,255,255,.08)}
-    .hero-stat:last-child{border-right:none}
-    .hero-stat strong{display:block;font-size:2rem;line-height:1;letter-spacing:-.05em;font-weight:780;margin-bottom:8px}
-    .hero-stat span{font-size:.95rem;color:rgba(255,255,255,.58)}
-
-    .hero-visual{position:relative;min-height:700px}
-    .hero-panel{position:absolute;inset:0;border:1px solid rgba(255,255,255,.12);border-radius:34px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));box-shadow:0 40px 120px rgba(0,0,0,.22);padding:24px 24px 26px}
-    .hero-panel-top{display:flex;justify-content:space-between;align-items:center;color:rgba(255,255,255,.7);font-size:.85rem;margin-bottom:18px}
-    .hero-panel-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03)}
-    .hero-panel-badge::before{content:"";width:8px;height:8px;border-radius:50%;background:#55d291}
-    .hero-device-area{position:relative;height:620px;border-radius:26px;background:linear-gradient(180deg,#1b1822 0%,#131018 100%);border:1px solid rgba(255,255,255,.08);overflow:hidden}
-    .hero-device-area::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:42px 42px;opacity:.25;mask-image:linear-gradient(to bottom,rgba(0,0,0,.65),rgba(0,0,0,.2));}
-    .scale-card{position:absolute;left:28px;bottom:28px;width:260px;padding:24px;border-radius:26px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(12px)}
-    .scale-plate{width:100%;height:138px;border-radius:26px;border:1px solid rgba(181,168,255,.4);background:linear-gradient(180deg,rgba(109,74,255,.08),rgba(109,74,255,.02));position:relative;margin-bottom:18px}
-    .scale-plate::before{content:"";position:absolute;left:50%;top:-16px;transform:translateX(-50%);width:136px;height:26px;border-radius:50%;border:1px solid rgba(255,255,255,.22);background:#17141b}
-    .scale-screen{position:absolute;left:44px;right:44px;bottom:22px;height:42px;border-radius:11px;border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:760;color:#c4b7ff;letter-spacing:.08em}
-    .scale-card p{font-size:.93rem;color:rgba(255,255,255,.7);line-height:1.6}
-    .device-phone{position:absolute;box-shadow:0 28px 70px rgba(0,0,0,.36);border-radius:42px;overflow:hidden;border:8px solid #0d0b11;background:#0d0b11}
-    .device-phone.main{width:280px;right:42px;top:58px;transform:rotate(0deg)}
-    .device-phone.side{width:238px;right:244px;top:170px;transform:rotate(-6deg);opacity:.96}
-    .device-phone img{width:100%;height:auto;display:block}
-    .floating-card{position:absolute;padding:16px 18px;border-radius:18px;background:#fff;border:1px solid #ece7f2;box-shadow:var(--shadow);color:var(--ink);max-width:240px}
-    .floating-card small{display:block;font-size:.74rem;color:#8a8491;margin-bottom:8px;text-transform:uppercase;letter-spacing:.12em;font-weight:800}
-    .floating-card strong{display:block;font-size:1.72rem;line-height:1;letter-spacing:-.04em;margin-bottom:8px}
-    .floating-card p{font-size:.92rem;line-height:1.45;color:#6b6670}
-    .floating-a{top:54px;left:24px}
-    .floating-b{right:18px;bottom:32px}
-    .floating-c{left:306px;bottom:94px;max-width:212px}
-    .floating-c strong{font-size:1.42rem;color:var(--accent)}
-    .mini-foot{display:flex;gap:22px;align-items:center;margin-top:20px;font-size:.86rem;color:rgba(255,255,255,.58)}
-    .mini-foot span{display:inline-flex;align-items:center;gap:8px}
-    .mini-foot span::before{content:"";width:6px;height:6px;border-radius:50%;background:#7c62fa}
-
-    .light-section{background:var(--bg)}
-    .section-head{display:flex;justify-content:space-between;align-items:end;gap:28px;margin-bottom:36px}
-    .section-head p{max-width:520px}
-
-    .problems-wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
-    .pain-major{background:linear-gradient(180deg,#fff 0%,#faf7ff 100%);border:1px solid #ded6f2;border-radius:32px;padding:34px 34px 30px;box-shadow:var(--shadow);min-height:420px;display:flex;flex-direction:column;justify-content:space-between}
-    .pain-major .metric{font-size:5.2rem;line-height:.92;letter-spacing:-.08em;font-weight:800;color:var(--ink);margin-bottom:10px}
-    .pain-major .metric-note{font-size:1.02rem;color:#676271;max-width:38ch;line-height:1.65}
-    .pain-grid{display:grid;gap:18px}
-    .pain-card{background:#fff;border:1px solid var(--line);border-radius:28px;padding:28px;box-shadow:0 18px 42px rgba(27,24,35,.045)}
-    .pain-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-    .pain-tag{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:.76rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
-    .pain-icon{width:42px;height:42px;border-radius:12px;background:#f4efff;color:var(--accent);display:grid;place-items:center;border:1px solid #e3dafd}
-    .pain-icon svg{width:20px;height:20px}
-    .pain-card h3{margin-bottom:10px}
-    .pain-card p{color:#6f6a74;line-height:1.7}
-    .pain-major-bottom{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}
-    .micro{padding:16px;border-radius:18px;background:rgba(109,74,255,.06);border:1px solid rgba(109,74,255,.12)}
-    .micro strong{display:block;font-size:1.18rem;letter-spacing:-.03em;margin-bottom:6px}
-    .micro span{font-size:.9rem;color:#6f6a74;line-height:1.55}
-
-    .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    .step-card{background:#fff;border:1px solid var(--line);border-radius:30px;padding:28px;box-shadow:0 16px 40px rgba(27,24,35,.05);display:flex;flex-direction:column;gap:22px}
-    .step-num{font-size:.78rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#8f8995}
-    .step-visual{border-radius:24px;background:linear-gradient(180deg,#f7f4fb,#efebf5);padding:18px;min-height:245px;display:grid;place-items:center;overflow:hidden;border:1px solid #e5deed}
-    .step-visual.dark{background:linear-gradient(180deg,#201d28,#16131c);border-color:#2b2536}
-    .step-visual.dark img,.step-visual.light img{border-radius:24px}
-    .step-desc p{color:#6f6a74;line-height:1.7}
-    .signal-flow{display:flex;align-items:center;gap:12px;width:100%;justify-content:center}
-    .signal-flow .box{width:84px;height:84px;border-radius:24px;background:#fff;border:1px solid #ddd5e7;display:grid;place-items:center;box-shadow:0 12px 32px rgba(27,24,35,.05)}
-    .signal-flow .arrow{flex:1;height:2px;background:linear-gradient(90deg,#cabdff,var(--accent));position:relative;max-width:110px}
-    .signal-flow .arrow::after{content:"";position:absolute;right:-1px;top:50%;transform:translateY(-50%) rotate(45deg);width:10px;height:10px;border-top:2px solid var(--accent);border-right:2px solid var(--accent)}
-    .icon-scale{position:relative;width:64px;height:48px;border-radius:14px;border:1px solid #baaaff;background:#f5f1ff}
-    .icon-scale::before{content:"";position:absolute;left:50%;top:-10px;transform:translateX(-50%);width:42px;height:12px;border-radius:50%;border:1px solid #cfc4f7;background:#fff}
-    .icon-scale::after{content:"3.5";position:absolute;left:15px;right:15px;bottom:9px;height:18px;border-radius:6px;border:1px solid #d9cffd;display:grid;place-items:center;font-size:.8rem;color:var(--accent);font-weight:800}
-    .icon-app{width:64px;height:84px;border-radius:18px;background:#18151d;border:6px solid #101015;position:relative;box-shadow:0 10px 24px rgba(0,0,0,.18)}
-    .icon-app::before,.icon-app::after{content:"";position:absolute;left:12px;right:12px;border-radius:5px;background:rgba(255,255,255,.1)}
-    .icon-app::before{top:18px;height:10px}.icon-app::after{top:36px;height:28px;border:1px solid rgba(255,255,255,.08);background:rgba(109,74,255,.16)}
-    .icon-money{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#7a62ff,#a58fff);display:grid;place-items:center;color:#fff;font-size:1.6rem;font-weight:780;box-shadow:0 18px 40px rgba(109,74,255,.25)}
-
-    .interface-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:18px}
-    .showcase-panel{background:#fff;border:1px solid var(--line);border-radius:32px;padding:28px;box-shadow:var(--shadow);min-height:620px;position:relative;overflow:hidden}
-    .showcase-panel.dark{background:linear-gradient(180deg,#16131c,#141118);border-color:#26222f;color:#fff}
-    .showcase-copy{max-width:350px;margin-bottom:18px}
-    .showcase-copy p{color:inherit;opacity:.72;line-height:1.7}
-    .annot{position:absolute;display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:#fff;box-shadow:0 18px 42px rgba(27,24,35,.1);border:1px solid #e7e1ee;font-size:.92rem;color:#5d5863;max-width:250px}
-    .annot::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--accent);flex:0 0 auto}
-    .big-phone{width:min(100%,360px);margin:28px auto 0;border-radius:46px;overflow:hidden;border:8px solid #0d0b11;box-shadow:0 34px 78px rgba(0,0,0,.24)}
-    .showcase-stack{display:grid;grid-template-rows:1fr 1fr;gap:18px}
-    .stack-panel{background:#fff;border:1px solid var(--line);border-radius:32px;padding:24px;box-shadow:var(--shadow);display:grid;grid-template-columns:1fr 220px;gap:18px;align-items:center}
-    .stack-panel .mini-screen{border-radius:28px;overflow:hidden;border:8px solid #0d0b11;box-shadow:0 18px 44px rgba(0,0,0,.2)}
-    .feature-list{display:grid;gap:14px;margin-top:18px}
-    .feature-list li{list-style:none;position:relative;padding-left:22px;color:#6f6a74;line-height:1.65}
-    .feature-list li::before{content:"";position:absolute;left:0;top:.6em;width:8px;height:8px;border-radius:50%;background:var(--accent)}
-
-    .roi-shell{display:grid;grid-template-columns:.9fr 1.1fr;gap:18px;align-items:stretch}
-    .roi-copy{background:linear-gradient(180deg,#18151e,#120f17);color:#fff;border-radius:32px;padding:34px;position:relative;overflow:hidden}
-    .roi-copy p{color:rgba(255,255,255,.72);line-height:1.72;max-width:48ch}
-    .roi-copy .big{font-size:4.2rem;font-weight:800;letter-spacing:-.06em;line-height:.94;margin:20px 0 8px;color:#c7b9ff}
-    .roi-copy .badge{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);margin-bottom:26px}
-    .roi-card{background:#fff;border:1px solid var(--line);border-radius:32px;padding:32px;box-shadow:var(--shadow)}
-    .range-group{margin-bottom:28px}
-    .range-top{display:flex;align-items:baseline;justify-content:space-between;gap:18px;margin-bottom:12px}
-    .range-top label{font-size:.95rem;font-weight:700;color:#514c55}
-    .range-value{font-size:1.4rem;letter-spacing:-.04em;font-weight:780;color:var(--accent)}
-    input[type=range]{width:100%;appearance:none;height:6px;border-radius:999px;background:#ebe5f0;outline:none}
-    input[type=range]::-webkit-slider-thumb{appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;border:5px solid var(--accent);box-shadow:0 6px 12px rgba(109,74,255,.2)}
-    input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#fff;border:5px solid var(--accent)}
-    .roi-results{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:24px}
-    .roi-box{padding:18px;border-radius:22px;background:#f7f4fa;border:1px solid #ebe4f1}
-    .roi-box span{display:block;font-size:.84rem;color:#7d7783;margin-bottom:8px}
-    .roi-box strong{display:block;font-size:2rem;line-height:1;letter-spacing:-.05em}
-    .roi-box.accent{background:linear-gradient(180deg,#f3efff,#ede7ff);border-color:#ddd3ff}
-    .roi-box.profit strong{color:#1b1a20}
-
-    .trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-    .trust-card{background:#fff;border:1px solid var(--line);border-radius:28px;padding:24px;box-shadow:0 14px 34px rgba(27,24,35,.05)}
-    .trust-card .num{font-size:.78rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#968fa0;margin-bottom:16px}
-    .trust-card h3{margin-bottom:10px}
-    .trust-card p{color:#6f6a74;line-height:1.65}
-
-    .cta-shell{background:linear-gradient(180deg,#1a1720,#131019);color:#fff;border-radius:36px;padding:36px;display:grid;grid-template-columns:.9fr 1.1fr;gap:28px;box-shadow:0 30px 90px rgba(0,0,0,.16)}
-    .cta-copy p{color:rgba(255,255,255,.72);line-height:1.72;max-width:42ch}
-    .cta-points{display:grid;gap:12px;margin-top:26px}
-    .cta-points div{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.82)}
-    .cta-points div::before{content:"";width:8px;height:8px;border-radius:50%;background:#66dda3}
-    .lead-form{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:28px;padding:22px}
-    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    .field{display:grid;gap:8px}
-    .field.full{grid-column:1 / -1}
-    .field label{font-size:.88rem;color:rgba(255,255,255,.72)}
-    .field input,.field select{width:100%;min-height:54px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:#faf8ff;color:var(--ink);padding:0 16px}
-    .field input::placeholder{color:#8f8997}
-    .check{display:flex;gap:10px;align-items:flex-start;color:rgba(255,255,255,.68);font-size:.88rem;line-height:1.45}
-    .check input{margin-top:3px}
-    .form-note{font-size:.86rem;color:rgba(255,255,255,.56)}
-    .form-status{min-height:22px;font-size:.92rem;font-weight:650}
-    .form-status.success{color:#6ae3a7}.form-status.error{color:#ff8f9f}
-
-    footer{padding:34px 0 44px;color:#7c7781}
-    .footer-row{display:flex;justify-content:space-between;gap:24px;align-items:center;border-top:1px solid var(--line);padding-top:24px}
-    .footer-links{display:flex;gap:24px;flex-wrap:wrap}
-
-    @media (max-width: 1200px){
-      .hero-grid{grid-template-columns:1fr;gap:36px}
-      .hero-visual{min-height:760px}
-      .interface-grid,.roi-shell,.cta-shell,.problems-wrap{grid-template-columns:1fr}
-      .how-grid,.trust-grid{grid-template-columns:repeat(2,1fr)}
-      .stack-panel{grid-template-columns:1fr}
-    }
-    @media (max-width: 900px){
-      .container{width:min(calc(100% - 32px),var(--container))}
-      nav{display:none}
-      .hero{padding-top:20px}
-      .hero-stats{grid-template-columns:repeat(2,1fr)}
-      .hero-device-area{height:610px}
-      .device-phone.main{width:235px;right:24px;top:70px}
-      .device-phone.side{width:190px;right:194px;top:200px}
-      .floating-a{left:16px;top:24px}.floating-b{right:16px;bottom:18px}.floating-c{left:18px;bottom:138px}
-      .scale-card{width:220px}
-      .how-grid,.trust-grid{grid-template-columns:1fr}
-      .pain-major-bottom{grid-template-columns:1fr}
-      .form-grid,.roi-results{grid-template-columns:1fr}
-      .footer-row{flex-direction:column;align-items:flex-start}
-    }
-    @media (max-width: 640px){
-      .site-header .container{min-height:70px}
-      .brand{font-size:1.2rem}
-      .header-cta{display:none}
-      .section{padding:84px 0}
-      .hero-copy .lead{font-size:1rem}
-      .btn{width:100%}
-      .hero-stats{grid-template-columns:1fr}
-      .hero-stat{border-right:none;border-bottom:1px solid rgba(255,255,255,.08)}
-      .hero-stat:last-child{border-bottom:none}
-      .hero-visual{min-height:650px}
-      .hero-panel{padding:16px}
-      .hero-device-area{height:560px}
-      .device-phone.main{width:178px;right:12px;top:100px;border-width:6px;border-radius:28px}
-      .device-phone.side{width:148px;right:136px;top:216px;border-width:6px;border-radius:24px}
-      .scale-card{left:14px;bottom:14px;width:180px;padding:16px;border-radius:18px}
-      .scale-plate{height:112px;border-radius:18px}
-      .scale-plate::before{width:92px;height:18px;top:-11px}
-      .scale-screen{left:28px;right:28px;bottom:16px;font-size:1.15rem;height:34px}
-      .floating-card{padding:12px 13px;max-width:170px;border-radius:14px}
-      .floating-card strong{font-size:1.24rem}
-      .floating-card p{font-size:.8rem}
-      .floating-a{top:14px;left:12px}
-      .floating-b{display:none}
-      .floating-c{left:auto;right:12px;bottom:20px}
-      .hero-panel-top{font-size:.75rem}
-      .section-head{margin-bottom:26px}
-      .pain-major,.pain-card,.step-card,.showcase-panel,.stack-panel,.roi-copy,.roi-card,.trust-card,.cta-shell{border-radius:24px}
-      .showcase-panel{padding:22px}
-      .annot{position:static;margin:12px 0 0}
-      .lead-form{padding:18px}
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ColorMaster Pro — функциональный каркас</title>
+<meta name="description" content="Функциональный каркас сайта ColorMaster Pro без финального визуального оформления.">
+<style>
+  /* ВАЖНО: это не дизайн. Только минимальные стили для проверки структуры и функций. */
+  *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font:16px/1.55 system-ui,-apple-system,Segoe UI,sans-serif;color:#19171d;background:#fff}
+  a{color:inherit} button,input,select{font:inherit} button{cursor:pointer}
+  .wrap{width:min(1100px,calc(100% - 32px));margin:auto}.nav{position:sticky;top:0;background:#fff;border-bottom:1px solid #ddd;z-index:10}.nav .wrap{display:flex;align-items:center;gap:18px;min-height:62px;overflow:auto;white-space:nowrap}.brand{font-weight:800;margin-right:auto}.nav a{font-size:14px;text-decoration:none}
+  section{padding:64px 0;border-bottom:1px solid #e5e5e5}.hero{padding-top:78px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:28px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.box{border:1px solid #ccc;padding:20px;border-radius:8px}.placeholder{border:1px dashed #999;min-height:300px;padding:20px;display:flex;align-items:center;justify-content:center;text-align:center;color:#666}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border:1px solid #222;background:#222;color:#fff;text-decoration:none;border-radius:6px}.btn.alt{background:#fff;color:#222}.muted{color:#666}.metric{font-size:30px;font-weight:800}.field{display:grid;gap:6px;margin:18px 0}.field input,.field select{min-height:44px;padding:8px 10px;border:1px solid #aaa;border-radius:5px}.calc-result{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:20px}.calc-result .box{padding:14px}.result-big{font-size:24px;font-weight:800}.faq-item{border-top:1px solid #ddd}.faq-item:last-child{border-bottom:1px solid #ddd}.faq-q{width:100%;padding:18px 0;border:0;background:transparent;display:flex;justify-content:space-between;text-align:left;font-weight:700}.faq-a{display:none;padding:0 0 18px;color:#555}.faq-item.open .faq-a{display:block}.status{min-height:24px;margin-top:10px;font-weight:700}.status.ok{color:green}.status.err{color:#b00020}.inline{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.hidden{display:none!important}.small{font-size:13px;color:#666}.summary{background:#f7f7f7;padding:18px;border:1px solid #ddd;border-radius:6px}.section-index{font-size:13px;color:#777;margin-bottom:6px}.list{padding-left:20px}.wire-note{background:#fffbe6;border:1px solid #e8d878;padding:12px 16px;margin:20px 0;border-radius:6px}
+  @media(max-width:760px){.grid2,.grid3,.calc-result{grid-template-columns:1fr}.nav a:not(.brand){display:none}section{padding:48px 0}}
+</style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container">
-      <a href="#top" class="brand"><span class="brand-mark"></span> ColorMaster Pro</a>
-      <nav>
-        <a href="#how">Как работает</a>
-        <a href="#pain">Проблема</a>
-        <a href="#interface">Интерфейс</a>
-        <a href="#roi">Экономика</a>
-        <a href="#contact">Контакты</a>
-      </nav>
-      <a href="#contact" class="header-cta">Заказать звонок</a>
-    </div>
-  </header>
+<nav class="nav" aria-label="Навигация по функциональному каркасу">
+  <div class="wrap">
+    <a class="brand" href="#hero">ColorMaster Pro</a>
+    <a href="#how">Как работает</a>
+    <a href="#problems">Проблемы</a>
+    <a href="#product">Продукт</a>
+    <a href="#savings">Экономия</a>
+    <a href="#benefits">Результаты</a>
+    <a href="#pricing">Тариф</a>
+    <a href="#trust">Подключение</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Заказать звонок</a>
+  </div>
+</nav>
 
-  <main id="top">
-    <section class="hero">
-      <div class="container">
-        <div class="hero-grid">
-          <div class="hero-copy">
-            <div class="eyebrow">Beauty-tech для салонов красоты</div>
-            <h1>Зарабатывайте больше<br>на привычном <span class="accent">окрашивании</span></h1>
-            <p class="lead">Весы автоматически передают данные в ColorMaster Pro. Остатки, формулы и себестоимость теперь без ручного учёта.</p>
-            <div class="btn-row">
-              <a class="btn btn-primary" href="#contact">Заказать звонок</a>
-              <a class="btn btn-secondary" href="#interface">Посмотреть интерфейс</a>
-            </div>
-            <div class="mini-foot">
-              <span>Bluetooth-весы</span>
-              <span>Автосписание</span>
-              <span>История по клиенту и мастеру</span>
-            </div>
-          </div>
-
-          <div class="hero-visual" aria-label="Сцена продукта ColorMaster Pro">
-            <div class="hero-panel">
-              <div class="hero-panel-top">
-                <span>ColorMaster Pro · весы + приложение</span>
-                <span class="hero-panel-badge">Система готова к работе</span>
-              </div>
-              <div class="hero-device-area">
-                <div class="floating-card floating-a">
-                  <small>сессия окрашивания</small>
-                  <strong>3.5 г</strong>
-                  <p>Новая порция краски автоматически списана и привязана к мастеру и клиенту.</p>
-                </div>
-                <div class="floating-card floating-b">
-                  <small>остаток</small>
-                  <strong>106.5 г</strong>
-                  <p>Система сразу обновляет остатки и помогает избежать нехватки в разгар записи.</p>
-                </div>
-                <div class="floating-card floating-c">
-                  <small>себестоимость</small>
-                  <strong>от 1 840 ₽</strong>
-                  <p>Точная стоимость материалов по каждой услуге.</p>
-                </div>
-
-                <div class="device-phone main"><img src="assets/app-session.jpg" alt="Экран сессии ColorMaster Pro" /></div>
-                <div class="device-phone side"><img src="assets/app-weight.jpg" alt="Экран взвешивания ColorMaster Pro" /></div>
-
-                <div class="scale-card">
-                  <div class="scale-plate">
-                    <div class="scale-screen">37.4</div>
-                  </div>
-                  <p>Bluetooth-весы передают фактический расход без ручного ввода. Данные сразу попадают в систему.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="hero-stats">
-          <div class="hero-stat"><strong>до 18%</strong><span>меньше неконтролируемых потерь красителя</span></div>
-          <div class="hero-stat"><strong>3 сек</strong><span>на автоматическое списание материала</span></div>
-          <div class="hero-stat"><strong>0 тетрадей</strong><span>и ручного учёта «на глаз»</span></div>
-          <div class="hero-stat"><strong>до грамма</strong><span>понятна фактическая себестоимость услуги</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section light-section" id="pain">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <div class="eyebrow">Где салон теряет деньги</div>
-            <h2 style="margin-top:16px">Проблема не в краске.<br>Проблема — в слепом учёте.</h2>
-          </div>
-          <p class="copy">ColorMaster Pro убирает серую зону между тем, что мастер реально использовал, и тем, что владелец салона видит в остатках, формулах и себестоимости.</p>
-        </div>
-
-        <div class="problems-wrap">
-          <article class="pain-major">
-            <div>
-              <div class="pain-tag">Основная потеря бизнеса</div>
-              <div class="metric">12–18%</div>
-              <p class="metric-note">столько материала может уходить без точного контроля расхода. Вы закупаете краситель, но не видите, куда именно он исчезает.</p>
-            </div>
-            <div class="pain-major-bottom">
-              <div class="micro"><strong>Запасы тают</strong><span>а причина потерь остаётся неочевидной.</span></div>
-              <div class="micro"><strong>Себестоимость плавает</strong><span>и часть услуг оказывается менее прибыльной, чем кажется.</span></div>
-              <div class="micro"><strong>Команда тратит время</strong><span>не на клиента, а на ручной учёт и поиск ошибок.</span></div>
-            </div>
-          </article>
-
-          <div class="pain-grid">
-            <article class="pain-card">
-              <div class="pain-top">
-                <span class="pain-tag">Сценарий 01</span>
-                <div class="pain-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M6 18V10"/><path d="M12 18V4"/><path d="M18 18v-7"/></svg>
-                </div>
-              </div>
-              <h3>Фактический расход с ошибками</h3>
-              <p>Материал списывается примерно, а не по реальному весу. В результате владелец салона получает искажённые остатки и не понимает точную прибыль по окрашиванию.</p>
-            </article>
-
-            <article class="pain-card">
-              <div class="pain-top">
-                <span class="pain-tag">Сценарий 02</span>
-                <div class="pain-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v5l3 2"/></svg>
-                </div>
-              </div>
-              <h3>Ежедневный ручной учёт «на глаз»</h3>
-              <p>Тетрадки, Excel и мессенджеры забирают время команды. При этом цифры всё равно расходятся, а ежедневная рутина не даёт надёжной картины по расходам.</p>
-            </article>
-
-            <article class="pain-card">
-              <div class="pain-top">
-                <span class="pain-tag">Сценарий 03</span>
-                <div class="pain-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4"/><path d="M10 13h6"/><path d="M10 17h4"/></svg>
-                </div>
-              </div>
-              <h3>Формулы на бумаге</h3>
-              <p>История смешиваний живёт отдельно от реального расхода. Мастеру и владельцу сложно быстро вернуться к прошлой формуле, проверить остаток и восстановить логику списания.</p>
-            </article>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="how">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <div class="eyebrow">Как работает система</div>
-            <h2 style="margin-top:16px">Один рабочий процесс.<br>Три результата для бизнеса.</h2>
-          </div>
-          <p class="copy">ColorMaster Pro соединяет физический расход материала с ежедневной работой салона. Весы, приложение и экономика бизнеса оказываются в одном цифровом контуре.</p>
-        </div>
-
-        <div class="how-grid">
-          <article class="step-card">
-            <div class="step-num">Шаг 01</div>
-            <div class="step-visual">
-              <div class="signal-flow">
-                <div class="box"><div class="icon-scale"></div></div>
-                <div class="arrow"></div>
-                <div class="box"><div class="icon-app"></div></div>
-              </div>
-            </div>
-            <div class="step-desc">
-              <h3>Весы передают точный расход</h3>
-              <p>Мастер работает как обычно, но теперь фактический вес не теряется. Bluetooth-весы передают данные без ручного ввода.</p>
-            </div>
-          </article>
-
-          <article class="step-card">
-            <div class="step-num">Шаг 02</div>
-            <div class="step-visual dark"><img src="assets/app-session.jpg" alt="Сессия окрашивания в приложении" /></div>
-            <div class="step-desc">
-              <h3>Сессия привязывается к мастеру и клиенту</h3>
-              <p>ColorMaster Pro сохраняет историю по каждому окрашиванию: кто работал, что использовал, сколько ушло и из каких компонентов состояла формула.</p>
-            </div>
-          </article>
-
-          <article class="step-card">
-            <div class="step-num">Шаг 03</div>
-            <div class="step-visual">
-              <div class="signal-flow">
-                <div class="box"><div class="icon-app"></div></div>
-                <div class="arrow"></div>
-                <div class="box"><div class="icon-money">₽</div></div>
-              </div>
-            </div>
-            <div class="step-desc">
-              <h3>Салон получает остатки, формулы и себестоимость</h3>
-              <p>Владельцу больше не нужно гадать, где расходуется материал. Система показывает, что происходит с запасами и сколько реально стоит услуга.</p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section light-section" id="interface">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <div class="eyebrow">Интерфейс продукта</div>
-            <h2 style="margin-top:16px">Приложение не объясняет идею.<br>Оно сразу показывает факты.</h2>
-          </div>
-          <p class="copy">Мы не прячем продукт за абстрактными иконками. На сайте вы видите реальный интерфейс: каталог, сессии, взвешивание, история по клиенту и контроль остатков.</p>
-        </div>
-
-        <div class="interface-grid">
-          <div class="showcase-panel dark">
-            <div class="showcase-copy">
-              <h3 style="margin-bottom:10px">Сессия окрашивания</h3>
-              <p>Мастер устанавливает тару, выбирает клиента и фиксирует использованные компоненты. Итоговый расход сразу попадает в историю салона.</p>
-            </div>
-            <div class="big-phone"><img src="assets/app-session.jpg" alt="Сессия окрашивания ColorMaster Pro" /></div>
-            <div class="annot" style="top:110px;right:28px;">Вес каждой порции фиксируется автоматически, а не вручную.</div>
-            <div class="annot" style="left:28px;bottom:118px;">Использованные компоненты сразу становятся частью истории по клиенту и мастеру.</div>
-          </div>
-
-          <div class="showcase-stack">
-            <article class="stack-panel">
-              <div>
-                <h3>Каталог и контроль остатков</h3>
-                <p class="copy" style="margin-top:10px">Команда видит компоненты и текущий остаток, а бизнес быстрее замечает дефицит и ошибки в работе с материалами.</p>
-                <ul class="feature-list">
-                  <li>понятный каталог компонентов;</li>
-                  <li>статусы и предупреждения по остаткам;</li>
-                  <li>быстрый поиск без бумажных записей.</li>
-                </ul>
-              </div>
-              <div class="mini-screen"><img src="assets/app-catalog.jpg" alt="Каталог компонентов ColorMaster Pro" /></div>
-            </article>
-
-            <article class="stack-panel">
-              <div>
-                <h3>История по клиенту и формуле</h3>
-                <p class="copy" style="margin-top:10px">По каждому клиенту можно быстро вернуться к прошлым сессиям, формуле окрашивания и использованным компонентам.</p>
-                <ul class="feature-list">
-                  <li>карточка клиента и история посещений;</li>
-                  <li>список использованных компонентов;</li>
-                  <li>привязка расхода к конкретной услуге.</li>
-                </ul>
-              </div>
-              <div class="mini-screen"><img src="assets/app-client.jpg" alt="История клиента ColorMaster Pro" /></div>
-            </article>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="roi">
-      <div class="container">
-        <div class="roi-shell">
-          <div class="roi-copy">
-            <div class="badge">Экономика салона</div>
-            <h2>Считайте не расход краски.<br>Считайте деньги.</h2>
-            <p style="margin-top:18px">Ниже — простой ориентир. Он показывает, как быстро точный учёт может окупать подписку за счёт уменьшения потерь и появления прозрачной себестоимости.</p>
-            <div class="big" id="roiBig">19 510 ₽</div>
-            <p>ориентировочная дополнительная прибыль в месяц после учёта подписки</p>
-          </div>
-
-          <div class="roi-card">
-            <div class="range-group">
-              <div class="range-top">
-                <label for="masters">Количество мастеров</label>
-                <div class="range-value"><span id="mastersVal">4</span></div>
-              </div>
-              <input id="masters" type="range" min="1" max="15" value="4" />
-            </div>
-
-            <div class="range-group">
-              <div class="range-top">
-                <label for="spend">Расход на закупку красителя / мес.</label>
-                <div class="range-value"><span id="spendVal">150 000 ₽</span></div>
-              </div>
-              <input id="spend" type="range" min="20000" max="500000" step="5000" value="150000" />
-            </div>
-
-            <div class="roi-results">
-              <div class="roi-box">
-                <span>Стоимость ColorMaster Pro</span>
-                <strong id="subVal">2 990 ₽</strong>
-              </div>
-              <div class="roi-box accent">
-                <span>Сохраним на расходе</span>
-                <strong id="saveVal">22 500 ₽</strong>
-              </div>
-              <div class="roi-box profit" style="grid-column:1 / -1;">
-                <span>Ваша чистая выгода</span>
-                <strong id="profitVal">19 510 ₽</strong>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section light-section" id="trust">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <div class="eyebrow">Почему этому можно доверять</div>
-            <h2 style="margin-top:16px">Не просто приложение.<br>Система для ежедневной работы салона.</h2>
-          </div>
-          <p class="copy">ColorMaster Pro должен снижать хаос, а не создавать новый. Поэтому мы строим продукт так, чтобы им было удобно пользоваться ежедневно — мастеру, администратору и владельцу салона.</p>
-        </div>
-
-        <div class="trust-grid">
-          <article class="trust-card"><div class="num">01</div><h3>Работа без ручного учёта</h3><p>Система снимает основную боль: мастеру не нужно отдельно записывать расход и потом переносить данные в таблицы.</p></article>
-          <article class="trust-card"><div class="num">02</div><h3>История по мастеру и клиенту</h3><p>Каждое окрашивание остаётся в системе: кто работал, какие компоненты использовали и в каком объёме.</p></article>
-          <article class="trust-card"><div class="num">03</div><h3>Контроль остатков и формул</h3><p>Остатки перестают быть приблизительными, а формулы больше не живут отдельно на бумаге или в заметках.</p></article>
-          <article class="trust-card"><div class="num">04</div><h3>Понятное внедрение</h3><p>Продукт должен быстро становиться частью текущего рабочего процесса, а не превращаться в ещё один тяжёлый IT-проект.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="contact">
-      <div class="container">
-        <div class="cta-shell">
-          <div class="cta-copy">
-            <div class="eyebrow">Следующий шаг</div>
-            <h2 style="margin-top:16px">Покажем, как ColorMaster Pro работает именно в вашем салоне.</h2>
-            <p style="margin-top:18px">Оставьте контакты — мы свяжемся с вами, покажем продукт, обсудим текущий процесс учёта и подскажем, как можно внедрить систему без лишней нагрузки на команду.</p>
-            <div class="cta-points">
-              <div>Покажем интерфейс и сценарии использования</div>
-              <div>Обсудим модель внедрения для вашего салона</div>
-              <div>Ответим на вопросы по весам, учёту и экономике</div>
-            </div>
-          </div>
-
-          <form class="lead-form" id="leadForm">
-            <div class="form-grid">
-              <div class="field full">
-                <label for="name">Ваше имя</label>
-                <input id="name" name="name" type="text" placeholder="Например, Анна" />
-              </div>
-              <div class="field full">
-                <label for="phone">Телефон</label>
-                <input id="phone" name="phone" type="tel" placeholder="+7 (___) ___-__-__" required />
-              </div>
-              <div class="field full">
-                <label for="tariff">Количество мастеров</label>
-                <select id="tariff" name="tariff">
-                  <option value="1 мастер">1 мастер</option>
-                  <option value="2–3 мастера">2–3 мастера</option>
-                  <option value="4–6 мастеров" selected>4–6 мастеров</option>
-                  <option value="7–10 мастеров">7–10 мастеров</option>
-                  <option value="более 10 мастеров">более 10 мастеров</option>
-                </select>
-              </div>
-              <div class="field full" style="display:none">
-                <label for="website">Сайт</label>
-                <input id="website" name="website" type="text" autocomplete="off" />
-              </div>
-              <div class="field full">
-                <label class="check"><input id="privacy" name="privacy" type="checkbox" required /> <span>Я согласен на обработку персональных данных и принимаю условия оферты.</span></label>
-              </div>
-            </div>
-            <div class="btn-row" style="margin-top:16px">
-              <button class="btn btn-primary" type="submit">Заказать звонок</button>
-            </div>
-            <div class="form-status" id="formStatus"></div>
-            <div class="form-note">Заявка уйдёт в Telegram, если на Vercel уже настроены переменные TELEGRAM_BOT_TOKEN и TELEGRAM_CHAT_ID.</div>
-          </form>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container footer-row">
-      <div class="brand" style="font-size:1.08rem"><span class="brand-mark"></span> ColorMaster Pro</div>
-      <div class="footer-links">
-        <a href="#how">Как работает</a>
-        <a href="#interface">Интерфейс</a>
-        <a href="#roi">Экономика</a>
-        <a href="#contact">Заказать звонок</a>
+<main>
+<section class="hero" id="hero">
+  <div class="wrap grid2">
+    <div>
+      <div class="section-index">01. Первый экран</div>
+      <h1>Зарабатывайте больше на привычном окрашивании</h1>
+      <p>Весы автоматически передают данные в ColorMaster Pro. Остатки, формулы и себестоимость теперь без ручного учёта.</p>
+      <div class="actions">
+        <a class="btn" href="#contact">Заказать звонок</a>
+        <a class="btn alt" href="#how">Как это работает</a>
       </div>
     </div>
-  </footer>
+    <div class="placeholder">Здесь позже будет утверждённая продуктовая сцена: весы + реальный интерфейс приложения.<br>Сейчас визуал намеренно не проектируем.</div>
+  </div>
+</section>
 
-  <script>
-    const masters = document.getElementById('masters');
-    const spend = document.getElementById('spend');
-    const mastersVal = document.getElementById('mastersVal');
-    const spendVal = document.getElementById('spendVal');
-    const subVal = document.getElementById('subVal');
-    const saveVal = document.getElementById('saveVal');
-    const profitVal = document.getElementById('profitVal');
-    const roiBig = document.getElementById('roiBig');
-    const formatRub = (value) => new Intl.NumberFormat('ru-RU').format(Math.round(value)) + ' ₽';
+<section id="how">
+  <div class="wrap">
+    <div class="section-index">02. Как работает</div>
+    <h2>Три шага работы системы</h2>
+    <div class="grid3">
+      <div class="box"><strong>1. Взвешивание</strong><p>Весы фиксируют фактический расход красителя.</p></div>
+      <div class="box"><strong>2. Передача данных</strong><p>Данные автоматически попадают в ColorMaster Pro и привязываются к сессии.</p></div>
+      <div class="box"><strong>3. Учёт</strong><p>Остатки, формулы и себестоимость обновляются без ручного ввода.</p></div>
+    </div>
+  </div>
+</section>
 
-    function updateROI(){
-      const m = Number(masters.value);
-      const s = Number(spend.value);
-      const subscription = 1490 + Math.max(0, m - 1) * 500;
-      const savingsRate = 0.15;
-      const savings = s * savingsRate;
-      const profit = savings - subscription;
-      mastersVal.textContent = m;
-      spendVal.textContent = formatRub(s);
-      subVal.textContent = formatRub(subscription);
-      saveVal.textContent = formatRub(savings);
-      profitVal.textContent = formatRub(profit);
-      roiBig.textContent = formatRub(profit);
-    }
-    masters.addEventListener('input', updateROI);
-    spend.addEventListener('input', updateROI);
-    updateROI();
+<section id="problems">
+  <div class="wrap">
+    <div class="section-index">03. Что происходит без ColorMaster Pro</div>
+    <h2>Три бизнес-сценария</h2>
+    <div class="grid3">
+      <div class="box"><strong>Фактический расход с ошибками</strong><p>Списанный объём расходится с реальным использованием материала.</p></div>
+      <div class="box"><strong>Ежедневный ручной учёт «на глаз»</strong><p>Мастера и администраторы тратят время на записи, таблицы и сверки.</p></div>
+      <div class="box"><strong>Формулы на бумаге</strong><p>История окрашиваний и фактический расход хранятся отдельно друг от друга.</p></div>
+    </div>
+  </div>
+</section>
 
-    const form = document.getElementById('leadForm');
-    const statusEl = document.getElementById('formStatus');
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      statusEl.className = 'form-status';
-      statusEl.textContent = 'Отправляем заявку...';
-      const payload = {
-        name: form.name.value.trim(),
-        phone: form.phone.value.trim(),
-        tariff: form.tariff.value,
-        privacy: form.privacy.checked,
-        website: form.website.value.trim()
-      };
-      try {
-        const response = await fetch('/api/lead', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        const result = await response.json().catch(() => ({}));
-        if (!response.ok) throw new Error(result.error || 'Не удалось отправить заявку');
-        statusEl.className = 'form-status success';
-        statusEl.textContent = 'Спасибо! Заявка отправлена.';
-        form.reset();
-      } catch (error) {
-        statusEl.className = 'form-status error';
-        statusEl.textContent = error.message || 'Ошибка при отправке заявки';
-      }
-    });
-  </script>
+<section id="product">
+  <div class="wrap">
+    <div class="section-index">04. Продукт</div>
+    <h2>Реальные сценарии приложения</h2>
+    <div class="grid3">
+      <div class="box"><strong>Сессия окрашивания</strong><p>Выбор мастера и клиента, добавление компонентов, фиксация веса, завершение сессии.</p></div>
+      <div class="box"><strong>Каталог и остатки</strong><p>Компоненты, текущий остаток, предупреждения и поиск.</p></div>
+      <div class="box"><strong>История клиента и формул</strong><p>Сессии, мастер, использованные компоненты и их фактический вес.</p></div>
+    </div>
+    <div class="wire-note">Реальные скриншоты уже есть. Пока не определяем способ их визуальной подачи — только фиксируем, какие сценарии обязательно должны быть показаны.</div>
+  </div>
+</section>
+
+<section id="savings">
+  <div class="wrap">
+    <div class="section-index">05. Калькулятор экономии</div>
+    <h2>Проверяем экономику салона</h2>
+    <div class="grid2">
+      <div>
+        <div class="field">
+          <label for="roiMasters">Мастеров в салоне: <strong id="roiMastersValue">4</strong></label>
+          <input type="range" id="roiMasters" min="1" max="15" step="1" value="4">
+        </div>
+        <div class="field">
+          <label for="roiExpense">Закупка красителя в месяц: <strong id="roiExpenseValue">150 000 ₽</strong></label>
+          <input type="range" id="roiExpense" min="20000" max="500000" step="5000" value="150000">
+        </div>
+        <p class="small">Расчёт пока использует прежнюю модель сайта: потенциальное снижение потерь — 15%. Это допущение позже отдельно проверим и юридически корректно сформулируем.</p>
+      </div>
+      <div class="summary">
+        <div class="calc-result">
+          <div class="box"><span class="muted">Подписка / мес.</span><div class="result-big" id="roiSubscription">2 990 ₽</div></div>
+          <div class="box"><span class="muted">Потенциально сохранено / мес.</span><div class="result-big" id="roiSaved">22 500 ₽</div></div>
+          <div class="box"><span class="muted">Чистый эффект / мес.</span><div class="result-big" id="roiNet">19 510 ₽</div></div>
+          <div class="box"><span class="muted">Окупаемость</span><div class="result-big" id="roiPayback">4 дня</div></div>
+          <div class="box"><span class="muted">ROI</span><div class="result-big" id="roiPercent">652%</div></div>
+          <div class="box"><span class="muted">Комплектов весов</span><div class="result-big" id="roiScales">1</div></div>
+        </div>
+        <div class="actions"><button class="btn" id="roiToForm" type="button">Обсудить этот расчёт</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="benefits">
+  <div class="wrap">
+    <div class="section-index">06. Что получает владелец салона</div>
+    <h2>Четыре результата</h2>
+    <div class="grid2">
+      <div class="box"><strong>Точные остатки</strong><p>Фактический расход обновляет остаток автоматически.</p></div>
+      <div class="box"><strong>Сохранённые формулы</strong><p>История компонентов и веса остаётся привязана к клиенту.</p></div>
+      <div class="box"><strong>Понятная себестоимость</strong><p>Можно считать реальную стоимость материалов в услуге.</p></div>
+      <div class="box"><strong>Контроль работы с материалами</strong><p>Видно, что, кем и в каком объёме использовалось.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="section-index">07. Калькулятор тарифа</div>
+    <h2>Стоимость по размеру команды</h2>
+    <div class="grid2">
+      <div>
+        <div class="field">
+          <label for="tariffMasters">Мастеров в салоне: <strong id="tariffMastersValue">1</strong></label>
+          <input type="range" id="tariffMasters" min="1" max="15" value="1" step="1">
+        </div>
+        <label class="inline"><input type="checkbox" id="tariffMore15"> Более 15 мастеров</label>
+        <p class="small">Сохраняем прежнюю логику: 1 490 ₽ за 1 мастера + 500 ₽ за каждого следующего. От 7 мастеров добавляется второй комплект весов и +1 000 ₽. Более 15 — индивидуальный расчёт.</p>
+      </div>
+      <div class="summary">
+        <div><span class="muted">Стоимость подписки</span><div class="metric" id="tariffPrice">1 490 ₽</div><div class="muted">в месяц за весь салон</div></div>
+        <p><strong id="tariffScales">1 комплект:</strong> весы + софт</p>
+        <ul class="list" id="tariffBenefits">
+          <li id="tariffLimit">Лимит: до 50 формул колористики</li>
+          <li>Автоматический учёт расхода</li>
+          <li>Поддержка</li>
+          <li id="tariffAnalytics">Аналитика расхода мастеров — недоступна на тарифе для 1 мастера</li>
+        </ul>
+        <div class="actions"><button class="btn" id="tariffToForm" type="button">Выбрать этот вариант</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="trust">
+  <div class="wrap">
+    <div class="section-index">08. Подключение и доверие</div>
+    <h2>Что нужно объяснить до заявки</h2>
+    <div class="grid2">
+      <div class="box"><strong>Комплект оборудования</strong><p>Какие весы используются и сколько комплектов требуется салону.</p></div>
+      <div class="box"><strong>Установка и настройка</strong><p>Кто помогает подключить весы и подготовить приложение к работе.</p></div>
+      <div class="box"><strong>Обучение команды</strong><p>Как мастера начинают работать с системой и сколько это занимает.</p></div>
+      <div class="box"><strong>Поддержка</strong><p>Куда обращаться, если возникают вопросы по программе или оборудованию.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="section-index">09. FAQ</div>
+    <h2>Практические вопросы</h2>
+    <div class="faq-item"><button class="faq-q" type="button">Какие весы нужны?<span>+</span></button><div class="faq-a">Ответ пока фиксируем позже после проверки точной аппаратной конфигурации.</div></div>
+    <div class="faq-item"><button class="faq-q" type="button">Работает ли ColorMaster Pro без интернета?<span>+</span></button><div class="faq-a">Да — этот пункт был заявлен в текущей версии продукта. Перед публикацией финального сайта ещё раз проверим точные ограничения офлайн-режима.</div></div>
+    <div class="faq-item"><button class="faq-q" type="button">Сколько времени занимает подключение?<span>+</span></button><div class="faq-a">Точное обещание по времени пока не публикуем — его нужно подтвердить на реальных внедрениях.</div></div>
+    <div class="faq-item"><button class="faq-q" type="button">Сколько комплектов весов нужно?<span>+</span></button><div class="faq-a">В текущей тарифной модели: 1 комплект до 6 мастеров, 2 комплекта начиная с 7 мастеров.</div></div>
+    <div class="faq-item"><button class="faq-q" type="button">Что сохраняется в истории клиента?<span>+</span></button><div class="faq-a">Мастер, сессия и использованные компоненты с их фактическим весом — согласно текущим экранам приложения.</div></div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap grid2">
+    <div>
+      <div class="section-index">10. Заказать звонок</div>
+      <h2>Обсудить подключение ColorMaster Pro</h2>
+      <p>Минимальная форма. Позже решим, нужен ли здесь дополнительный текст, кейсы или обещание по сроку ответа.</p>
+      <div id="selectedCalc" class="wire-note hidden"></div>
+    </div>
+    <form id="leadForm" class="box" novalidate>
+      <div class="field"><label for="name">Имя</label><input id="name" name="name" type="text" autocomplete="name"></div>
+      <div class="field"><label for="phone">Телефон *</label><input id="phone" name="phone" type="tel" placeholder="+7 (___) ___-__-__" required autocomplete="tel"></div>
+      <div class="field"><label for="formTariff">Количество мастеров</label><select id="formTariff" name="tariff"></select></div>
+      <div class="hidden"><label>Website<input id="website" name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
+      <label class="inline"><input type="checkbox" id="privacy" required> Я согласен на обработку персональных данных</label>
+      <div class="actions"><button class="btn" id="submitBtn" type="submit">Заказать звонок</button></div>
+      <div class="status" id="formStatus" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+</section>
+</main>
+
+<script>
+const rub=n=>new Intl.NumberFormat('ru-RU').format(Math.round(n))+' ₽';
+function noun(n,one,two,five){n=Math.abs(n)%100;if(n>=5&&n<=20)return five;n%=10;if(n===1)return one;if(n>=2&&n<=4)return two;return five}
+
+// Общая тарифная логика — единый источник для обоих калькуляторов.
+function tariffForMasters(m){
+  if(m>15) return {individual:true,price:null,scales:2};
+  let price=1490+(m-1)*500;
+  let scales=1;
+  if(m>=7){price+=1000;scales=2}
+  return {individual:false,price,scales};
+}
+
+// Заполняем количество мастеров в форме.
+const formTariff=document.getElementById('formTariff');
+for(let i=1;i<=15;i++){
+  const o=document.createElement('option');
+  o.value=i+' '+noun(i,'мастер','мастера','мастеров');
+  o.textContent=o.value;
+  formTariff.appendChild(o);
+}
+const more=document.createElement('option');more.value='Более 15 мастеров';more.textContent=more.value;formTariff.appendChild(more);
+
+// Калькулятор экономии.
+const roiMasters=document.getElementById('roiMasters');
+const roiExpense=document.getElementById('roiExpense');
+let roiState={};
+function updateROI(){
+  const m=Number(roiMasters.value),expense=Number(roiExpense.value),t=tariffForMasters(m);
+  const saved=Math.round(expense*.15),net=saved-t.price;
+  const days=Math.max(1,Math.ceil((t.price/saved)*30));
+  const roi=net>0?Math.round((net/t.price)*100):0;
+  roiState={masters:m,expense,price:t.price,saved,net,days,roi,scales:t.scales};
+  document.getElementById('roiMastersValue').textContent=m;
+  document.getElementById('roiExpenseValue').textContent=rub(expense);
+  document.getElementById('roiSubscription').textContent=rub(t.price);
+  document.getElementById('roiSaved').textContent=rub(saved);
+  document.getElementById('roiNet').textContent=rub(net);
+  document.getElementById('roiPayback').textContent=days+' '+noun(days,'день','дня','дней');
+  document.getElementById('roiPercent').textContent=roi+'%';
+  document.getElementById('roiScales').textContent=t.scales;
+}
+roiMasters.addEventListener('input',updateROI);roiExpense.addEventListener('input',updateROI);updateROI();
+
+document.getElementById('roiToForm').addEventListener('click',()=>{
+  formTariff.value=roiState.masters+' '+noun(roiState.masters,'мастер','мастера','мастеров');
+  const box=document.getElementById('selectedCalc');
+  box.classList.remove('hidden');
+  box.textContent=`Вы выбрали расчёт экономии: ${roiState.masters} ${noun(roiState.masters,'мастер','мастера','мастеров')}, закупка ${rub(roiState.expense)}, подписка ${rub(roiState.price)}, расчётный чистый эффект ${rub(roiState.net)}.`;
+  document.getElementById('contact').scrollIntoView({behavior:'smooth'});
+});
+
+// Калькулятор тарифа.
+const tariffMasters=document.getElementById('tariffMasters');
+const tariffMore15=document.getElementById('tariffMore15');
+let tariffState={};
+function updateTariff(){
+  const isMore=tariffMore15.checked;
+  tariffMasters.disabled=isMore;
+  const m=isMore?16:Number(tariffMasters.value),t=tariffForMasters(m);
+  tariffState={masters:m,...t};
+  document.getElementById('tariffMastersValue').textContent=isMore?'15+':m;
+  document.getElementById('tariffPrice').textContent=t.individual?'Индивидуально':rub(t.price);
+  document.getElementById('tariffScales').textContent=t.scales+' '+noun(t.scales,'комплект','комплекта','комплектов')+':';
+  document.getElementById('tariffLimit').innerHTML=(!isMore&&m===1)?'Лимит: до 50 формул колористики':'Без лимитов: формулы колористики';
+  document.getElementById('tariffAnalytics').textContent=(!isMore&&m===1)?'Аналитика расхода мастеров — недоступна на тарифе для 1 мастера':'Аналитика расхода каждого мастера';
+}
+tariffMasters.addEventListener('input',updateTariff);tariffMore15.addEventListener('change',updateTariff);updateTariff();
+
+document.getElementById('tariffToForm').addEventListener('click',()=>{
+  formTariff.value=tariffState.individual?'Более 15 мастеров':tariffState.masters+' '+noun(tariffState.masters,'мастер','мастера','мастеров');
+  const box=document.getElementById('selectedCalc');box.classList.remove('hidden');
+  box.textContent=tariffState.individual?'Вы выбрали индивидуальный расчёт для команды более 15 мастеров.':`Вы выбрали тариф: ${tariffState.masters} ${noun(tariffState.masters,'мастер','мастера','мастеров')}, ${rub(tariffState.price)} / мес., ${tariffState.scales} ${noun(tariffState.scales,'комплект весов','комплекта весов','комплектов весов')}.`;
+  document.getElementById('contact').scrollIntoView({behavior:'smooth'});
+});
+
+// FAQ.
+document.querySelectorAll('.faq-q').forEach(btn=>btn.addEventListener('click',()=>{
+  const item=btn.closest('.faq-item');item.classList.toggle('open');btn.querySelector('span').textContent=item.classList.contains('open')?'−':'+';
+}));
+
+// Форма заявки -> /api/lead.
+const form=document.getElementById('leadForm'),status=document.getElementById('formStatus'),submit=document.getElementById('submitBtn');
+form.addEventListener('submit',async e=>{
+  e.preventDefault();status.className='status';status.textContent='';
+  const phone=form.phone.value.trim(),digits=phone.replace(/\D/g,'');
+  if(digits.length<11||digits.length>15){status.className='status err';status.textContent='Введите корректный номер телефона.';return}
+  if(!document.getElementById('privacy').checked){status.className='status err';status.textContent='Нужно подтвердить согласие на обработку данных.';return}
+  submit.disabled=true;status.textContent='Отправляем…';
+  try{
+    const response=await fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:form.name.value.trim(),phone,tariff:formTariff.value,privacy:true,website:form.website.value.trim()})});
+    const data=await response.json().catch(()=>({}));
+    if(!response.ok) throw new Error(data.error||'Не удалось отправить заявку');
+    status.className='status ok';status.textContent='Заявка отправлена.';form.reset();
+  }catch(err){status.className='status err';status.textContent=err.message||'Ошибка отправки заявки.'}
+  finally{submit.disabled=false}
+});
+</script>
 </body>
 </html>
