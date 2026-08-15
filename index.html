@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ColorMaster Pro — Hero v9</title>
+<title>ColorMaster Pro — Hero v10</title>
 <meta name="description" content="Функциональный каркас сайта ColorMaster Pro без финального визуального оформления.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -171,9 +171,9 @@
   .nav .nav-cta:hover{border-color:var(--cm-text);color:var(--cm-text);background:transparent}
 
   .hero{padding:84px 0 96px;border-bottom:1px solid var(--cm-line);overflow:hidden}
-  .hero-layout{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(360px,.92fr);gap:72px;align-items:center}
+  .hero-layout{display:grid;grid-template-columns:minmax(720px,1.22fr) minmax(360px,.78fr);gap:36px;align-items:center}
   .hero-copy{padding:20px 0}
-  .hero-title{font-size:clamp(3.55rem,5.45vw,5.35rem);line-height:.93;letter-spacing:-.065em;font-weight:800;max-width:760px;margin:0 0 28px}
+  .hero-title{font-size:clamp(3.45rem,5.05vw,4.8rem);line-height:.93;letter-spacing:-.06em;font-weight:800;max-width:760px;margin:0 0 28px}
   .hero-title .line{display:block}
   .hero-title .line-first{white-space:nowrap}
   .marker{position:relative;display:inline-block;white-space:nowrap;padding-bottom:.03em}
@@ -184,7 +184,7 @@
   .hero-actions{display:flex;margin-top:34px}
   .hero-actions .btn{min-height:58px;padding:0 30px;border-radius:14px;font-weight:700;font-size:1rem}
 
-  .product-stage{display:flex;align-items:center;justify-content:center;min-height:700px;position:relative}
+  .product-stage{display:flex;align-items:center;justify-content:flex-end;min-height:700px;position:relative;padding-right:6px}
   .product-stage::before{content:"";position:absolute;inset:50% auto auto 50%;transform:translate(-50%,-50%);width:530px;height:530px;border-radius:50%;background:radial-gradient(circle, rgba(109,74,255,.10), rgba(109,74,255,.035) 42%, rgba(109,74,255,0) 72%);pointer-events:none}
   .product-stage::after{content:"";position:absolute;bottom:58px;left:50%;transform:translateX(-50%);width:360px;height:42px;border-radius:50%;background:radial-gradient(ellipse at center, rgba(23,21,27,.16), rgba(23,21,27,0) 70%);filter:blur(10px);pointer-events:none}
   .iphone-frame{position:relative;z-index:2;width:min(100%,378px);padding:12px;border-radius:52px;background:linear-gradient(180deg,#1a1722 0%, #0f0d14 100%);box-shadow:0 34px 90px rgba(23,21,27,.20), inset 0 1px 0 rgba(255,255,255,.12), inset 0 -1px 0 rgba(255,255,255,.05)}
@@ -192,10 +192,10 @@
   .iphone-frame::after{content:"";position:absolute;right:-3px;top:126px;width:3px;height:62px;border-radius:3px;background:rgba(16,14,21,.5);box-shadow:0 88px 0 rgba(16,14,21,.5), 0 144px 0 rgba(16,14,21,.5)}
   .iphone-screen{border-radius:40px;overflow:hidden;background:#0c0b10;position:relative}
   .iphone-screen img{display:block;width:100%;height:auto}
-  @media(max-width:1040px){
+  @media(max-width:1180px){
     .hero-layout{grid-template-columns:1fr;gap:26px}
     .hero-copy{padding-bottom:8px}
-    .product-stage{max-width:520px;width:100%;margin:0 auto;min-height:620px}
+    .product-stage{max-width:520px;width:100%;margin:0 auto;min-height:620px;justify-content:center;padding-right:0}
   }
 
   @media(max-width:760px){
