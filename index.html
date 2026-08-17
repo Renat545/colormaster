@@ -1044,7 +1044,7 @@
 
       <div class="savings-report">
         <div class="savings-report-label">Расчётный эффект в месяц</div>
-        <div class="savings-report-total" id="roiNet">19 510 ₽</div>
+        <div class="savings-report-total" id="roiNet">18 310 ₽</div>
 
         <div class="savings-equation">
           <div class="savings-eq-item">
@@ -1054,23 +1054,23 @@
           <div class="savings-eq-op">−</div>
           <div class="savings-eq-item">
             <span>Подписка</span>
-            <strong id="roiSubscription">2 990 ₽</strong>
+            <strong id="roiSubscription">4 190 ₽</strong>
           </div>
           <div class="savings-eq-op">=</div>
           <div class="savings-eq-item result">
             <span>Чистый эффект</span>
-            <strong id="roiNetMirror">19 510 ₽</strong>
+            <strong id="roiNetMirror">18 310 ₽</strong>
           </div>
         </div>
 
         <div class="savings-meta">
           <div class="savings-meta-item">
             <span>Окупаемость</span>
-            <strong id="roiPayback">4 дня</strong>
+            <strong id="roiPayback">6 дней</strong>
           </div>
           <div class="savings-meta-item">
             <span>ROI</span>
-            <strong id="roiPercent">652%</strong>
+            <strong id="roiPercent">437%</strong>
           </div>
           <div class="savings-meta-item">
             <span>Комплектов весов</span>
@@ -1108,7 +1108,7 @@
           <input type="range" id="tariffMasters" min="1" max="15" value="1" step="1">
         </div>
         <label class="inline"><input type="checkbox" id="tariffMore15"> Более 15 мастеров</label>
-        <p class="small">Сохраняем прежнюю логику: 1 490 ₽ за 1 мастера + 500 ₽ за каждого следующего. От 7 мастеров добавляется второй комплект весов и +1 000 ₽. Более 15 — индивидуальный расчёт.</p>
+        <p class="small">1 490 ₽ за 1 мастера + 900 ₽ за каждого следующего. От 7 мастеров добавляется второй комплект весов и +1 500 ₽. Более 15 — индивидуальный расчёт.</p>
       </div>
       <div class="summary">
         <div><span class="muted">Стоимость подписки</span><div class="metric" id="tariffPrice">1 490 ₽</div><div class="muted">в месяц за весь салон</div></div>
@@ -1177,9 +1177,9 @@ function noun(n,one,two,five){n=Math.abs(n)%100;if(n>=5&&n<=20)return five;n%=10
 // Общая тарифная логика — единый источник для обоих калькуляторов.
 function tariffForMasters(m){
   if(m>15) return {individual:true,price:null,scales:2};
-  let price=1490+(m-1)*500;
+  let price=1490+(m-1)*900;
   let scales=1;
-  if(m>=7){price+=1000;scales=2}
+  if(m>=7){price+=1500;scales=2}
   return {individual:false,price,scales};
 }
 
