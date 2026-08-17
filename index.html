@@ -1566,20 +1566,30 @@
     }
   }
 
-
-  /* PRICING STABILITY v1 — fixed price area so the layout does not jump */
+  /* PRICING STABILITY v2 — lock the whole price area, not the price line */
+  .pricing-price-area{
+    min-height:156px;
+  }
   .pricing-price{
-    min-height:94px;
-    display:flex;
-    align-items:flex-start;
+    min-height:0 !important;
+    display:block !important;
   }
   .pricing-summary.is-individual .pricing-price{
     white-space:nowrap;
   }
+  .pricing-summary-label{
+    margin-bottom:13px;
+  }
+  .pricing-period{
+    margin-top:13px !important;
+  }
+  .pricing-config{
+    margin-top:18px !important;
+  }
 
   @media(max-width:940px){
-    .pricing-price{
-      min-height:82px;
+    .pricing-price-area{
+      min-height:144px;
     }
     .pricing-summary.is-individual .pricing-price{
       white-space:normal;
@@ -1587,15 +1597,71 @@
   }
 
   @media(max-width:760px){
-    .pricing-price{
-      min-height:72px;
+    .pricing-price-area{
+      min-height:132px;
+    }
+    .pricing-summary-label{
+      margin-bottom:10px;
+    }
+    .pricing-period{
+      margin-top:10px !important;
     }
   }
 
 
-  /* PRICING PERIOD SPACING v1 */
+  /* PRICING PRICE LINE v1 — price and period on one clean line */
+  .pricing-price-area{
+    min-height:132px !important;
+  }
+  .pricing-price-line{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    min-height:86px;
+  }
+  .pricing-price{
+    min-height:0 !important;
+    display:block !important;
+    flex:0 0 auto;
+  }
   .pricing-period{
-    margin-top:6px !important;
+    margin:0 !important;
+    flex:0 0 auto;
+    white-space:nowrap;
+    color:var(--cm-muted);
+    font-size:.98rem;
+  }
+  .pricing-summary.is-individual .pricing-period{
+    display:none;
+  }
+  .pricing-summary.is-individual .pricing-price{
+    white-space:nowrap !important;
+  }
+  .pricing-config{
+    margin-top:12px !important;
+  }
+
+  @media(max-width:940px){
+    .pricing-price-area{
+      min-height:122px !important;
+    }
+    .pricing-price-line{
+      min-height:78px;
+      gap:12px;
+    }
+  }
+
+  @media(max-width:760px){
+    .pricing-price-area{
+      min-height:110px !important;
+    }
+    .pricing-price-line{
+      min-height:70px;
+      gap:10px;
+    }
+    .pricing-period{
+      font-size:.9rem;
+    }
   }
 
 </style>
@@ -1902,9 +1968,13 @@
       </div>
 
       <div class="pricing-summary" id="pricingSummary">
-        <div class="pricing-summary-label">Стоимость подписки</div>
-        <div class="pricing-price" id="tariffPrice">1 490 ₽</div>
-        <div class="pricing-period" id="tariffPeriod">в месяц</div>
+        <div class="pricing-price-area">
+          <div class="pricing-summary-label">Стоимость подписки</div>
+          <div class="pricing-price-line">
+            <div class="pricing-price" id="tariffPrice">1 490 ₽</div>
+            <div class="pricing-period" id="tariffPeriod">в месяц</div>
+          </div>
+        </div>
 
         <div class="pricing-config">
           <div class="pricing-config-item"><span>Команда</span><strong id="tariffTeam">1 мастер</strong></div>
