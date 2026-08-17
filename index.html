@@ -1732,7 +1732,7 @@
   }
 
 
-  /* TRUST v3 — visual onboarding story, minimal text */
+  /* TRUST v4 — flow + 3 accordions */
   .trust-editorial{
     padding:78px 0 88px;
     background:var(--cm-bg);
@@ -1754,7 +1754,7 @@
     grid-template-columns:1fr 46px 1fr 46px 1fr;
     align-items:center;
     gap:24px;
-    padding:32px 0 36px;
+    padding:32px 0 34px;
   }
   .trust-flow-item{
     min-width:0;
@@ -1782,129 +1782,102 @@
     opacity:.72;
   }
 
-  .trust-inventory{
+  .trust-accordions{
+    margin-top:26px;
     display:grid;
-    grid-template-columns:minmax(240px,.82fr) minmax(0,1.18fr);
-    gap:44px;
-    align-items:center;
-    margin:18px 0 38px;
-    padding:26px 30px;
+    gap:14px;
+  }
+  .trust-accordion{
     border-radius:22px;
     background:rgba(255,255,255,.36);
+    overflow:hidden;
   }
-  .trust-inventory strong{
-    display:block;
-    font-size:1.35rem;
-    line-height:1.1;
-    letter-spacing:-.03em;
+  .trust-accordion summary{
+    list-style:none;
+    cursor:pointer;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    gap:16px;
+    align-items:center;
+    padding:22px 26px;
   }
-  .trust-inventory p{
+  .trust-accordion summary::-webkit-details-marker{
+    display:none;
+  }
+  .trust-accordion-title{
     margin:0;
+    font-size:1.45rem;
+    line-height:1.05;
+    letter-spacing:-.035em;
+    font-weight:720;
+  }
+  .trust-accordion-icon{
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:var(--cm-accent-soft);
+    color:var(--cm-accent);
+    font-size:1.15rem;
+    line-height:1;
+    font-weight:700;
+    transition:transform .22s ease;
+    flex:0 0 auto;
+  }
+  .trust-accordion[open] .trust-accordion-icon{
+    transform:rotate(45deg);
+  }
+  .trust-accordion-body{
+    padding:0 26px 24px;
     color:var(--cm-muted);
-    font-size:.95rem;
-    line-height:1.58;
-    max-width:70ch;
+    font-size:.96rem;
+    line-height:1.62;
   }
-
-  .trust-included-bar{
-    padding:24px 0 28px;
+  .trust-accordion-body p{
+    margin:0;
+    max-width:74ch;
   }
-  .trust-included-title{
-    margin:0 0 18px;
-    font-size:1.05rem;
-    line-height:1.2;
-    font-weight:650;
-  }
-  .trust-included-list{
+  .trust-accordion-list{
     list-style:none;
     padding:0;
     margin:0;
     display:grid;
-    grid-template-columns:repeat(5,minmax(0,1fr));
-    gap:18px;
+    gap:12px;
   }
-  .trust-included-list li{
+  .trust-accordion-list li{
     position:relative;
     padding-left:24px;
-    font-size:.92rem;
-    line-height:1.35;
     color:var(--cm-text);
-    font-weight:550;
+    font-size:.96rem;
+    line-height:1.5;
   }
-  .trust-included-list li::before{
+  .trust-accordion-list li::before{
     content:"";
     position:absolute;
-    left:1px;
-    top:.35em;
+    left:2px;
+    top:.42em;
     width:9px;
     height:5px;
     border-left:2px solid var(--cm-accent);
     border-bottom:2px solid var(--cm-accent);
     transform:rotate(-45deg);
   }
-
-  .trust-facts{
-    display:grid;
-    grid-template-columns:repeat(4,minmax(0,1fr));
-    gap:0;
-    margin-top:30px;
-    border-radius:26px;
-    overflow:hidden;
-    background:rgba(255,255,255,.34);
-  }
-  .trust-fact{
-    min-width:0;
-    padding:28px 26px 30px;
-  }
-  .trust-fact + .trust-fact{
-    border-left:1px solid rgba(52,47,58,.10);
-  }
-  .trust-fact-value{
-    display:block;
-    margin-bottom:10px;
-    font-size:clamp(1.65rem,2.2vw,2.15rem);
-    line-height:1;
-    letter-spacing:-.045em;
-    font-weight:750;
-    color:var(--cm-text);
-  }
-  .trust-fact-label{
-    display:block;
-    color:var(--cm-muted);
-    font-size:.9rem;
-    line-height:1.45;
-    max-width:22ch;
+  .trust-accordion-list strong{
+    font-weight:700;
   }
 
   @media(max-width:980px){
     .trust-flow{
       grid-template-columns:1fr;
       gap:22px;
-      padding-bottom:30px;
+      padding-bottom:28px;
     }
     .trust-flow-arrow{
       justify-content:flex-start;
       transform:rotate(90deg);
       width:28px;
       height:20px;
-    }
-    .trust-inventory{
-      grid-template-columns:1fr;
-      gap:10px;
-    }
-    .trust-included-list{
-      grid-template-columns:1fr 1fr 1fr;
-      gap:15px 24px;
-    }
-    .trust-facts{
-      grid-template-columns:1fr 1fr;
-    }
-    .trust-fact:nth-child(3){
-      border-left:0;
-      border-top:1px solid rgba(52,47,58,.10);
-    }
-    .trust-fact:nth-child(4){
-      border-top:1px solid rgba(52,47,58,.10);
     }
   }
 
@@ -1915,30 +1888,29 @@
     .trust-flow{padding:20px 0 28px}
     .trust-flow-title{font-size:1.75rem}
     .trust-flow-copy{font-size:.93rem}
-    .trust-inventory{
-      margin:10px 0 28px;
-      padding:22px 20px;
-      border-radius:18px;
+    .trust-accordions{gap:12px;margin-top:18px}
+    .trust-accordion{border-radius:18px}
+    .trust-accordion summary{
+      padding:18px 18px;
     }
-    .trust-inventory strong{font-size:1.22rem}
-    .trust-inventory p{font-size:.92rem}
-    .trust-included-bar{padding:18px 0 22px}
-    .trust-included-list{
-      grid-template-columns:1fr;
-      gap:12px;
+    .trust-accordion-title{
+      font-size:1.22rem;
     }
-    .trust-facts{
-      grid-template-columns:1fr;
-      border-radius:20px;
+    .trust-accordion-icon{
+      width:30px;
+      height:30px;
+      font-size:1rem;
     }
-    .trust-fact{
-      padding:22px 20px 24px;
+    .trust-accordion-body{
+      padding:0 18px 20px;
+      font-size:.93rem;
     }
-    .trust-fact + .trust-fact{
-      border-left:0;
-      border-top:1px solid rgba(52,47,58,.10);
+    .trust-accordion-list{
+      gap:10px;
     }
-    .trust-fact-value{font-size:1.6rem}
+    .trust-accordion-list li{
+      font-size:.93rem;
+    }
   }
 
 </style>
@@ -2298,42 +2270,47 @@
       </div>
     </div>
 
-    <div class="trust-inventory">
-      <strong>Перед стартом — одна инвентаризация</strong>
-      <p>Переносим фактические остатки материалов в ColorMaster Pro. После этого салон может сразу начинать работу.</p>
-    </div>
+    <div class="trust-accordions">
+      <details class="trust-accordion" open>
+        <summary>
+          <h3 class="trust-accordion-title">После старта</h3>
+          <span class="trust-accordion-icon" aria-hidden="true">+</span>
+        </summary>
+        <div class="trust-accordion-body">
+          <p><strong>После старта — одна инвентаризация.</strong><br>Переносим фактические остатки материалов в ColorMaster Pro.</p>
+        </div>
+      </details>
 
-    <div class="trust-included-bar">
-      <h3 class="trust-included-title">В подключение уже входит</h3>
-      <ul class="trust-included-list">
-        <li>Bluetooth-весы</li>
-        <li>ColorMaster Pro</li>
-        <li>Установка ПО</li>
-        <li>Обучение команды</li>
-        <li>Выделенный менеджер</li>
-      </ul>
-    </div>
+      <details class="trust-accordion">
+        <summary>
+          <h3 class="trust-accordion-title">Что входит в подключение</h3>
+          <span class="trust-accordion-icon" aria-hidden="true">+</span>
+        </summary>
+        <div class="trust-accordion-body">
+          <ul class="trust-accordion-list">
+            <li><strong>Bluetooth-весы</strong></li>
+            <li><strong>ColorMaster Pro</strong></li>
+            <li><strong>Установка ПО</strong></li>
+            <li><strong>Обучение команды</strong></li>
+            <li><strong>Выделенный менеджер</strong></li>
+          </ul>
+        </div>
+      </details>
 
-    <div class="trust-facts">
-      <div class="trust-fact">
-        <span class="trust-fact-value">1–2 часа</span>
-        <span class="trust-fact-label">Обучение команды</span>
-      </div>
-
-      <div class="trust-fact">
-        <span class="trust-fact-value">3 канала связи</span>
-        <span class="trust-fact-label">Телефон · мессенджер · e-mail</span>
-      </div>
-
-      <div class="trust-fact">
-        <span class="trust-fact-value">В любое время</span>
-        <span class="trust-fact-label">Можно расторгнуть договор</span>
-      </div>
-
-      <div class="trust-fact">
-        <span class="trust-fact-value">Замена оборудования</span>
-        <span class="trust-fact-label">Если возникнет неисправность</span>
-      </div>
+      <details class="trust-accordion">
+        <summary>
+          <h3 class="trust-accordion-title">Безопасность</h3>
+          <span class="trust-accordion-icon" aria-hidden="true">+</span>
+        </summary>
+        <div class="trust-accordion-body">
+          <ul class="trust-accordion-list">
+            <li><strong>Обучение команды</strong></li>
+            <li><strong>3 канала связи</strong> с поддержкой</li>
+            <li>Можно расторгнуть договор <strong>в любое время</strong></li>
+            <li><strong>Замена оборудования</strong> при необходимости</li>
+          </ul>
+        </div>
+      </details>
     </div>
   </div>
 </section>
