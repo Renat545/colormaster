@@ -1907,6 +1907,118 @@
     .trust-safety-list li{font-size:.93rem}
   }
 
+
+  /* FAQ v1 — large heading + clean accordion column */
+  .faq-editorial{
+    padding:82px 0 92px;
+    background:var(--cm-bg);
+  }
+  .faq-layout{
+    display:grid;
+    grid-template-columns:minmax(260px,.72fr) minmax(520px,1.28fr);
+    gap:86px;
+    align-items:start;
+  }
+  .faq-head{
+    position:sticky;
+    top:112px;
+  }
+  .faq-head h2{
+    margin:0;
+    font-size:clamp(3.2rem,5vw,4.8rem);
+    line-height:.9;
+    letter-spacing:-.06em;
+    font-weight:800;
+  }
+  .faq-list{
+    border-top:1px solid var(--cm-line);
+  }
+  .faq-editorial .faq-item{
+    border-top:0;
+    border-bottom:1px solid var(--cm-line);
+  }
+  .faq-editorial .faq-q{
+    width:100%;
+    min-height:86px;
+    padding:23px 0;
+    border:0;
+    background:transparent;
+    color:var(--cm-text);
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 38px;
+    gap:24px;
+    align-items:center;
+    text-align:left;
+    font:inherit;
+    cursor:pointer;
+  }
+  .faq-question{
+    font-size:1.28rem;
+    line-height:1.22;
+    letter-spacing:-.025em;
+    font-weight:650;
+  }
+  .faq-toggle{
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    justify-self:end;
+    background:var(--cm-accent-soft);
+    color:var(--cm-accent) !important;
+    font-size:1.15rem !important;
+    font-weight:650;
+    line-height:1;
+    transition:transform .22s ease;
+  }
+  .faq-editorial .faq-a{
+    display:grid;
+    grid-template-rows:0fr;
+    padding:0;
+    max-width:none;
+    color:var(--cm-muted);
+    overflow:hidden;
+    transition:grid-template-rows .28s ease,padding-bottom .28s ease;
+  }
+  .faq-answer-inner{
+    min-height:0;
+    overflow:hidden;
+    max-width:680px;
+    font-size:.98rem;
+    line-height:1.65;
+  }
+  .faq-item.open .faq-a{
+    display:grid;
+    grid-template-rows:1fr;
+    padding-bottom:25px;
+  }
+  .faq-item.open .faq-toggle{
+    transform:rotate(45deg);
+  }
+
+  @media(max-width:980px){
+    .faq-layout{
+      grid-template-columns:1fr;
+      gap:34px;
+    }
+    .faq-head{position:static}
+  }
+  @media(max-width:760px){
+    .faq-editorial{padding:72px 0 80px}
+    .faq-head h2{font-size:clamp(2.8rem,15vw,4rem)}
+    .faq-layout{gap:28px}
+    .faq-editorial .faq-q{
+      min-height:74px;
+      padding:19px 0;
+      grid-template-columns:minmax(0,1fr) 32px;
+      gap:16px;
+    }
+    .faq-question{font-size:1.12rem}
+    .faq-toggle{width:30px;height:30px}
+    .faq-answer-inner{font-size:.93rem}
+  }
+
 </style>
 </head>
 <body>
@@ -2278,18 +2390,73 @@
     </div>
   </div>
 </section>
-<section id="faq">
+<section class="faq-editorial" id="faq">
   <div class="wrap">
-    <div class="section-index">09. FAQ</div>
-    <h2>Практические вопросы</h2>
-    <div class="faq-item"><button class="faq-q" type="button">Какие весы нужны?<span>+</span></button><div class="faq-a">Ответ пока фиксируем позже после проверки точной аппаратной конфигурации.</div></div>
-    <div class="faq-item"><button class="faq-q" type="button">Работает ли ColorMaster Pro без интернета?<span>+</span></button><div class="faq-a">Да — этот пункт был заявлен в текущей версии продукта. Перед публикацией финального сайта ещё раз проверим точные ограничения офлайн-режима.</div></div>
-    <div class="faq-item"><button class="faq-q" type="button">Сколько времени занимает подключение?<span>+</span></button><div class="faq-a">Точное обещание по времени пока не публикуем — его нужно подтвердить на реальных внедрениях.</div></div>
-    <div class="faq-item"><button class="faq-q" type="button">Сколько комплектов весов нужно?<span>+</span></button><div class="faq-a">В текущей тарифной модели: 1 комплект до 6 мастеров, 2 комплекта начиная с 7 мастеров.</div></div>
-    <div class="faq-item"><button class="faq-q" type="button">Что сохраняется в истории клиента?<span>+</span></button><div class="faq-a">Мастер, сессия и использованные компоненты с их фактическим весом — согласно текущим экранам приложения.</div></div>
+    <div class="faq-layout">
+      <div class="faq-head">
+        <h2>FAQ</h2>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span class="faq-question">Что нужно салону для работы с ColorMaster Pro?</span>
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-answer-inner">Bluetooth-весы и планшет на Android с установленным ColorMaster Pro. При необходимости возможна установка на наш планшет.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span class="faq-question">Что нужно сделать перед началом работы?</span>
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-answer-inner">Один раз провести инвентаризацию и перенести фактические остатки материалов в систему. Также в ColorMaster Pro вносятся сотрудники и администраторы салона.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span class="faq-question">Сколько времени занимает обучение?</span>
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-answer-inner">Обычно 1–2 часа. Показываем команде работу с весами и программой, управление остатками и выгрузку отчётов. После настройки и инвентаризации можно сразу начинать работу.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span class="faq-question">Сколько комплектов весов требуется?</span>
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-answer-inner">В текущей конфигурации один комплект рассчитан на салон до 6 мастеров. Начиная с 7 мастеров используется два комплекта весов.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span class="faq-question">Что сохраняется в истории клиента?</span>
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-answer-inner">История сессий, мастер, использованные компоненты и их фактический вес. Сохранённые формулы остаются привязаны к клиенту.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span class="faq-question">Что происходит после подключения?</span>
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-answer-inner">За салоном закрепляется персональный менеджер. Связаться с поддержкой можно по телефону, в мессенджере или по e-mail. При необходимости оборудование бесплатно заменяется.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span class="faq-question">Можно ли отказаться от ColorMaster Pro?</span>
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-answer-inner">Да. Договор можно расторгнуть в любое время.</div></div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
-
 <section id="contact">
   <div class="wrap grid2">
     <div>
@@ -2398,7 +2565,9 @@ document.getElementById('tariffToForm').addEventListener('click',()=>{
 
 // FAQ.
 document.querySelectorAll('.faq-q').forEach(btn=>btn.addEventListener('click',()=>{
-  const item=btn.closest('.faq-item');item.classList.toggle('open');btn.querySelector('span').textContent=item.classList.contains('open')?'−':'+';
+  const item=btn.closest('.faq-item');
+  const isOpen=item.classList.toggle('open');
+  btn.setAttribute('aria-expanded',String(isOpen));
 }));
 
 // Форма заявки -> /api/lead.
