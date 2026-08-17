@@ -873,6 +873,421 @@
     .savings-actions .btn{width:100%}
   }
 
+
+  /* RESULTS v2 — benefits translated into tangible business effects */
+  .results-editorial{
+    padding:118px 0 128px;
+    border-bottom:1px solid var(--cm-line);
+    background:var(--cm-bg);
+  }
+  .results-head{
+    margin-bottom:58px;
+  }
+  .results-head h2{
+    font-size:clamp(3.05rem,5vw,4.8rem);
+    line-height:.95;
+    letter-spacing:-.055em;
+    font-weight:800;
+    margin:0;
+    max-width:820px;
+  }
+  .results-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    border-top:1px solid var(--cm-line-strong);
+    border-bottom:1px solid var(--cm-line-strong);
+  }
+  .result-item{
+    position:relative;
+    min-height:350px;
+    padding:38px 52px 38px 0;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+  }
+  .result-item:nth-child(even){
+    padding-left:54px;
+    padding-right:0;
+    border-left:1px solid var(--cm-line);
+  }
+  .result-item:nth-child(n+3){
+    border-top:1px solid var(--cm-line);
+  }
+  .result-top{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 96px;
+    gap:32px;
+    align-items:start;
+  }
+  .result-title{
+    font-size:2rem;
+    line-height:1.05;
+    letter-spacing:-.045em;
+    font-weight:700;
+    margin:2px 0 18px;
+    max-width:440px;
+  }
+  .result-copy{
+    font-size:1.08rem;
+    line-height:1.66;
+    color:var(--cm-muted);
+    margin:0;
+    max-width:47ch;
+  }
+  .result-copy strong{
+    color:var(--cm-text);
+    font-weight:600;
+  }
+
+  /* Abstract product-value marks: deliberately not application UI. */
+  .result-signal{
+    position:relative;
+    width:96px;
+    height:76px;
+    opacity:.96;
+  }
+  .result-signal span{
+    position:absolute;
+    display:block;
+  }
+  .signal-stock span{
+    right:0;
+    height:2px;
+    border-radius:20px;
+    background:var(--cm-line-strong);
+  }
+  .signal-stock span:nth-child(1){top:8px;width:74px}
+  .signal-stock span:nth-child(2){top:27px;width:58px}
+  .signal-stock span:nth-child(3){top:46px;width:86px;background:var(--cm-accent)}
+  .signal-stock span:nth-child(4){top:65px;width:44px}
+
+  .signal-formula:before{
+    content:"";
+    position:absolute;
+    left:14px;right:14px;top:37px;
+    height:1px;background:var(--cm-line-strong);
+  }
+  .signal-formula span{
+    width:14px;height:14px;border-radius:50%;
+    top:30px;
+    background:var(--cm-bg);
+    border:2px solid var(--cm-line-strong);
+  }
+  .signal-formula span:nth-child(1){left:7px}
+  .signal-formula span:nth-child(2){left:41px;border-color:var(--cm-accent);background:var(--cm-accent-soft)}
+  .signal-formula span:nth-child(3){right:7px}
+
+  .signal-cost{
+    display:grid;
+    place-items:center;
+  }
+  .signal-cost:before{
+    content:"₽";
+    font-size:4.55rem;
+    line-height:1;
+    font-weight:700;
+    letter-spacing:-.08em;
+    color:rgba(109,74,255,.16);
+    transform:translateY(-2px);
+  }
+  .signal-cost span{
+    left:9px;right:8px;bottom:7px;height:2px;
+    border-radius:20px;background:var(--cm-accent);
+  }
+
+  .signal-control:before{
+    content:"";
+    position:absolute;
+    left:10px;right:10px;top:37px;
+    height:1px;background:var(--cm-line-strong);
+  }
+  .signal-control span{
+    width:8px;height:8px;border-radius:50%;
+    top:33px;background:var(--cm-text);
+  }
+  .signal-control span:nth-child(1){left:9px}
+  .signal-control span:nth-child(2){left:34px}
+  .signal-control span:nth-child(3){left:59px;background:var(--cm-accent);width:12px;height:12px;top:31px}
+  .signal-control span:nth-child(4){right:8px}
+
+  .result-impact{
+    margin-top:auto;
+    padding-top:36px;
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+    max-width:520px;
+  }
+  .result-impact-arrow{
+    flex:0 0 auto;
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    margin-top:2px;
+    color:var(--cm-accent);
+    background:var(--cm-accent-soft);
+    font-size:1.05rem;
+    font-weight:700;
+  }
+  .result-impact-text{
+    font-size:clamp(1.45rem,2.05vw,2rem);
+    line-height:1.08;
+    letter-spacing:-.04em;
+    font-weight:650;
+    color:var(--cm-text);
+    max-width:16ch;
+  }
+
+  @media(max-width:900px){
+    .results-grid{grid-template-columns:1fr}
+    .result-item,
+    .result-item:nth-child(even){
+      min-height:0;
+      padding:34px 0 38px;
+      border-left:0;
+    }
+    .result-item:nth-child(n+2){border-top:1px solid var(--cm-line)}
+    .result-impact{margin-top:34px;padding-top:0}
+  }
+  @media(max-width:760px){
+    .results-editorial{padding:84px 0 92px}
+    .results-head{margin-bottom:34px}
+    .results-head h2{font-size:clamp(2.7rem,12vw,4rem)}
+    .result-item,
+    .result-item:nth-child(even){
+      padding:27px 0 30px;
+    }
+    .result-top{
+      grid-template-columns:minmax(0,1fr) 70px;
+      gap:18px;
+    }
+    .result-title{font-size:1.55rem;margin-bottom:12px}
+    .result-copy{font-size:.98rem;line-height:1.62}
+    .result-signal{width:70px;height:62px;transform:scale(.82);transform-origin:top right}
+    .result-impact{margin-top:28px;gap:11px}
+    .result-impact-arrow{width:30px;height:30px}
+    .result-impact-text{font-size:1.38rem;max-width:19ch}
+  }
+
+
+  /* PRICING v1 — one clear commercial calculation, not a pricing card grid */
+  .pricing-editorial{
+    padding:118px 0 128px;
+    border-bottom:1px solid var(--cm-line);
+    background:var(--cm-bg);
+  }
+  .pricing-head{margin-bottom:58px}
+  .pricing-head h2{
+    font-size:clamp(3.05rem,5vw,4.8rem);
+    line-height:.95;
+    letter-spacing:-.055em;
+    font-weight:800;
+    margin:0;
+    max-width:900px;
+  }
+  .pricing-layout{
+    display:grid;
+    grid-template-columns:1.08fr .92fr;
+    border-top:1px solid var(--cm-line-strong);
+    border-bottom:1px solid var(--cm-line-strong);
+  }
+  .pricing-controls{
+    padding:44px 58px 48px 0;
+    display:flex;
+    flex-direction:column;
+    min-height:480px;
+  }
+  .pricing-control-top{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:30px;
+    margin-bottom:34px;
+  }
+  .pricing-control-label{
+    font-size:1.08rem;
+    font-weight:600;
+    color:var(--cm-text);
+  }
+  .pricing-control-value{
+    font-size:clamp(2.7rem,4vw,4rem);
+    line-height:.92;
+    letter-spacing:-.055em;
+    font-weight:750;
+    color:var(--cm-text);
+  }
+  .pricing-range{
+    --fill:0%;
+    width:100%;
+    height:4px;
+    padding:0;
+    appearance:none;
+    -webkit-appearance:none;
+    border:0;
+    border-radius:999px;
+    background:linear-gradient(90deg,var(--cm-accent) 0 var(--fill),#DDD6CD var(--fill) 100%);
+    outline:none;
+  }
+  .pricing-range::-webkit-slider-thumb{
+    appearance:none;
+    -webkit-appearance:none;
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    border:5px solid var(--cm-surface-strong);
+    background:var(--cm-accent);
+    box-shadow:0 0 0 1px rgba(109,74,255,.18);
+    cursor:pointer;
+  }
+  .pricing-range::-moz-range-thumb{
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    border:5px solid var(--cm-surface-strong);
+    background:var(--cm-accent);
+    box-shadow:0 0 0 1px rgba(109,74,255,.18);
+    cursor:pointer;
+  }
+  .pricing-range:disabled{opacity:.35;cursor:not-allowed}
+  .pricing-range-meta{
+    display:flex;
+    justify-content:space-between;
+    margin-top:15px;
+    color:#9A939C;
+    font-size:.78rem;
+    font-weight:600;
+  }
+  .pricing-more{
+    display:inline-flex;
+    width:max-content;
+    align-items:center;
+    gap:11px;
+    margin-top:34px;
+    color:var(--cm-text);
+    font-size:.94rem;
+    font-weight:600;
+    cursor:pointer;
+  }
+  .pricing-more input{
+    width:18px;
+    height:18px;
+    margin:0;
+  }
+  .pricing-formula{
+    margin:auto 0 0;
+    padding-top:42px;
+    max-width:620px;
+    color:var(--cm-muted);
+    font-size:.94rem;
+    line-height:1.65;
+  }
+  .pricing-formula strong{color:var(--cm-text);font-weight:650}
+
+  .pricing-summary{
+    padding:44px 0 48px 58px;
+    border-left:1px solid var(--cm-line);
+    min-width:0;
+  }
+  .pricing-summary-label{
+    color:var(--cm-muted);
+    font-size:.82rem;
+    font-weight:650;
+    letter-spacing:.02em;
+    margin-bottom:13px;
+  }
+  .pricing-price{
+    font-size:clamp(4.2rem,6.5vw,6.6rem);
+    line-height:.88;
+    letter-spacing:-.07em;
+    font-weight:780;
+    color:var(--cm-text);
+    white-space:nowrap;
+  }
+  .pricing-summary.is-individual .pricing-price{
+    font-size:clamp(3rem,4.8vw,4.9rem);
+    letter-spacing:-.06em;
+    white-space:normal;
+  }
+  .pricing-period{
+    color:var(--cm-muted);
+    margin-top:13px;
+    font-size:.98rem;
+  }
+  .pricing-config{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+    padding:34px 0 30px;
+    margin-top:34px;
+    border-top:1px solid var(--cm-line);
+    border-bottom:1px solid var(--cm-line);
+  }
+  .pricing-config-item span{
+    display:block;
+    color:var(--cm-muted);
+    font-size:.78rem;
+    font-weight:600;
+    margin-bottom:7px;
+  }
+  .pricing-config-item strong{
+    font-size:1.08rem;
+    line-height:1.25;
+    letter-spacing:-.02em;
+  }
+  .pricing-benefits{
+    list-style:none;
+    padding:0;
+    margin:28px 0 0;
+  }
+  .pricing-benefits li{
+    position:relative;
+    padding:13px 0 13px 30px;
+    margin:0;
+    border-bottom:1px solid var(--cm-line);
+    color:var(--cm-text);
+    font-size:.96rem;
+    line-height:1.4;
+  }
+  .pricing-benefits li:last-child{border-bottom:0}
+  .pricing-benefits li:before{
+    content:"";
+    position:absolute;
+    left:2px;
+    top:18px;
+    width:10px;
+    height:6px;
+    border-left:2px solid var(--cm-accent);
+    border-bottom:2px solid var(--cm-accent);
+    transform:rotate(-45deg);
+  }
+  .pricing-actions{margin-top:30px}
+  .pricing-actions .btn{min-height:54px;padding:0 24px}
+
+  @media(max-width:940px){
+    .pricing-layout{grid-template-columns:1fr}
+    .pricing-controls{padding:38px 0 42px;min-height:0}
+    .pricing-formula{margin-top:42px}
+    .pricing-summary{padding:42px 0 48px;border-left:0;border-top:1px solid var(--cm-line)}
+    .pricing-price{white-space:normal}
+  }
+  @media(max-width:760px){
+    .pricing-editorial{padding:84px 0 92px}
+    .pricing-head{margin-bottom:34px}
+    .pricing-head h2{font-size:clamp(2.7rem,12vw,4rem)}
+    .pricing-controls{padding:30px 0 34px}
+    .pricing-control-top{margin-bottom:28px;align-items:start}
+    .pricing-control-label{font-size:.98rem}
+    .pricing-control-value{font-size:2.45rem}
+    .pricing-formula{padding-top:34px;margin-top:30px;font-size:.88rem}
+    .pricing-summary{padding:34px 0 38px}
+    .pricing-price{font-size:clamp(3.8rem,17vw,5.3rem)}
+    .pricing-config{gap:14px;padding:27px 0 24px;margin-top:28px}
+    .pricing-config-item strong{font-size:1rem}
+    .pricing-actions .btn{width:100%}
+  }
+
 </style>
 </head>
 <body>
@@ -1084,41 +1499,117 @@
   </div>
 </section>
 
-<section id="benefits">
+<section class="results-editorial" id="benefits">
   <div class="wrap">
-    <div class="section-index">06. Что получает владелец салона</div>
-    <h2>Четыре результата</h2>
-    <div class="grid2">
-      <div class="box"><strong>Точные остатки</strong><p>Фактический расход обновляет остаток автоматически.</p></div>
-      <div class="box"><strong>Сохранённые формулы</strong><p>История компонентов и веса остаётся привязана к клиенту.</p></div>
-      <div class="box"><strong>Понятная себестоимость</strong><p>Можно считать реальную стоимость материалов в услуге.</p></div>
-      <div class="box"><strong>Контроль работы с материалами</strong><p>Видно, что, кем и в каком объёме использовалось.</p></div>
+    <div class="results-head">
+      <h2>Надежные результаты</h2>
+    </div>
+
+    <div class="results-grid">
+      <article class="result-item">
+        <div class="result-top">
+          <div>
+            <h3 class="result-title">Точные остатки</h3>
+            <p class="result-copy">Меньше ручных сверок, неожиданных дефицитов и лишних закупок.</p>
+          </div>
+          <div class="result-signal signal-stock" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+        <div class="result-impact">
+          <span class="result-impact-arrow" aria-hidden="true">→</span>
+          <div class="result-impact-text">Без постоянных сверок</div>
+        </div>
+      </article>
+
+      <article class="result-item">
+        <div class="result-top">
+          <div>
+            <h3 class="result-title">Сохранённые формулы</h3>
+            <p class="result-copy">Формулы клиентов доступны всегда — без тетрадей, переписок и памяти мастера.</p>
+          </div>
+          <div class="result-signal signal-formula" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+        <div class="result-impact">
+          <span class="result-impact-arrow" aria-hidden="true">→</span>
+          <div class="result-impact-text">Знания остаются в салоне</div>
+        </div>
+      </article>
+
+      <article class="result-item">
+        <div class="result-top">
+          <div>
+            <h3 class="result-title">Понятная себестоимость</h3>
+            <p class="result-copy">Владелец видит, сколько на самом деле стоит окрашивание и где салон упускает прибыль.</p>
+          </div>
+          <div class="result-signal signal-cost" aria-hidden="true"><span></span></div>
+        </div>
+        <div class="result-impact">
+          <span class="result-impact-arrow" aria-hidden="true">→</span>
+          <div class="result-impact-text">Решения на основе реальных цифр</div>
+        </div>
+      </article>
+
+      <article class="result-item">
+        <div class="result-top">
+          <div>
+            <h3 class="result-title">Контроль работы с материалами</h3>
+            <p class="result-copy">Данные не зависят от субъективного учёта и остаются доступными в единой системе.</p>
+          </div>
+          <div class="result-signal signal-control" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+        <div class="result-impact">
+          <span class="result-impact-arrow" aria-hidden="true">→</span>
+          <div class="result-impact-text">Учёт не зависит от памяти сотрудников</div>
+        </div>
+      </article>
     </div>
   </div>
 </section>
 
-<section id="pricing">
+<section class="pricing-editorial" id="pricing">
   <div class="wrap">
-    <div class="section-index">07. Калькулятор тарифа</div>
-    <h2>Стоимость по размеру команды</h2>
-    <div class="grid2">
-      <div>
-        <div class="field">
-          <label for="tariffMasters">Мастеров в салоне: <strong id="tariffMastersValue">1</strong></label>
-          <input type="range" id="tariffMasters" min="1" max="15" value="1" step="1">
+    <div class="pricing-head">
+      <h2>Стоимость для вашего салона</h2>
+    </div>
+
+    <div class="pricing-layout">
+      <div class="pricing-controls">
+        <div class="pricing-control-top">
+          <div class="pricing-control-label">Мастеров в салоне</div>
+          <strong class="pricing-control-value" id="tariffMastersValue">1</strong>
         </div>
-        <label class="inline"><input type="checkbox" id="tariffMore15"> Более 15 мастеров</label>
-        <p class="small">1 490 ₽ за 1 мастера + 900 ₽ за каждого следующего. От 7 мастеров добавляется второй комплект весов и +1 500 ₽. Более 15 — индивидуальный расчёт.</p>
+
+        <input class="pricing-range" type="range" id="tariffMasters" min="1" max="15" value="1" step="1" aria-label="Количество мастеров">
+        <div class="pricing-range-meta" aria-hidden="true"><span>1</span><span>7</span><span>15</span></div>
+
+        <label class="pricing-more"><input type="checkbox" id="tariffMore15"> Более 15 мастеров</label>
+
+        <p class="pricing-formula"><strong>1 490 ₽</strong> за первого мастера + <strong>900 ₽</strong> за каждого следующего. С 7 мастеров добавляется второй комплект весов и <strong>1 500 ₽</strong> в месяц. Для команды больше 15 мастеров — индивидуальный расчёт.</p>
       </div>
-      <div class="summary">
-        <div><span class="muted">Стоимость подписки</span><div class="metric" id="tariffPrice">1 490 ₽</div><div class="muted">в месяц за весь салон</div></div>
-        <ul class="list" id="tariffBenefits">
+
+      <div class="pricing-summary" id="pricingSummary">
+        <div class="pricing-summary-label">Стоимость подписки</div>
+        <div class="pricing-price" id="tariffPrice">1 490 ₽</div>
+        <div class="pricing-period" id="tariffPeriod">в месяц за весь салон</div>
+
+        <div class="pricing-config">
+          <div class="pricing-config-item"><span>Команда</span><strong id="tariffTeam">1 мастер</strong></div>
+          <div class="pricing-config-item"><span>Оборудование</span><strong id="tariffScalesDisplay">1 комплект весов</strong></div>
+        </div>
+
+        <ul class="pricing-benefits" id="tariffBenefits">
           <li id="tariffLimit">Лимит: до 50 формул колористики</li>
           <li>Автоматический учёт расхода</li>
           <li>Поддержка</li>
           <li id="tariffAnalytics">Аналитика расхода мастеров — недоступна на тарифе для 1 мастера</li>
         </ul>
-        <div class="actions"><button class="btn" id="tariffToForm" type="button">Выбрать этот вариант</button></div>
+
+        <div class="pricing-actions"><button class="btn" id="tariffToForm" type="button">Выбрать этот вариант</button></div>
       </div>
     </div>
   </div>
@@ -1238,8 +1729,12 @@ function updateTariff(){
   tariffState={masters:m,...t};
   document.getElementById('tariffMastersValue').textContent=isMore?'15+':m;
   document.getElementById('tariffPrice').textContent=t.individual?'Индивидуально':rub(t.price);
+  document.getElementById('tariffTeam').textContent=isMore?'Более 15 мастеров':m+' '+noun(m,'мастер','мастера','мастеров');
+  document.getElementById('tariffScalesDisplay').textContent=t.scales+' '+noun(t.scales,'комплект весов','комплекта весов','комплектов весов');
   document.getElementById('tariffLimit').innerHTML=(!isMore&&m===1)?'Лимит: до 50 формул колористики':'Без лимитов: формулы колористики';
   document.getElementById('tariffAnalytics').textContent=(!isMore&&m===1)?'Аналитика расхода мастеров — недоступна на тарифе для 1 мастера':'Аналитика расхода каждого мастера';
+  document.getElementById('pricingSummary').classList.toggle('is-individual',t.individual);
+  paintRange(tariffMasters);
 }
 tariffMasters.addEventListener('input',updateTariff);tariffMore15.addEventListener('change',updateTariff);updateTariff();
 
