@@ -2273,6 +2273,30 @@ nav.nav{
   }
 }
 
+
+
+/* SCROLL REVEAL v1 — calm entrance for every section after hero */
+main > section:not(#hero).section-reveal{
+  opacity:0;
+  transform:translateY(22px);
+  transition:
+    opacity .78s cubic-bezier(.22,.8,.2,1),
+    transform .78s cubic-bezier(.22,.8,.2,1);
+  will-change:opacity,transform;
+}
+main > section:not(#hero).section-reveal.is-visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+@media(prefers-reduced-motion:reduce){
+  main > section:not(#hero).section-reveal{
+    opacity:1;
+    transform:none;
+    transition:none;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -2854,5 +2878,36 @@ form.addEventListener('submit',async e=>{
 })();
 
 </script>
+
+<script>
+(function(){
+  const sections = Array.from(document.querySelectorAll('main > section:not(#hero)'));
+  if (!sections.length) return;
+
+  const reduceMotion = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    sections.forEach(section => section.classList.add('section-reveal','is-visible'));
+    return;
+  }
+
+  sections.forEach(section => section.classList.add('section-reveal'));
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      obs.unobserve(entry.target);
+    });
+  }, {
+    threshold: 0.08,
+    rootMargin: '0px 0px -7% 0px'
+  });
+
+  sections.forEach(section => observer.observe(section));
+})();
+</script>
+
 </body>
 </html>
