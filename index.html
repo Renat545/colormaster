@@ -1566,6 +1566,32 @@
     }
   }
 
+
+  /* PRICING STABILITY v1 — fixed price area so the layout does not jump */
+  .pricing-price{
+    min-height:94px;
+    display:flex;
+    align-items:flex-start;
+  }
+  .pricing-summary.is-individual .pricing-price{
+    white-space:nowrap;
+  }
+
+  @media(max-width:940px){
+    .pricing-price{
+      min-height:82px;
+    }
+    .pricing-summary.is-individual .pricing-price{
+      white-space:normal;
+    }
+  }
+
+  @media(max-width:760px){
+    .pricing-price{
+      min-height:72px;
+    }
+  }
+
 </style>
 </head>
 <body>
