@@ -1429,6 +1429,113 @@
     .iphone-screen{border-radius:32px}
   }
 
+
+  /* HOW block refinement v2 — no side text, iPad-style device, caption below the screen */
+  .how-story-head{
+    display:block !important;
+    margin-bottom:42px !important;
+  }
+  .how-story-head h2{
+    max-width:760px;
+  }
+  .how-story-layout{
+    grid-template-columns:minmax(0,.8fr) minmax(520px,1.2fr);
+    gap:68px;
+  }
+  .how-story-product{
+    min-height:700px;
+    padding:12px 0 18px !important;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+  }
+  .how-story-product::before{
+    width:520px;
+    height:520px;
+    top:78px;
+  }
+  .how-phone{
+    width:min(100%, 500px) !important;
+    padding:14px !important;
+    border-radius:34px !important;
+    background:linear-gradient(180deg,#191620 0%,#0F0C13 100%) !important;
+    box-shadow:0 32px 86px rgba(23,21,27,.16), inset 0 1px 0 rgba(255,255,255,.10);
+  }
+  .how-phone::before{
+    display:none !important;
+  }
+  .how-phone-screen{
+    aspect-ratio:860/1120 !important;
+    border-radius:22px !important;
+    background:#14111A;
+  }
+  .how-phone-screen img{
+    object-fit:contain !important;
+    object-position:center top !important;
+    padding:14px 12px 6px;
+    transform:translateY(8px) scale(.996);
+    background:#14111A;
+  }
+  .how-progress{
+    right:-26px !important;
+  }
+  .how-screen-caption{
+    position:static !important;
+    left:auto !important;
+    bottom:auto !important;
+    transform:none !important;
+    width:auto !important;
+    margin-top:18px;
+    text-align:center;
+  }
+
+  @media(max-width:1040px){
+    .how-story-head{
+      margin-bottom:34px !important;
+    }
+    .how-story-layout{
+      grid-template-columns:1fr;
+      gap:32px;
+    }
+    .how-story-product{
+      min-height:auto;
+      padding:8px 0 8px !important;
+    }
+    .how-story-product::before{
+      width:420px;
+      height:420px;
+      top:58px;
+    }
+  }
+
+  @media(max-width:760px){
+    .how-story-head{
+      margin-bottom:30px !important;
+    }
+    .how-story-product{
+      padding:6px 0 4px !important;
+    }
+    .how-phone{
+      width:min(94vw, 430px) !important;
+      padding:10px !important;
+      border-radius:28px !important;
+    }
+    .how-phone-screen{
+      border-radius:18px !important;
+    }
+    .how-phone-screen img{
+      padding:10px 8px 4px;
+    }
+    .how-progress{
+      right:-16px !important;
+    }
+    .how-screen-caption{
+      margin-top:16px;
+      font-size:.82rem;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -1465,7 +1572,6 @@
   <div class="wrap">
     <div class="how-story-head">
       <h2>Как работает ColorMaster Pro</h2>
-      <p>Мастер работает как обычно. ColorMaster Pro просто фиксирует то, что раньше приходилось записывать вручную.</p>
     </div>
 
     <div class="how-story-layout">
