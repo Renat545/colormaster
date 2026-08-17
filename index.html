@@ -818,7 +818,6 @@ function updateTariff(){
   tariffState={masters:m,...t};
   document.getElementById('tariffMastersValue').textContent=isMore?'15+':m;
   document.getElementById('tariffPrice').textContent=t.individual?'Индивидуально':rub(t.price);
-  document.getElementById('tariffScales').textContent=t.scales+' '+noun(t.scales,'комплект','комплекта','комплектов')+':';
   document.getElementById('tariffLimit').innerHTML=(!isMore&&m===1)?'Лимит: до 50 формул колористики':'Без лимитов: формулы колористики';
   document.getElementById('tariffAnalytics').textContent=(!isMore&&m===1)?'Аналитика расхода мастеров — недоступна на тарифе для 1 мастера':'Аналитика расхода каждого мастера';
 }
