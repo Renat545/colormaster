@@ -691,6 +691,188 @@
     .product-click-hint{width:23px;height:23px;top:-34px}
   }
 
+
+
+  /* Savings v1 — financial report, not a card grid */
+  .savings-editorial{
+    padding:118px 0 126px;
+    border-bottom:1px solid var(--cm-line);
+    background:var(--cm-bg);
+  }
+  .savings-head{margin-bottom:58px}
+  .savings-head h2{
+    font-size:clamp(3.05rem,5vw,4.8rem);
+    line-height:.95;
+    letter-spacing:-.055em;
+    font-weight:800;
+    margin:0;
+    max-width:780px;
+  }
+  .savings-layout{
+    display:grid;
+    grid-template-columns:minmax(0,.82fr) minmax(420px,1.18fr);
+    gap:86px;
+    align-items:start;
+  }
+  .savings-controls{
+    padding-top:18px;
+  }
+  .savings-control{
+    padding:30px 0 34px;
+    border-top:1px solid var(--cm-line);
+  }
+  .savings-control:last-of-type{border-bottom:1px solid var(--cm-line)}
+  .savings-control-top{
+    display:flex;
+    justify-content:space-between;
+    gap:24px;
+    align-items:baseline;
+    margin-bottom:22px;
+  }
+  .savings-control label{
+    font-size:1rem;
+    font-weight:500;
+    color:#6F6972;
+  }
+  .savings-control strong{
+    font-size:1.55rem;
+    line-height:1;
+    letter-spacing:-.04em;
+    color:var(--cm-text);
+    white-space:nowrap;
+  }
+  .savings-control input[type="range"]{
+    --fill:30%;
+    display:block;
+    width:100%;
+    height:5px;
+    margin:0;
+    appearance:none;
+    border:0;
+    border-radius:999px;
+    outline:none;
+    background:linear-gradient(90deg,var(--cm-accent) 0 var(--fill),#DDD6CD var(--fill) 100%);
+    cursor:pointer;
+  }
+  .savings-control input[type="range"]::-webkit-slider-thumb{
+    appearance:none;
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    background:var(--cm-bg);
+    border:6px solid var(--cm-accent);
+    box-shadow:0 3px 12px rgba(109,74,255,.16);
+  }
+  .savings-control input[type="range"]::-moz-range-thumb{
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    background:var(--cm-bg);
+    border:6px solid var(--cm-accent);
+    box-shadow:0 3px 12px rgba(109,74,255,.16);
+  }
+  .savings-footnote{
+    margin:22px 0 0;
+    font-size:.82rem;
+    line-height:1.55;
+    color:#99919C;
+    max-width:48ch;
+  }
+  .savings-report{
+    padding:42px 44px 40px;
+    border:1px solid var(--cm-line-strong);
+    border-radius:28px;
+    background:rgba(255,255,255,.20);
+  }
+  .savings-report-label{
+    font-size:.95rem;
+    color:#77717B;
+    margin-bottom:12px;
+  }
+  .savings-report-total{
+    font-size:clamp(4.1rem,6vw,6rem);
+    line-height:.9;
+    letter-spacing:-.07em;
+    font-weight:800;
+    color:var(--cm-text);
+    margin-bottom:28px;
+  }
+  .savings-equation{
+    display:grid;
+    grid-template-columns:1fr auto 1fr auto 1fr;
+    gap:14px;
+    align-items:center;
+    padding:24px 0 28px;
+    border-top:1px solid var(--cm-line);
+    border-bottom:1px solid var(--cm-line);
+  }
+  .savings-eq-item span{
+    display:block;
+    font-size:.78rem;
+    line-height:1.35;
+    color:#8A838D;
+    margin-bottom:7px;
+  }
+  .savings-eq-item strong{
+    display:block;
+    font-size:1.45rem;
+    line-height:1;
+    letter-spacing:-.04em;
+    white-space:nowrap;
+  }
+  .savings-eq-op{font-size:1.3rem;color:#A39CA7;text-align:center}
+  .savings-eq-item.result strong{color:var(--cm-accent)}
+  .savings-meta{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:0;
+    margin-top:26px;
+  }
+  .savings-meta-item{
+    padding:2px 22px 2px 0;
+    border-right:1px solid var(--cm-line);
+  }
+  .savings-meta-item + .savings-meta-item{padding-left:22px}
+  .savings-meta-item:last-child{border-right:0}
+  .savings-meta-item span{
+    display:block;
+    color:#89828C;
+    font-size:.78rem;
+    margin-bottom:7px;
+  }
+  .savings-meta-item strong{
+    font-size:1.35rem;
+    line-height:1;
+    letter-spacing:-.035em;
+  }
+  .savings-actions{margin-top:30px}
+  .savings-actions .btn{min-height:54px;padding:0 24px}
+
+  @media(max-width:1040px){
+    .savings-layout{grid-template-columns:1fr;gap:34px}
+    .savings-controls{padding-top:0}
+    .savings-report{max-width:760px}
+  }
+  @media(max-width:760px){
+    .savings-editorial{padding:84px 0 92px}
+    .savings-head{margin-bottom:34px}
+    .savings-head h2{font-size:clamp(2.7rem,12vw,4rem)}
+    .savings-control{padding:24px 0 28px}
+    .savings-control-top{display:grid;gap:8px;margin-bottom:20px}
+    .savings-control strong{font-size:1.38rem}
+    .savings-report{padding:28px 22px;border-radius:22px}
+    .savings-report-total{font-size:clamp(3.7rem,17vw,5rem);margin-bottom:24px}
+    .savings-equation{grid-template-columns:1fr;gap:13px}
+    .savings-eq-op{display:none}
+    .savings-eq-item{display:flex;justify-content:space-between;align-items:baseline;gap:18px}
+    .savings-eq-item span{margin:0}
+    .savings-eq-item strong{font-size:1.28rem}
+    .savings-meta{grid-template-columns:1fr;gap:16px}
+    .savings-meta-item,.savings-meta-item + .savings-meta-item{padding:0 0 16px;border-right:0;border-bottom:1px solid var(--cm-line)}
+    .savings-meta-item:last-child{border-bottom:0;padding-bottom:0}
+    .savings-actions .btn{width:100%}
+  }
+
 </style>
 </head>
 <body>
@@ -832,32 +1014,71 @@
   </div>
 </section>
 
-<section id="savings">
+<section class="savings-editorial" id="savings">
   <div class="wrap">
-    <div class="section-index">05. Калькулятор экономии</div>
-    <h2>Проверяем экономику салона</h2>
-    <div class="grid2">
-      <div>
-        <div class="field">
-          <label for="roiMasters">Мастеров в салоне: <strong id="roiMastersValue">4</strong></label>
+    <div class="savings-head">
+      <div class="section-index">05. Калькулятор экономии</div>
+      <h2>Посчитайте экономию вашего салона</h2>
+    </div>
+
+    <div class="savings-layout">
+      <div class="savings-controls">
+        <div class="savings-control">
+          <div class="savings-control-top">
+            <label for="roiMasters">Мастеров в салоне</label>
+            <strong id="roiMastersValue">4</strong>
+          </div>
           <input type="range" id="roiMasters" min="1" max="15" step="1" value="4">
         </div>
-        <div class="field">
-          <label for="roiExpense">Закупка красителя в месяц: <strong id="roiExpenseValue">150 000 ₽</strong></label>
+
+        <div class="savings-control">
+          <div class="savings-control-top">
+            <label for="roiExpense">Закупка красителя в месяц</label>
+            <strong id="roiExpenseValue">150 000 ₽</strong>
+          </div>
           <input type="range" id="roiExpense" min="20000" max="500000" step="5000" value="150000">
         </div>
-        <p class="small">Расчёт пока использует прежнюю модель сайта: потенциальное снижение потерь — 15%. Это допущение позже отдельно проверим и юридически корректно сформулируем.</p>
+
+        <p class="savings-footnote">Примерный расчёт при снижении неконтролируемых потерь на 15%.</p>
       </div>
-      <div class="summary">
-        <div class="calc-result">
-          <div class="box"><span class="muted">Подписка / мес.</span><div class="result-big" id="roiSubscription">2 990 ₽</div></div>
-          <div class="box"><span class="muted">Потенциально сохранено / мес.</span><div class="result-big" id="roiSaved">22 500 ₽</div></div>
-          <div class="box"><span class="muted">Чистый эффект / мес.</span><div class="result-big" id="roiNet">19 510 ₽</div></div>
-          <div class="box"><span class="muted">Окупаемость</span><div class="result-big" id="roiPayback">4 дня</div></div>
-          <div class="box"><span class="muted">ROI</span><div class="result-big" id="roiPercent">652%</div></div>
-          <div class="box"><span class="muted">Комплектов весов</span><div class="result-big" id="roiScales">1</div></div>
+
+      <div class="savings-report">
+        <div class="savings-report-label">Расчётный эффект в месяц</div>
+        <div class="savings-report-total" id="roiNet">19 510 ₽</div>
+
+        <div class="savings-equation">
+          <div class="savings-eq-item">
+            <span>Потенциально сохранено</span>
+            <strong id="roiSaved">22 500 ₽</strong>
+          </div>
+          <div class="savings-eq-op">−</div>
+          <div class="savings-eq-item">
+            <span>Подписка</span>
+            <strong id="roiSubscription">2 990 ₽</strong>
+          </div>
+          <div class="savings-eq-op">=</div>
+          <div class="savings-eq-item result">
+            <span>Чистый эффект</span>
+            <strong id="roiNetMirror">19 510 ₽</strong>
+          </div>
         </div>
-        <div class="actions"><button class="btn" id="roiToForm" type="button">Обсудить этот расчёт</button></div>
+
+        <div class="savings-meta">
+          <div class="savings-meta-item">
+            <span>Окупаемость</span>
+            <strong id="roiPayback">4 дня</strong>
+          </div>
+          <div class="savings-meta-item">
+            <span>ROI</span>
+            <strong id="roiPercent">652%</strong>
+          </div>
+          <div class="savings-meta-item">
+            <span>Комплектов весов</span>
+            <strong id="roiScales">1</strong>
+          </div>
+        </div>
+
+        <div class="savings-actions"><button class="btn" id="roiToForm" type="button">Обсудить этот расчёт</button></div>
       </div>
     </div>
   </div>
@@ -987,11 +1208,16 @@ function updateROI(){
   document.getElementById('roiSubscription').textContent=rub(t.price);
   document.getElementById('roiSaved').textContent=rub(saved);
   document.getElementById('roiNet').textContent=rub(net);
+  const roiNetMirror=document.getElementById('roiNetMirror'); if(roiNetMirror) roiNetMirror.textContent=rub(net);
   document.getElementById('roiPayback').textContent=days+' '+noun(days,'день','дня','дней');
   document.getElementById('roiPercent').textContent=roi+'%';
   document.getElementById('roiScales').textContent=t.scales;
 }
-roiMasters.addEventListener('input',updateROI);roiExpense.addEventListener('input',updateROI);updateROI();
+const paintRange=(el)=>{const min=Number(el.min||0),max=Number(el.max||100),value=Number(el.value);const pct=((value-min)/(max-min))*100;el.style.setProperty('--fill',pct+'%');};
+const updateSavingsUI=()=>{paintRange(roiMasters);paintRange(roiExpense);};
+roiMasters.addEventListener('input',()=>{updateROI();updateSavingsUI();});
+roiExpense.addEventListener('input',()=>{updateROI();updateSavingsUI();});
+updateROI();updateSavingsUI();
 
 document.getElementById('roiToForm').addEventListener('click',()=>{
   formTariff.value=roiState.masters+' '+noun(roiState.masters,'мастер','мастера','мастеров');
