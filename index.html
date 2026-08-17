@@ -1251,7 +1251,21 @@
     line-height:1.4;
   }
   .pricing-benefits li:last-child{border-bottom:0}
-  .pricing-benefits li:before{
+  
+  .pricing-benefits li.is-unavailable:before{
+    content:"×";
+    width:auto;
+    height:auto;
+    border:0;
+    transform:none;
+    top:9px;
+    left:1px;
+    color:var(--cm-accent);
+    font-size:1.28rem;
+    font-weight:700;
+    line-height:1;
+  }
+.pricing-benefits li:before{
     content:"";
     position:absolute;
     left:2px;
@@ -1848,7 +1862,7 @@
         </div>
 
         <input class="pricing-range" type="range" id="tariffMasters" min="1" max="15" value="1" step="1" aria-label="Количество мастеров">
-        <div class="pricing-range-meta" aria-hidden="true"><span>1</span><span>7</span><span>15</span></div>
+        <div class="pricing-range-meta" aria-hidden="true"><span>1</span><span>8</span><span>15</span></div>
 
         <label class="pricing-more"><input type="checkbox" id="tariffMore15"> Более 15 мастеров</label>
 
@@ -1869,7 +1883,7 @@
           <li id="tariffLimit">Лимит: до 50 формул колористики</li>
           <li>Автоматический учёт расхода</li>
           <li>Поддержка</li>
-          <li id="tariffAnalytics">Аналитика расхода мастеров — недоступна на тарифе для 1 мастера</li>
+          <li id="tariffAnalytics" class="is-unavailable">Аналитика расхода каждого мастера</li>
         </ul>
 
         <div class="pricing-actions"><button class="btn" id="tariffToForm" type="button">Выбрать этот вариант</button></div>
@@ -1995,7 +2009,8 @@ function updateTariff(){
   document.getElementById('tariffTeam').textContent=isMore?'Более 15 мастеров':m+' '+noun(m,'мастер','мастера','мастеров');
   document.getElementById('tariffScalesDisplay').textContent=t.scales+' '+noun(t.scales,'комплект весов','комплекта весов','комплектов весов');
   document.getElementById('tariffLimit').innerHTML=(!isMore&&m===1)?'Лимит: до 50 формул колористики':'Без лимитов: формулы колористики';
-  document.getElementById('tariffAnalytics').textContent=(!isMore&&m===1)?'Аналитика расхода мастеров — недоступна на тарифе для 1 мастера':'Аналитика расхода каждого мастера';
+  document.getElementById('tariffAnalytics').textContent='Аналитика расхода каждого мастера';
+  document.getElementById('tariffAnalytics').classList.toggle('is-unavailable',!isMore&&m===1);
   document.getElementById('pricingSummary').classList.toggle('is-individual',t.individual);
   paintRange(tariffMasters);
 }
