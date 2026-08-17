@@ -1732,13 +1732,13 @@
   }
 
 
-  /* TRUST v5 — clear 3-step setup + safety */
+  /* TRUST v6 — polished setup + handwritten arrows + lighter safety */
   .trust-editorial{
-    padding:78px 0 88px;
+    padding:82px 0 92px;
     background:var(--cm-bg);
   }
   .trust-head{
-    margin-bottom:42px;
+    margin-bottom:46px;
   }
   .trust-head h2{
     margin:0;
@@ -1751,10 +1751,10 @@
 
   .trust-flow{
     display:grid;
-    grid-template-columns:1fr 54px 1fr 54px 1fr;
+    grid-template-columns:1fr 68px 1fr 68px 1fr;
     align-items:start;
-    gap:24px;
-    padding:28px 0 26px;
+    gap:22px;
+    padding:30px 0 30px;
   }
   .trust-flow-item{
     min-width:0;
@@ -1770,35 +1770,44 @@
     margin:0;
     max-width:31ch;
     color:var(--cm-muted);
-    font-size:.95rem;
-    line-height:1.58;
+    font-size:.96rem;
+    line-height:1.6;
   }
   .trust-flow-copy + .trust-flow-copy{
-    margin-top:6px;
+    margin-top:8px;
   }
+
   .trust-flow-arrow{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:var(--cm-accent);
-    font-size:1.45rem;
-    line-height:1;
-    opacity:.72;
-    padding-top:14px;
+    position:relative;
+    width:68px;
+    height:34px;
+    align-self:start;
+    margin-top:10px;
+  }
+  .trust-flow-arrow::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-repeat:no-repeat;
+    background-position:center;
+    background-size:100% 100%;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='68' height='34' viewBox='0 0 68 34' fill='none'%3E%3Cpath d='M4 18C13 10 25 10 34 17C41 23 49 24 56 19' stroke='%236B4DFF' stroke-width='3.2' stroke-linecap='round'/%3E%3Cpath d='M49 11C54 14 57 16 61 20' stroke='%236B4DFF' stroke-width='3.2' stroke-linecap='round'/%3E%3Cpath d='M51 27C55 24 58 22 61 20' stroke='%236B4DFF' stroke-width='3.2' stroke-linecap='round'/%3E%3C/svg%3E");
+    opacity:.9;
   }
 
   .trust-safety{
-    margin-top:34px;
-    padding:0;
+    margin-top:40px;
+    padding-top:26px;
+    border-top:1px solid rgba(52,47,58,.10);
   }
   .trust-safety-card{
     display:grid;
     grid-template-columns:minmax(220px,.9fr) minmax(0,1.1fr);
-    gap:36px;
+    gap:42px;
     align-items:start;
-    padding:26px 30px 28px;
-    border-radius:24px;
-    background:rgba(255,255,255,.36);
+    padding:0;
+    border-radius:0;
+    background:transparent;
   }
   .trust-safety-title{
     margin:0;
@@ -1812,20 +1821,20 @@
     padding:0;
     margin:0;
     display:grid;
-    gap:12px;
+    gap:14px;
   }
   .trust-safety-list li{
     position:relative;
-    padding-left:24px;
+    padding-left:26px;
     color:var(--cm-muted);
     font-size:.96rem;
-    line-height:1.58;
+    line-height:1.62;
   }
   .trust-safety-list li::before{
     content:"";
     position:absolute;
     left:2px;
-    top:.46em;
+    top:.5em;
     width:9px;
     height:5px;
     border-left:2px solid var(--cm-accent);
@@ -1836,15 +1845,19 @@
   @media(max-width:980px){
     .trust-flow{
       grid-template-columns:1fr;
-      gap:22px;
-      padding-bottom:20px;
+      gap:20px;
+      padding-bottom:18px;
     }
     .trust-flow-arrow{
-      justify-content:flex-start;
+      width:42px;
+      height:30px;
+      margin-top:-2px;
+      margin-left:2px;
       transform:rotate(90deg);
-      width:28px;
-      height:20px;
-      padding-top:0;
+    }
+    .trust-safety{
+      margin-top:30px;
+      padding-top:22px;
     }
     .trust-safety-card{
       grid-template-columns:1fr;
@@ -1853,17 +1866,20 @@
   }
 
   @media(max-width:760px){
-    .trust-editorial{padding:72px 0 80px}
-    .trust-head{margin-bottom:30px}
+    .trust-editorial{padding:72px 0 82px}
+    .trust-head{margin-bottom:32px}
     .trust-head h2{font-size:clamp(2.7rem,12vw,4rem)}
-    .trust-flow{padding:18px 0 12px}
+    .trust-flow{padding:14px 0 10px}
     .trust-flow-title{font-size:1.75rem;margin-bottom:12px}
     .trust-flow-copy{font-size:.93rem}
-    .trust-safety{margin-top:26px}
-    .trust-safety-card{
-      padding:22px 20px 22px;
-      border-radius:18px;
-      gap:14px;
+    .trust-flow-arrow{
+      width:36px;
+      height:26px;
+      margin-left:0;
+    }
+    .trust-safety{
+      margin-top:24px;
+      padding-top:18px;
     }
     .trust-safety-title{font-size:1.75rem}
     .trust-safety-list{gap:10px}
@@ -2213,7 +2229,7 @@
         <p class="trust-flow-copy">Внесение сотрудников и администраторов.</p>
       </div>
 
-      <div class="trust-flow-arrow" aria-hidden="true">→</div>
+      <div class="trust-flow-arrow" aria-hidden="true"></div>
 
       <div class="trust-flow-item">
         <h3 class="trust-flow-title">Установим</h3>
@@ -2221,7 +2237,7 @@
         <p class="trust-flow-copy">Программное обеспечение.</p>
       </div>
 
-      <div class="trust-flow-arrow" aria-hidden="true">→</div>
+      <div class="trust-flow-arrow" aria-hidden="true"></div>
 
       <div class="trust-flow-item">
         <h3 class="trust-flow-title">Обучим</h3>
