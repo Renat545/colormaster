@@ -1751,7 +1751,7 @@
 
   .trust-flow{
     display:grid;
-    grid-template-columns:1fr 68px 1fr 68px 1fr;
+    grid-template-columns:1fr 108px 1fr 108px 1fr;
     align-items:start;
     gap:22px;
     padding:30px 0 30px;
@@ -1779,10 +1779,11 @@
 
   .trust-flow-arrow{
     position:relative;
-    width:68px;
-    height:34px;
-    align-self:start;
-    margin-top:10px;
+    width:108px;
+    height:42px;
+    align-self:center;
+    justify-self:center;
+    margin-top:0;
   }
   .trust-flow-arrow::before{
     content:"";
@@ -1791,8 +1792,8 @@
     background-repeat:no-repeat;
     background-position:center;
     background-size:100% 100%;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='68' height='34' viewBox='0 0 68 34' fill='none'%3E%3Cpath d='M4 18C13 10 25 10 34 17C41 23 49 24 56 19' stroke='%236B4DFF' stroke-width='3.2' stroke-linecap='round'/%3E%3Cpath d='M49 11C54 14 57 16 61 20' stroke='%236B4DFF' stroke-width='3.2' stroke-linecap='round'/%3E%3Cpath d='M51 27C55 24 58 22 61 20' stroke='%236B4DFF' stroke-width='3.2' stroke-linecap='round'/%3E%3C/svg%3E");
-    opacity:.9;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='108' height='42' viewBox='0 0 108 42' fill='none'%3E%3Cpath d='M5 22C16 12 31 12 43 20C54 28 67 29 80 22' stroke='%236B4DFF' stroke-width='3.4' stroke-linecap='round'/%3E%3Cpath d='M72 13C79 16 85 20 93 25' stroke='%236B4DFF' stroke-width='3.4' stroke-linecap='round'/%3E%3Cpath d='M76 31C82 27 87 25 93 25' stroke='%236B4DFF' stroke-width='3.4' stroke-linecap='round'/%3E%3C/svg%3E");
+    opacity:.92;
   }
 
   .trust-safety{
@@ -1849,10 +1850,11 @@
       padding-bottom:18px;
     }
     .trust-flow-arrow{
-      width:42px;
-      height:30px;
-      margin-top:-2px;
-      margin-left:2px;
+      width:58px;
+      height:28px;
+      margin-top:0;
+      margin-left:0;
+      justify-self:start;
       transform:rotate(90deg);
     }
     .trust-safety{
@@ -1873,8 +1875,8 @@
     .trust-flow-title{font-size:1.75rem;margin-bottom:12px}
     .trust-flow-copy{font-size:.93rem}
     .trust-flow-arrow{
-      width:36px;
-      height:26px;
+      width:48px;
+      height:24px;
       margin-left:0;
     }
     .trust-safety{
