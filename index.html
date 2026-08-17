@@ -1664,6 +1664,55 @@
     }
   }
 
+
+  /* PRICING PRICE SCALE v2 — calmer price + fixed monthly label position */
+  @media(min-width:941px){
+    .pricing-price-line{
+      display:grid !important;
+      grid-template-columns:250px max-content;
+      column-gap:18px;
+      align-items:baseline;
+      min-height:70px !important;
+    }
+    .pricing-price{
+      font-size:clamp(3.15rem,4vw,3.7rem) !important;
+      line-height:.92 !important;
+      letter-spacing:-.055em !important;
+      width:250px;
+      white-space:nowrap !important;
+    }
+    .pricing-period{
+      margin:0 !important;
+      align-self:baseline;
+      font-size:.92rem !important;
+      white-space:nowrap;
+    }
+    .pricing-summary.is-individual .pricing-price{
+      grid-column:1 / -1;
+      width:auto;
+      font-size:clamp(2.8rem,3.6vw,3.45rem) !important;
+      white-space:nowrap !important;
+    }
+    .pricing-summary.is-individual .pricing-period{
+      display:none !important;
+    }
+    .pricing-price-area{
+      min-height:116px !important;
+    }
+  }
+
+  @media(max-width:940px){
+    .pricing-price-line{
+      display:grid !important;
+      grid-template-columns:minmax(0,max-content) max-content;
+      column-gap:12px;
+      align-items:baseline;
+    }
+    .pricing-price{
+      font-size:clamp(3rem,8vw,3.8rem) !important;
+    }
+  }
+
 </style>
 </head>
 <body>
