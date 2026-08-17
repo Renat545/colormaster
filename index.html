@@ -1713,6 +1713,24 @@
     }
   }
 
+
+  /* PRICING PERIOD TUNE v1 — closer "/в месяц" */
+  @media(min-width:941px){
+    .pricing-price-line{
+      grid-template-columns:230px max-content !important;
+      column-gap:8px !important;
+    }
+    .pricing-price{
+      width:230px !important;
+    }
+  }
+
+  @media(max-width:940px){
+    .pricing-price-line{
+      column-gap:8px !important;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -2021,7 +2039,7 @@
           <div class="pricing-summary-label">Стоимость подписки</div>
           <div class="pricing-price-line">
             <div class="pricing-price" id="tariffPrice">1 490 ₽</div>
-            <div class="pricing-period" id="tariffPeriod">в месяц</div>
+            <div class="pricing-period" id="tariffPeriod">/в месяц</div>
           </div>
         </div>
 
